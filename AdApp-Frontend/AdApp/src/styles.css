@@ -1,6 +1,15 @@
 :root {
-  --bg: #0b0d17;
-  --fg: #e6ecff;
+  --white: #ffffff;
+  --gray-200: #a9a9a9;
+  --surface-700: #2a2a2a; 
+  --bg-900: #1a1a1a;     
+  --blue-500: #002266;
+  --blue-300: #2B78D4
+  ;
+  --gradient-blue: linear-gradient(90deg, var(--blue-500), var(--blue-300));
+  --success-500: #2ecc71; 
+  --success-600: #179b4a;
+  --gradient-success: linear-gradient(90deg, var(--success-600), var(--success-500));
 }
 
 html, body {
@@ -9,8 +18,8 @@ html, body {
 
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--fg);
+  background: linear-gradient(180deg, #1a1a1a 0%, #131313 100%);
+  color: var(--white);
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
 }
 
