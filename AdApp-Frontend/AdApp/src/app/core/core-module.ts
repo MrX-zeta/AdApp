@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { Navbar } from './components/navBar/navbar';
 import { Footer } from './components/footer/footer';
 
@@ -11,7 +12,9 @@ import { Footer } from './components/footer/footer';
     Footer
   ],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    RouterModule
+  ],
+  exports: [Navbar, Footer]
 })
 export class CoreModule { }
