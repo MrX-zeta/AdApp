@@ -41,7 +41,8 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
-            "browser": "src/main.ts",
+            "index": "src/assets/index.html",
+            "browser": "src/assets/main.ts",
             "polyfills": [
               "zone.js"
             ],
@@ -53,7 +54,7 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/assets/styles.css"
             ]
           },
           "configurations": {
@@ -110,11 +111,14 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/assets/styles.css"
             ]
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

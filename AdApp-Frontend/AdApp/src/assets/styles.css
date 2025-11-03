@@ -1,2 +1,1 @@
 /* Redirect root styles import to the existing assets styles file to satisfy angular.json */
-@import './assets/styles.css';
