@@ -1,9 +1,9 @@
 ktor:
     application:
         modules:
-            - com.adapp.ApplicationKt.module
+            - com.adapp.backend.ApplicationKt.module
     deployment:
-        port: 8080
+        port: 8081
 jwt:
   domain: "https://jwt-provider-domain/"
   audience: "jwt-audience"
