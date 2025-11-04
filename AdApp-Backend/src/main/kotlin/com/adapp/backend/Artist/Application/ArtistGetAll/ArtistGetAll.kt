@@ -5,6 +5,6 @@ import com.adapp.backend.Artist.Domain.Repositories.ArtistRepository
 
 class ArtistGetAll(private val artistRepo: ArtistRepository) {
     suspend fun invoke(): List<Artist>{
-        return artistRepo.getAllUsers()
+        return artistRepo.getAllArtists()
     }
 }

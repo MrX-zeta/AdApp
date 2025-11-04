@@ -7,7 +7,7 @@ import com.adapp.backend.User.Domain.Models.UserId
 interface ArtistRepository {
     fun create(artist: Artist)
     fun edit(artist: Artist)
-    fun getAllUsers(): List<Artist>
+    fun getAllArtists(): List<Artist>
     fun getOneById(id: UserId): Artist?
     fun delete(id: UserId)
 }

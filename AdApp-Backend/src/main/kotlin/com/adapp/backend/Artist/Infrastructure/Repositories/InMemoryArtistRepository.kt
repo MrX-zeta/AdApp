@@ -17,7 +17,7 @@ class InMemoryArtistRepository : ArtistRepository {
         if(index >= 0) artists[index] = artist
     }
 
-    override fun getAllUsers(): List<Artist> = artists.toList()
+    override fun getAllArtists(): List<Artist> = artists.toList()
 
     override fun getOneById(id: UserId): Artist? = artists.find { it.Usuarioid.value == id.value }
 

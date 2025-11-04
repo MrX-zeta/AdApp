@@ -9,6 +9,11 @@ version = "0.0.1"
 
 application {
     mainClass = "io.ktor.server.netty.EngineMain"
+    // Forzar properties JVM para evitar que Netty use sun.misc.Unsafe en tiempo de arranque
+    applicationDefaultJvmArgs = listOf(
+        "-Dio.netty.noUnsafe=true",
+        "-Dio.netty.tryReflectionSetAccessible=false"
+    )
 }
 
 dependencies {
