@@ -26,12 +26,6 @@ fun Application.configureArtistRouting(){
             }
         }
 
-        // Principal
-        get("/artist/"){
-            val artists = controller.getAll()
-            call.respond(artists)
-        }
-
         get("/artist/{id}/"){
             val idParam = call.parameters["id"]
             if(idParam == null){
