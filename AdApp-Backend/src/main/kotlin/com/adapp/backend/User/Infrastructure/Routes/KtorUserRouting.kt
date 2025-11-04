@@ -8,20 +8,16 @@ import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.request.*
-import io.ktor.serialization.kotlinx.json.*
-import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
 import kotlinx.serialization.Serializable
 
 fun Application.configureRouting(){
     val userRepo = InMemoryUserRepository()
     val controller = KtorUserController(userRepo)
 
-    install(ContentNegotiation) {
-        json()
-    }
+    // ContentNegotiation se instala en configureSerialization() a nivel de aplicación
 
     routing {
-        get("/user/"){
+        get("/users"){
             val users = controller.getAll()
             call.respond(users)
         }
@@ -52,13 +48,26 @@ fun Application.configureRouting(){
             call.respond(HttpStatusCode.Created, mapOf("message" to "User created"))
         }
 
-        put("/user/"){
+        put("/user/{id}/"){
+            val idParam = call.parameters["id"]
+            if(idParam == null){
+                call.respond(HttpStatusCode.BadRequest, mapOf("message" to "Missing id"))
+                return@put
+            }
+            val oldId = idParam.toIntOrNull()
+            if(oldId == null){
+                call.respond(HttpStatusCode.BadRequest, mapOf("message" to "Invalid id"))
+                return@put
+            }
+
             val payload = call.receive<EditUserRequest>()
             try{
-                controller.edit(payload.id, payload.name, payload.email, payload.password, payload.role)
+                controller.edit(oldId, payload.id, payload.name, payload.email, payload.password, payload.role)
                 call.respond(HttpStatusCode.NoContent)
             }catch(e: UserNotFoundError){
                 call.respond(HttpStatusCode.NotFound, mapOf("message" to e.message))
+            }catch(e: IllegalArgumentException){
+                call.respond(HttpStatusCode.BadRequest, mapOf("message" to e.message))
             }
         }
 
