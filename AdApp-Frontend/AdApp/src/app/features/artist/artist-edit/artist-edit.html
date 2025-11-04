@@ -52,10 +52,10 @@
 				</div>
 			</div>
 
-			<footer class="form-actions">
-						<button class="btn success" type="submit">Guardar</button>
-				<button class="btn ghost" type="button" (click)="cancel()">Cancelar</button>
-			</footer>
+						<footer class="form-actions">
+									<button class="btn success" type="submit">Guardar</button>
+							<button class="btn ghost" type="button" (click)="cancel()">Cancelar</button>
+						</footer>
 		</form>
 	</section>
 
@@ -117,4 +117,52 @@
 			</div>
 		</article>
 	</aside>
+
+	<div class="modal-backdrop" *ngIf="showSongModal" (click)="closeSong()"></div>
+	<div class="modal" *ngIf="showSongModal" role="dialog" aria-modal="true">
+			<header class="modal-header">
+				<h4>Agregar canción</h4>
+				<button class="icon close" type="button" (click)="closeSong()">
+					<img src="/media/icons/equis.png" alt="Cerrar" />
+				</button>
+			</header>
+		<form class="modal-body" [formGroup]="songForm" (ngSubmit)="submitSong()">
+			<label class="field">
+				<span>Título</span>
+				<input formControlName="title" placeholder="Título de la canción" />
+			</label>
+				<label class="field">
+					<span>Archivo de audio</span>
+					<input type="file" accept="audio/*" (change)="onSongFileSelected($event)" />
+				</label>
+			<footer class="modal-actions">
+				<button class="btn success" type="submit">Subir</button>
+				<button class="btn ghost" type="button" (click)="closeSong()">Cancelar</button>
+			</footer>
+		</form>
+		</div>
+
+	<div class="modal-backdrop" *ngIf="showEventModal" (click)="closeEvent()"></div>
+	<div class="modal" *ngIf="showEventModal" role="dialog" aria-modal="true">
+			<header class="modal-header">
+				<h4>Publicar evento</h4>
+				<button class="icon close" type="button" (click)="closeEvent()">
+					<img src="/media/icons/equis.png" alt="Cerrar" />
+				</button>
+			</header>
+				<form class="modal-body" [formGroup]="eventForm" (ngSubmit)="submitEvent()">
+					<label class="field">
+						<span>Título</span>
+						<input formControlName="title" placeholder="Nombre del evento" />
+					</label>
+					<label class="field">
+						<span>Descripción</span>
+						<textarea rows="4" formControlName="description" placeholder="Escribe los detalles del evento"></textarea>
+					</label>
+			<footer class="modal-actions">
+				<button class="btn success" type="submit">Publicar</button>
+				<button class="btn ghost" type="button" (click)="closeEvent()">Cancelar</button>
+			</footer>
+		</form>
+		</div>
 </div>

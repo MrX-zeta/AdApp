@@ -15,7 +15,12 @@ const routes: Routes = [
     path: 'artist',
     loadChildren: () => import('./features/artist/artist-module').then(m => m.ArtistModule)
   },
+  {
+    path: 'follower', // Este será el prefijo de la URL (e.g., /follower)
+    loadChildren: () => import('./features/follower/follower-module').then(m => m.FollowerModule)
+  },
   { path: '**', redirectTo: 'dashboard' }
+  
 ];
 
 @NgModule({
