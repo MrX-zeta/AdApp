@@ -1,0 +1,570 @@
+.perfil-de-artista_129-277 {
+  background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow: auto;
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 40px;
+  padding: 28px;
+  box-sizing: border-box;
+  align-items: start;
+  grid-auto-rows: auto;
+}
+.frame-44_129-278 {
+  display: none !important;
+}
+.rectangle-1_129-279 {
+  display: none;
+}
+
+.rectangle-14_129-280 {
+  display: none;
+}
+
+.text-perfil_129-281 {
+  display: none;
+}
+
+.text-inicio_129-282 {
+  display: none;
+}
+
+.frame-43_129-283 {
+  display: none !important;
+}
+.rectangle-2_129-284 {
+  display: none;
+}
+
+.rectangle-17_129-285 {
+  display: none;
+}
+
+.rectangle-18_129-286 {
+  display: none;
+}
+
+.rectangle-19_129-287 {
+  display: none;
+}
+
+.frame-62_129-288 {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  height: fit-content;
+  align-self: flex-start;
+  gap: 24px;
+  background: var(--surface-700, #2a2a2a);
+  border-radius: 10px;
+  padding: 28px;
+}
+.rectangle-31_129-289 {
+  display: none;
+}
+
+.frame-54_129-290 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  gap: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
+  border-bottom: none;
+}
+.frame-52_129-291 {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  gap: 16px;
+}
+.frame-51_129-300 {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  width: auto;
+  height: auto;
+  gap: 0;
+}
+.ellipse-1_129-302 {
+  position: relative;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #555;
+  overflow: hidden;
+}
+
+.frame-74_129-400 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: 2px;
+  box-sizing: border-box;
+  flex: 1;
+}
+.text-mac-miller_129-375 {
+  color: #ffffff;
+  font-size: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0%;
+  text-decoration: none;
+  font-weight: 600;
+  text-align: left;
+  text-wrap: wrap;
+  width: 100%;
+}
+
+.text-1-000-seguidores_129-301 {
+  color: var(--gray-200, #999);
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0%;
+  text-decoration: none;
+  font-weight: 400;
+  text-align: left;
+  text-wrap: wrap;
+  width: 100%;
+}
+
+.line-1_129-303 {
+  display: none;
+}
+
+.frame-65_129-344 {
+  display: none;
+}
+
+.frame-65_129-407 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: 12px;
+  box-sizing: border-box;
+  width: 100%;
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+.text-descripci-n_129-406 {
+  color: #4a9eff;
+  font-size: 13px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  font-weight: 500;
+  text-align: left;
+  text-wrap: wrap;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+.frame-66_129-402 {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+}
+.text-m-sico-y-cantante-en-solitario--hip-hop-y-r-b--exploro-el-jazz-_129-404 {
+  position: relative;
+  display: flex;
+  color: #ffffff;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0%;
+  text-decoration: none;
+  font-weight: 400;
+  text-align: left;
+  text-wrap: wrap;
+  width: 100%;
+  height: auto;
+  line-height: 1.6;
+}
+
+.line-2_129-405 {
+  display: none;
+}
+
+.frame-59_129-377 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  gap: 18px;
+}
+.text-redes-y-contacto_129-378 {
+  position: relative;
+  display: flex;
+  color: #4a9eff;
+  font-size: 13px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  font-weight: 500;
+  text-align: left;
+  text-wrap: nowrap;
+  width: 100%;
+  height: auto;
+  text-transform: uppercase;
+}
+
+.frame-58_129-379 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  gap: 16px;
+}
+
+.frame-53_129-390,
+.frame-55_129-395,
+.frame-56_129-380,
+.frame-57_129-385 {
+  position: relative;
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  gap: 14px;
+}
+
+.rectangle-35_129-381,
+.rectangle-35_129-386,
+.rectangle-35_129-391,
+.rectangle-35_129-396,
+.rectangle-34_129-397 {
+  width: 18px;
+  height: 18px;
+  opacity: 0.85;
+}
+
+.line-3_129-383,
+.line-3_129-388,
+.line-3_129-393,
+.line-3_129-398 {
+  display: none;
+}
+
+.text-mac-off_129-394,
+.text-mac-miller_129-399,
+.text-123-456-0789_129-384,
+.text-macmiller-gmail-com_129-389 {
+  position: relative;
+  display: flex;
+  color: #ffffff;
+  font-size: 13px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0%;
+  text-decoration: none;
+  font-weight: 400;
+  text-align: left;
+  text-wrap: nowrap;
+  width: auto;
+  height: auto;
+}
+
+.frame-69_129-351 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: auto;
+  padding: 22px 28px;
+  background: var(--surface-700, #2a2a2a);
+  border-radius: 10px;
+  margin-bottom: 24px;
+  grid-column: 2;
+  grid-row: 2;
+}
+.rectangle-32_129-352 {
+  display: none;
+}
+
+.frame-68_129-353 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  gap: 18px;
+}
+.text-publicado-el-16-10-2025_129-354 {
+  position: relative;
+  display: flex;
+  color: var(--gray-200, #999);
+  font-size: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0%;
+  text-decoration: none;
+  font-weight: 275;
+  text-align: right;
+  text-wrap: nowrap;
+  width: 100%;
+  height: auto;
+  justify-content: flex-end;
+}
+
+.frame-67_129-355 {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  gap: 12px;
+}
+.text-el-d-a-18-de-octubre-de-2025-me-presentar--en-las-palmas-en-un-evento-que-realizamos-entre-muchos-otros-artistas--el-evento-comenzar--a-las-8-de-la-noche--te-esperamos-_129-356 {
+  position: relative;
+  display: flex;
+  color: #ffffff;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0%;
+  text-decoration: none;
+  font-weight: 300;
+  text-align: left;
+  text-wrap: wrap;
+  width: 100%;
+  height: auto;
+  line-height: 1.6;
+}
+
+.text-concierto-en-las-palmas_129-357 {
+  position: relative;
+  display: flex;
+  color: #4a9eff;
+  font-size: 18px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0%;
+  text-decoration: none;
+  font-weight: 500;
+  text-align: left;
+  text-wrap: nowrap;
+  width: 100%;
+  height: auto;
+}
+
+.frame-71_129-360 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: auto;
+  padding: 22px 28px;
+  background: var(--surface-700, #2a2a2a);
+  border-radius: 10px;
+  margin-bottom: 24px;
+  grid-column: 2;
+  grid-row: 3;
+}
+.rectangle-32_129-361 {
+  display: none;
+}
+
+.frame-68_129-362 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  gap: 18px;
+}
+.text-publicado-el-16-10-2025_129-363 {
+  position: relative;
+  display: flex;
+  color: var(--gray-200, #999);
+  font-size: 12px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0%;
+  text-decoration: none;
+  font-weight: 275;
+  text-align: right;
+  text-wrap: nowrap;
+  width: 100%;
+  height: auto;
+  justify-content: flex-end;
+}
+
+.frame-67_129-364 {
+  position: relative;
+  display: flex;
+  flex-direction: column-reverse;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  gap: 12px;
+}
+.text-el-d-a-18-de-octubre-de-2025-me-presentar--en-las-palmas-en-un-evento-que-realizamos-entre-muchos-otros-artistas--el-evento-comenzar--a-las-8-de-la-noche--te-esperamos-_129-365 {
+  position: relative;
+  display: flex;
+  color: #ffffff;
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0%;
+  text-decoration: none;
+  font-weight: 300;
+  text-align: left;
+  text-wrap: wrap;
+  width: 100%;
+  height: auto;
+  line-height: 1.6;
+}
+
+.text-concierto-en-las-palmas_129-366 {
+  position: relative;
+  display: flex;
+  color: #4a9eff;
+  font-size: 18px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0%;
+  text-decoration: none;
+  font-weight: 500;
+  text-align: left;
+  text-wrap: nowrap;
+  width: 100%;
+  height: auto;
+}
+
+.frame-72_129-369 {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: auto;
+  padding: 22px 28px;
+  background: var(--surface-700, #2a2a2a);
+  border-radius: 10px;
+  margin-bottom: 24px;
+  grid-column: 2;
+  grid-row: 4;
+}
+.rectangle-33_129-370 {
+  display: none;
+}
+
+.frame-70_129-371 {
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+}
+.text-circles--demo-_129-374 {
+  position: relative;
+  display: flex;
+  color: #4a9eff;
+  font-size: 18px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0%;
+  text-decoration: none;
+  font-weight: 500;
+  text-align: left;
+  text-wrap: nowrap;
+  width: 100%;
+  height: auto;
+}
+
+/* Grid positioning for sidebar */
+.frame-62_129-288 {
+  grid-column: 1;
+  grid-row: 1 / span 10;
+  align-self: start;
+}
+
+/* Contenedor del lado derecho - Feed de eventos */
+.text-eventos-y-canciones_129-376 {
+  position: relative;
+  display: block;
+  color: #ffffff;
+  font-size: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  letter-spacing: 0%;
+  text-decoration: none;
+  font-weight: 500;
+  text-align: left;
+  text-wrap: nowrap;
+  width: 100%;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  grid-column: 2;
+  grid-row: 1;
+  order: 1;
+}
+
+.frame-69_129-351,
+.frame-71_129-360,
+.frame-72_129-369 {
+  grid-column: 2;
+}
+
+.frame-69_129-351 {
+  grid-row: 2;
+  order: 2;
+}
+
+.frame-71_129-360 {
+  grid-row: 3;
+  order: 3;
+}
+
+.frame-72_129-369 {
+  grid-row: 4;
+  order: 4;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .perfil-de-artista_129-277 {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    gap: 24px;
+  }
+  
+  .frame-62_129-288 {
+    position: relative;
+    top: 0;
+    width: 100%;
+    grid-column: 1;
+    grid-row: auto;
+  }
+  
+  .text-eventos-y-canciones_129-376,
+  .frame-69_129-351,
+  .frame-71_129-360,
+  .frame-72_129-369 {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
