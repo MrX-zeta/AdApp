@@ -7,6 +7,6 @@ interface SocialMediaRepository {
     fun create(SM: SocialMedia)
     fun edit(SM: SocialMedia)
     fun delete(id: SocialMediaId)
-    fun getAllSM(): MutableList<SocialMedia>
+    fun getAllSM(): List<SocialMedia>
     fun getOneById(id: SocialMediaId): SocialMedia?
 }
