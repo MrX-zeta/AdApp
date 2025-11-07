@@ -2,7 +2,6 @@ package com.adapp.backend.Artist.Infrastructure.Repositories
 
 import com.adapp.backend.Artist.Domain.Models.Artist
 import com.adapp.backend.Artist.Domain.Repositories.ArtistRepository
-import com.adapp.backend.User.Domain.Models.User
 import com.adapp.backend.User.Domain.Models.UserId
 
 class InMemoryArtistRepository : ArtistRepository {
