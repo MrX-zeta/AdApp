@@ -33,7 +33,11 @@
 				¿Olvidaste tu contraseña?
 			</div>
 
-			<button type="submit" class="primary" [disabled]="form.invalid">Login</button>
+			<div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+
+			<button type="submit" class="primary" [disabled]="form.invalid || isLoading">
+				{{ isLoading ? 'Iniciando sesión...' : 'Login' }}
+			</button>
 
 			<div class="register-hint">
 				¿No tienes una cuenta? <a routerLink="../register" class="link">Regístrate</a>
