@@ -1,10 +1,6 @@
 package com.adapp.backend
 
-import com.adapp.examples.configureDatabases
-import com.adapp.examples.configureFrameworks
-import com.adapp.examples.configureRouting
-import com.adapp.examples.configureSecurity
-import com.adapp.examples.configureSerialization
+import com.adapp.backend.Shared.Infrastructure.Plugins.configureSerialization
 import com.adapp.backend.User.Infrastructure.Routes.configureRouting as configureUserRouting
 import com.adapp.backend.Artist.Infrastructure.Routes.configureArtistRouting as configureArtistRouting
 
@@ -19,11 +15,7 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
-    configureSecurity()
-    configureFrameworks()
     configureSerialization()
-    configureDatabases()
-    configureRouting()
     configureUserRouting()
     configureArtistRouting()
 }
