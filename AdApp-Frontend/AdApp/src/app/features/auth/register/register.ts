@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -9,11 +11,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class RegisterComponent implements OnInit { 
 
-  protected hide = [true, true]; 
+  protected hide = [true, true];
+  errorMessage: string = '';
+  isLoading: boolean = false;
 
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
     
@@ -40,10 +48,26 @@ export class RegisterComponent implements OnInit {
     const { username, email, userType, password, confirmPassword } = this.form.getRawValue();
     
     if (password !== confirmPassword) {
-      console.error("Las contraseñas no coinciden.");
+      this.errorMessage = "Las contraseñas no coinciden.";
       return;
     }
+
+    this.isLoading = true;
+    this.errorMessage = '';
     
-    console.log('Registering new user with', { username, email, userType, password });
+    this.authService.register({ username, email, userType, password }).subscribe({
+      next: (response) => {
+        console.log('Registro exitoso:', response);
+        this.router.navigate(['/dashboard']);
+      },
+      error: (error) => {
+        console.error('Error en registro:', error);
+        this.errorMessage = error.error?.message || 'Error al registrar. Intenta nuevamente.';
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
+      }
+    });
   }
 }
