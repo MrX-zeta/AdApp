@@ -1,4 +1,4 @@
-package com.adapp.examples
+package com.adapp.backend.Shared.Infrastructure.Plugins
 
 import io.ktor.server.application.*
 import io.ktor.serialization.kotlinx.json.*
@@ -17,8 +17,8 @@ fun Application.configureSerialization() {
     }
 
     install(CORS) {
-        allowHost("localhost:4200")
-        allowHost("127.0.0.1:4200")
+        allowHost("localhost:4200", schemes = listOf("http", "https"))
+        allowHost("127.0.0.1:4200", schemes = listOf("http", "https"))
         allowHeader(HttpHeaders.ContentType)
         allowHeader(HttpHeaders.Authorization)
         allowMethod(HttpMethod.Options)
