@@ -3,6 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
 import { Router } from '@angular/router';
 
+export interface RegisterRequest {
+  username: string;
+  email: string;
+  password: string;
+  userType: string;
+}
+
 export interface LoginRequest {
   email: string;
   password: string;
@@ -35,6 +42,18 @@ export class AuthService {
     if (storedUser) {
       this.currentUserSubject.next(JSON.parse(storedUser));
     }
+  }
+
+  register(data: RegisterRequest): Observable<LoginResponse> {
+    return this.http.post<LoginResponse>(`${this.API_URL}/auth/register`, data)
+      .pipe(
+        tap(response => {
+          // Guardar token y usuario automáticamente después del registro
+          localStorage.setItem('token', response.token);
+          localStorage.setItem('currentUser', JSON.stringify(response.user));
+          this.currentUserSubject.next(response.user);
+        })
+      );
   }
 
   login(credentials: LoginRequest): Observable<LoginResponse> {
