@@ -17,6 +17,35 @@ fun Application.configureRouting(){
     // ContentNegotiation se instala en configureSerialization() a nivel de aplicación
 
     routing {
+        // Login endpoint
+        post("/auth/login"){
+            val credentials = call.receive<LoginRequest>()
+            
+            // Buscar usuario por email
+            val allUsers = controller.getAll()
+            val user = allUsers.find { it.correo == credentials.email }
+            
+            if(user == null || user.psswd != credentials.password){
+                call.respond(HttpStatusCode.Unauthorized, mapOf("message" to "Credenciales inválidas"))
+                return@post
+            }
+            
+            // Generar token JWT (por ahora mock)
+            val token = "mock-jwt-token-${user.id}"
+            
+            val response = LoginResponse(
+                token = token,
+                user = UserData(
+                    id = user.id,
+                    nombre = user.nombre,
+                    correo = user.correo,
+                    rol = user.rol
+                )
+            )
+            
+            call.respond(response)
+        }
+
         get("/users"){
             val users = controller.getAll()
             call.respond(users)
@@ -91,6 +120,26 @@ fun Application.configureRouting(){
         }
     }
 }
+
+@Serializable
+private data class LoginRequest(
+    val email: String,
+    val password: String
+)
+
+@Serializable
+private data class LoginResponse(
+    val token: String,
+    val user: UserData
+)
+
+@Serializable
+private data class UserData(
+    val id: Int,
+    val nombre: String,
+    val correo: String,
+    val rol: String
+)
 
 @Serializable
 private data class CreateUserRequest(
