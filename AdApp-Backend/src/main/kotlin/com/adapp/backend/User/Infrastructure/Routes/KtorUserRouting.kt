@@ -25,7 +25,7 @@ fun Application.configureRouting(){
             val allUsers = controller.getAll()
             val user = allUsers.find { it.correo == credentials.email }
             
-            if(user == null || user.psswd != credentials.password){
+            if(user == null || user.contrasena != credentials.password){
                 call.respond(HttpStatusCode.Unauthorized, mapOf("message" to "Credenciales inválidas"))
                 return@post
             }
