@@ -59,8 +59,12 @@
                     Las contraseñas no coinciden.
                 </div>
             </label>
+
+            <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
             
-            <button type="submit" class="primary" [disabled]="form.invalid">Iniciar sesión</button>
+            <button type="submit" class="primary" [disabled]="form.invalid || isLoading">
+                {{ isLoading ? 'Registrando...' : 'Registrarse' }}
+            </button>
 
             <div class="register-hint">
                 ¿Ya tienes una cuenta? <a routerLink="../login" class="link">Login</a>
