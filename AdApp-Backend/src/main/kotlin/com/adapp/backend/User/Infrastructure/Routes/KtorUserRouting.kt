@@ -17,6 +17,47 @@ fun Application.configureRouting(){
     // ContentNegotiation se instala en configureSerialization() a nivel de aplicación
 
     routing {
+        // Register endpoint
+        post("/auth/register"){
+            val registerData = call.receive<RegisterRequest>()
+            
+            // Verificar si el email ya existe
+            val allUsers = controller.getAll()
+            val existingUser = allUsers.find { it.correo == registerData.email }
+            
+            if(existingUser != null){
+                call.respond(HttpStatusCode.Conflict, mapOf("message" to "El correo ya está registrado"))
+                return@post
+            }
+            
+            // Generar ID automáticamente
+            val newId = if(allUsers.isEmpty()) 1 else allUsers.maxOf { it.id } + 1
+            
+            // Crear usuario
+            controller.create(
+                id = newId,
+                name = registerData.username,
+                email = registerData.email,
+                passwd = registerData.password,
+                rol = registerData.userType
+            )
+            
+            // Generar token JWT (mock)
+            val token = "mock-jwt-token-$newId"
+            
+            val response = LoginResponse(
+                token = token,
+                user = UserData(
+                    id = newId,
+                    nombre = registerData.username,
+                    correo = registerData.email,
+                    rol = registerData.userType
+                )
+            )
+            
+            call.respond(HttpStatusCode.Created, response)
+        }
+
         // Login endpoint
         post("/auth/login"){
             val credentials = call.receive<LoginRequest>()
@@ -73,7 +114,13 @@ fun Application.configureRouting(){
 
         post("/user/"){
             val payload = call.receive<CreateUserRequest>()
-            controller.create(payload.id, payload.name, payload.email, payload.password, payload.role)
+            controller.create(
+                id = payload.id,
+                name = payload.name,
+                email = payload.email,
+                passwd = payload.password,
+                rol = payload.role
+            )
             call.respond(HttpStatusCode.Created, mapOf("message" to "User created"))
         }
 
@@ -91,7 +138,14 @@ fun Application.configureRouting(){
 
             val payload = call.receive<EditUserRequest>()
             try{
-                controller.edit(oldId, payload.id, payload.name, payload.email, payload.password, payload.role)
+                controller.edit(
+                    oldId = oldId,
+                    newId = payload.id,
+                    name = payload.name,
+                    email = payload.email,
+                    passwd = payload.password,
+                    rol = payload.role
+                )
                 call.respond(HttpStatusCode.NoContent)
             }catch(e: UserNotFoundError){
                 call.respond(HttpStatusCode.NotFound, mapOf("message" to e.message))
@@ -120,6 +174,14 @@ fun Application.configureRouting(){
         }
     }
 }
+
+@Serializable
+private data class RegisterRequest(
+    val username: String,
+    val email: String,
+    val password: String,
+    val userType: String
+)
 
 @Serializable
 private data class LoginRequest(
