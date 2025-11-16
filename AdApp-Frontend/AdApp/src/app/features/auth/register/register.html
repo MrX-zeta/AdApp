@@ -62,9 +62,7 @@
 
             <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
             
-            <button type="submit" class="primary" [disabled]="form.invalid || isLoading">
-                {{ isLoading ? 'Registrando...' : 'Registrarse' }}
-            </button>
+            <button type="submit" class="primary" [disabled]="form.invalid">Registrarse</button>
 
             <div class="register-hint">
                 ¿Ya tienes una cuenta? <a routerLink="../login" class="link">Login</a>
