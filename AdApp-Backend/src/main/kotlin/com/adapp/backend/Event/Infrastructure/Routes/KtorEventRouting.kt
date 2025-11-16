@@ -20,10 +20,9 @@ fun Application.configureEventRouting() {
     val controller = KtorEventController(repo)
 
     routing {
-
         get("/event") {
             try {
-                call.respond(controller.getAllEvents())
+                call.respond(controller.getAll())
             } catch (e: Exception) {
                 call.respond(HttpStatusCode.InternalServerError, mapOf("message" to (e.message ?: "")))
             }

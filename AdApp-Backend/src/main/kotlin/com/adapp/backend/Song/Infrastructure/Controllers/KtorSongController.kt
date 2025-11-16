@@ -1,21 +1,35 @@
 package com.adapp.backend.Song.Infrastructure.Controllers
 
+import com.adapp.backend.Follower.Domain.Models.FollowerDTO
 import com.adapp.backend.Song.Domain.Models.Song
 import com.adapp.backend.Song.Domain.Models.SongId
 import com.adapp.backend.Song.Domain.Models.SongTitle
 import com.adapp.backend.Song.Domain.Repositories.SongRepository
 import com.adapp.backend.Song.Domain.Exceptions.SongNotFoundError
+import com.adapp.backend.Song.Domain.Models.SongDTO
 import com.adapp.backend.Song.Domain.Models.SongUrl
 import com.adapp.backend.User.Domain.Models.UserId
 
 class KtorSongController(private val songRepo: SongRepository) {
-    fun getAll(): List<Map<String, Any>> {
-        return songRepo.getAllSongs().map { it.mapToPrimitives() }
+    fun getAll(): List<SongDTO> {
+        return songRepo.getAllSongs().map { song ->
+            SongDTO(
+                id = song.SongId.value,
+                artistId = song.artistId.value,
+                title = song.title.value,
+                url = song.url.value
+            )
+        }
     }
 
-    fun getOneById(id: Int): Map<String, Any> {
+    fun getOneById(id: Int): SongDTO {
         val song = songRepo.getOneById(SongId(id)) ?: throw SongNotFoundError("Song not found")
-        return song.mapToPrimitives()
+        return SongDTO(
+            id = song.SongId.value,
+            artistId = song.artistId.value,
+            title = song.title.value,
+            url = song.url.value
+        )
     }
 
     fun create(id: Int, artistId: Int, title: String, url: String) {
