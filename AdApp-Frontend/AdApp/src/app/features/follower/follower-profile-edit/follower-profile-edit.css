@@ -43,7 +43,50 @@
     margin-right: 20px;
 }
 
-.user-info h3 {
+.user-info .user-name-input {
+    margin: 0 0 4px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #DBE3FF;
+    background-color: #2D3A58;
+    border: 1px solid #4A567D;
+    border-radius: 6px;
+    padding: 4px 8px;
+    width: 100%; 
+    box-sizing: border-box; 
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.user-info .user-name-input:focus {
+    outline: none; 
+    border-color: #8FB3FF; 
+    box-shadow: 0 0 0 2px rgba(143, 179, 255, 0.4);
+}
+
+.save-button {
+    display: block;
+    width: 250px; 
+    margin: 0 auto 40px auto; 
+    padding: 12px 24px;
+    background-color: #8FB3FF;
+    color: #0A0D17; 
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.save-button:hover {
+    background-color: #6C9AF5;
+}
+
+.save-button:active {
+    transform: translateY(1px);
+}
+
+.user-info h3 { 
     margin: 0 0 4px;
     font-size: 24px;
     font-weight: 700;
