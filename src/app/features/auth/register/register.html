@@ -1,0 +1,74 @@
+<div class="auth-layout">
+    <div class="auth-bg">
+        <img class="bg-img" src="/media/logos/fondo_registro.jpg" alt="background" />
+    </div>
+
+    <div class="auth-panel">
+        <div class="brand">
+            <img src="/media/logos/AddApp_a.png" alt="AdApp logo" class="brand-logo" />
+            <h2 class="brand-title">Registro</h2>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="submit()" novalidate class="form">
+            
+            <label class="field">
+                <input type="text" formControlName="username" placeholder="Nombre de usuario" />
+                <div class="error" *ngIf="form.controls['username'].touched && form.controls['username'].invalid">
+                    El nombre de usuario es obligatorio.
+                </div>
+            </label>
+
+            <label class="field">
+                <input type="email" formControlName="email" placeholder="Correo" />
+                <div class="error" *ngIf="form.controls['email'].touched && form.controls['email'].invalid">
+                    Ingresa un correo válido.
+                </div>
+            </label>
+
+            <div class="field">
+                <select formControlName="userType" class="select-field">
+                    <option value="" disabled selected>Tipo de usuario</option>
+                    <option value="artist">Artista</option>
+                    <option value="follower">Seguidor</option>
+                </select>
+                <div class="error" *ngIf="form.controls['userType'].touched && form.controls['userType'].invalid">
+                    Selecciona un tipo de usuario.
+                </div>
+            </div>
+
+            <label class="field">
+                <div class="password">
+                    <input [type]="hide[0] ? 'password' : 'text'" formControlName="password" placeholder="Contraseña" />
+                    <button type="button" class="toggle" (click)="toggleVisibility(0)" aria-label="Mostrar/ocultar contraseña">
+                        <img [src]="hide[0] ? '/media/icons/ojo.png' : '/media/icons/vista.png'" alt="toggle" />
+                    </button>
+                </div>
+                <div class="error" *ngIf="form.controls['password'].touched && form.controls['password'].invalid">
+                    La contraseña debe tener al menos 6 caracteres.
+                </div>
+            </label>
+
+            <label class="field">
+                <div class="password">
+                    <input [type]="hide[1] ? 'password' : 'text'" formControlName="confirmPassword" placeholder="confirmar contraseña" />
+                    <button type="button" class="toggle" (click)="toggleVisibility(1)" aria-label="Mostrar/ocultar confirmación de contraseña">
+                        <img [src]="hide[1] ? '/media/icons/ojo.png' : '/media/icons/vista.png'" alt="toggle" />
+                    </button>
+                </div>
+                <div class="error" *ngIf="form.controls['confirmPassword'].touched && form.controls['confirmPassword'].invalid">
+                    Las contraseñas no coinciden.
+                </div>
+            </label>
+
+            <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+            
+            <button type="submit" class="primary" [disabled]="form.invalid || isLoading">
+                {{ isLoading ? 'Registrando...' : 'Registrarse' }}
+            </button>
+
+            <div class="register-hint">
+                ¿Ya tienes una cuenta? <a routerLink="../login" class="link">Login</a>
+            </div>
+        </form>
+    </div>
+</div>

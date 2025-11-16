@@ -1,0 +1,27 @@
+.navbar {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	background: #2A2A2A;
+	backdrop-filter: blur(4px);
+	border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.nav-inner {
+	width: 100%;
+	padding: 8px 16px; 
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.brand img { width: 50px; height: 50px; display: block; }
+
+.links { display: flex; gap: 16px; }
+.links a {
+	color: var(--gray-200);
+	text-decoration: none;
+	font-weight: 500;
+}
+.links a.active { color: var(--blue-300); }
+.links a:hover { color: var(--white); }
