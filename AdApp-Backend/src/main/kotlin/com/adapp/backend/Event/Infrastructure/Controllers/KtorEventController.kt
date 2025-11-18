@@ -2,6 +2,7 @@ package com.adapp.backend.Event.Infrastructure.Controllers
 
 import com.adapp.backend.Event.Domain.Exceptions.EventNotFoundError
 import com.adapp.backend.Event.Domain.Models.Event
+import com.adapp.backend.Event.Domain.Models.EventDTO
 import com.adapp.backend.Event.Domain.Models.EventDate
 import com.adapp.backend.Event.Domain.Models.EventDescription
 import com.adapp.backend.Event.Domain.Models.EventId
@@ -13,13 +14,29 @@ import java.util.Date
 
 class KtorEventController(private val eventRepo: EventRepository) {
 
-    fun getAllEvents(): List<Map<String, Any>> {
-        return eventRepo.getAllEvents().map { it.mapToPrimitives() }
+    fun getAll(): List<EventDTO> {
+        return eventRepo.getAllEvents().map { event ->
+            EventDTO(
+                id = event.Event_Id.value,
+                artistId = event.ArtistId.value,
+                title = event.title.title,
+                description = event.description.description,
+                eventDate = event.Event_Date.date.time,
+                status = event.Status.status
+            )
+        }
     }
 
-    fun getOneById(id: Int): Map<String, Any> {
+    fun getOneById(id: Int): EventDTO {
         val event = eventRepo.getOneById(EventId(id)) ?: throw EventNotFoundError("Event not found")
-        return event.mapToPrimitives()
+        return EventDTO(
+            id = event.Event_Id.value,
+            artistId = event.ArtistId.value,
+            title = event.title.title,
+            description = event.description.description,
+            eventDate = event.Event_Date.date.time,
+            status = event.Status.status
+        )
     }
 
     fun create(id: Int, artistId: Int, title: String, eventDate: Date, description: String, status: String){
