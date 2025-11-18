@@ -16,6 +16,12 @@ interface ArtistResponse {
   description?: string;
 }
 
+interface SocialMediaResponse {
+  SocialMediaId: number;
+  artistId: number;
+  url: string;
+}
+
 @Component({
   selector: 'app-artist-edit',
   standalone: false,
@@ -84,22 +90,80 @@ export class ArtistEdit implements OnInit {
   }
 
   loadArtist(id: number): void {
+    console.log('=== LOADING ARTIST DATA ===');
+    console.log('Loading artist with ID:', id);
     this.isLoading = true;
+
+    // Cargar datos básicos del artista
     this.apiService.get<ArtistResponse>(`/artist/${id}/`).subscribe({
       next: (artist) => {
-        console.log('Artist loaded:', artist);
-        this.form.patchValue({
-          name: artist.nombre,
-          description: artist.description || '',
-          instagram: artist.instagram || '',
-          facebook: artist.facebook || '',
-          phone: artist.contactNum,
-          email: artist.correo,
+        console.log('=== ARTIST DATA RECEIVED ===');
+        console.log('Raw artist data:', artist);
+        
+        // Cargar redes sociales desde /sm
+        this.apiService.get<SocialMediaResponse[]>('/sm').subscribe({
+          next: (socialMediaList) => {
+            console.log('=== SOCIAL MEDIA DATA RECEIVED ===');
+            console.log('All social media:', socialMediaList);
+            
+            // Filtrar redes sociales del artista actual
+            const artistSocialMedia = socialMediaList.filter(sm => sm.artistId === id);
+            console.log('Artist social media:', artistSocialMedia);
+            
+            // Extraer Instagram y Facebook con prefijo
+            const instagramEntry = artistSocialMedia.find(sm => 
+              sm.url.toLowerCase().startsWith('instagram:')
+            );
+            const instagram = instagramEntry 
+              ? instagramEntry.url.replace(/^instagram:/i, '') 
+              : '';
+            
+            const facebookEntry = artistSocialMedia.find(sm => 
+              sm.url.toLowerCase().startsWith('facebook:')
+            );
+            const facebook = facebookEntry 
+              ? facebookEntry.url.replace(/^facebook:/i, '') 
+              : '';
+            
+            console.log('Instagram entry:', instagramEntry);
+            console.log('Extracted Instagram:', instagram);
+            console.log('Facebook entry:', facebookEntry);
+            console.log('Extracted Facebook:', facebook);
+            
+            // Actualizar el formulario con todos los datos
+            this.form.patchValue({
+              name: artist.nombre || '',
+              description: artist.description || '',
+              instagram: instagram,
+              facebook: facebook,
+              phone: artist.contactNum || '',
+              email: artist.correo || '',
+            });
+            
+            console.log('Form after patchValue:', this.form.value);
+            this.isLoading = false;
+          },
+          error: (error) => {
+            console.error('=== ERROR LOADING SOCIAL MEDIA ===');
+            console.error('Error details:', error);
+            
+            // Aún así llenar los datos básicos del artista
+            this.form.patchValue({
+              name: artist.nombre || '',
+              description: artist.description || '',
+              instagram: '',
+              facebook: '',
+              phone: artist.contactNum || '',
+              email: artist.correo || '',
+            });
+            
+            this.isLoading = false;
+          }
         });
-        this.isLoading = false;
       },
       error: (error) => {
-        console.error('Error loading artist:', error);
+        console.error('=== ERROR LOADING ARTIST ===');
+        console.error('Error details:', error);
         this.isLoading = false;
         alert('Error al cargar el artista');
       }
