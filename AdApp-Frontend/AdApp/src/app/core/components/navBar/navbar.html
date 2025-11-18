@@ -6,7 +6,7 @@
 
 		<nav class="links">
 			<a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
-			<a routerLink="/artist/edit" routerLinkActive="active">Perfil</a>
+			<a [routerLink]="getProfileLink()" routerLinkActive="active">Perfil</a>
 		</nav>
 	</div>
 </header>

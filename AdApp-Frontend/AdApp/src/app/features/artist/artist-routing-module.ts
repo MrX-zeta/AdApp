@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'profile' },
   { path: 'profile', component: ArtistProfile },
   { path: 'edit', component: ArtistEdit },
+  { path: 'edit/:id', component: ArtistEdit },
 ];
 
 @NgModule({
