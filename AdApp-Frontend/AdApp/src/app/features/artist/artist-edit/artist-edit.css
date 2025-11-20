@@ -61,7 +61,11 @@
 .col h3 { color: #4a9eff; font-size: 13px; letter-spacing:.5px; text-transform: uppercase; margin: 10px 0 18px; }
 .col { padding-top: 10px; }
 
-.field { display: grid; gap: 8px; margin-bottom: 16px; }
+.field {
+	display: grid; 
+	gap: 8px;
+	margin-bottom: 24px;
+}
 .field span { color: var(--gray-200); font-size: 12px; }
 .field input, .field textarea {
 	width: 100%;
@@ -71,7 +75,13 @@
 	background: #1f1f1f;
 	color: var(--white);
 }
-.field textarea { resize: vertical; min-height: 130px; }
+.field textarea { 
+	resize: none;
+	height: 130px;
+	min-height: 130px;
+	max-height: 130px;
+	overflow-y: auto;
+}
 .field.with-icon { grid-template-columns: 24px 1fr; align-items: center; gap: 14px; }
 .field.with-icon img { width: 18px; height: 18px; opacity: .85; }
 
