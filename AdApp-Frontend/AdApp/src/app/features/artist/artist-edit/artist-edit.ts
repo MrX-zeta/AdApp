@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 
@@ -34,9 +34,22 @@ export class ArtistEdit implements OnInit {
   eventForm!: FormGroup;
   showSongModal = false;
   showEventModal = false;
+  showSuccessModal = false;
   songFile?: File;
   artistId?: number;
   isLoading = false;
+  songs: any[] = [];
+  events: any[] = [];
+  editingSongId?: number;
+  editingEventId?: number;
+
+  phoneValidator(control: AbstractControl): ValidationErrors | null {
+    if (!control.value) {
+      return null; // Allow empty
+    }
+    const phonePattern = /^[0-9\s\-\+\(\)]{7,}$/;
+    return phonePattern.test(control.value) ? null : { invalidPhone: true };
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -49,7 +62,7 @@ export class ArtistEdit implements OnInit {
       description: ['', [Validators.required, Validators.maxLength(240)]],
       instagram: [''],
       facebook: [''],
-      phone: [''],
+      phone: ['', this.phoneValidator.bind(this)],
       email: ['', [Validators.email]],
     });
 
@@ -141,6 +154,8 @@ export class ArtistEdit implements OnInit {
             });
             
             console.log('Form after patchValue:', this.form.value);
+            this.loadSongs(id);
+            this.loadEvents(id);
             this.isLoading = false;
           },
           error: (error) => {
@@ -170,11 +185,40 @@ export class ArtistEdit implements OnInit {
     });
   }
 
+  loadSongs(artistId: number): void {
+    this.apiService.get<any[]>('/songs').subscribe({
+      next: (songs) => {
+        this.songs = songs.filter(s => s.artistId === artistId);
+        console.log('Songs loaded:', this.songs);
+      },
+      error: (error) => {
+        console.error('Error loading songs:', error);
+      }
+    });
+  }
+
+  loadEvents(artistId: number): void {
+    this.apiService.get<any[]>('/events').subscribe({
+      next: (events) => {
+        this.events = events.filter(e => e.artistId === artistId);
+        console.log('Events loaded:', this.events);
+      },
+      error: (error) => {
+        console.error('Error loading events:', error);
+      }
+    });
+  }
+
   addSong() {
+    this.editingSongId = undefined;
+    this.songForm.reset();
+    this.songFile = undefined;
     this.showSongModal = true;
   }
 
   publishEvent() {
+    this.editingEventId = undefined;
+    this.eventForm.reset();
     this.showEventModal = true;
   }
 
@@ -219,8 +263,10 @@ export class ArtistEdit implements OnInit {
       next: (response) => {
         console.log('Artist updated successfully', response);
         this.isLoading = false;
-        alert('Artista actualizado exitosamente');
-        this.router.navigate(['/artist/profile']);
+        this.showSuccessModal = true;
+        setTimeout(() => {
+          this.router.navigate(['/artist/profile']);
+        }, 2000);
       },
       error: (error) => {
         console.error('Error updating artist:', error);
@@ -241,6 +287,7 @@ export class ArtistEdit implements OnInit {
   // Modal helpers
   closeSong() { this.showSongModal = false; this.songForm.reset(); this.songFile = undefined; }
   closeEvent() { this.showEventModal = false; this.eventForm.reset(); }
+  closeSuccessModal() { this.showSuccessModal = false; this.router.navigate(['/artist/profile']); }
 
   onSongFileSelected(evt: Event) {
     const input = evt.target as HTMLInputElement;
@@ -251,16 +298,135 @@ export class ArtistEdit implements OnInit {
   }
 
   submitSong() {
-    if (this.songForm.invalid || !this.songFile) { this.songForm.markAllAsTouched(); return; }
-    const payload = { title: this.songForm.get('title')!.value, file: this.songFile };
-    console.log('Subir canción', payload);
-    this.closeSong();
+    if (this.editingSongId) {
+      // Editar canción existente
+      if (this.songForm.invalid) { this.songForm.markAllAsTouched(); return; }
+      const payload = { 
+        title: this.songForm.get('title')!.value,
+        artistId: this.artistId
+      };
+      this.isLoading = true;
+      this.apiService.put(`/songs/${this.editingSongId}/`, payload).subscribe({
+        next: () => {
+          console.log('Canción actualizada');
+          const song = this.songs.find(s => s.id === this.editingSongId);
+          if (song) song.title = payload.title;
+          this.isLoading = false;
+          this.closeSong();
+        },
+        error: (error) => {
+          console.error('Error al actualizar canción:', error);
+          alert('Error al actualizar la canción');
+          this.isLoading = false;
+        }
+      });
+    } else {
+      // Crear nueva canción
+      if (this.songForm.invalid || !this.songFile) { this.songForm.markAllAsTouched(); return; }
+      const payload = { 
+        title: this.songForm.get('title')!.value, 
+        file: this.songFile,
+        artistId: this.artistId
+      };
+      console.log('Subir canción', payload);
+      this.closeSong();
+    }
   }
 
   submitEvent() {
     if (this.eventForm.invalid) { this.eventForm.markAllAsTouched(); return; }
-  const payload = this.eventForm.getRawValue(); // título + descripción
-    console.log('Publicar evento', payload);
-    this.closeEvent();
+    
+    if (this.editingEventId) {
+      // Editar evento existente
+      const payload = {
+        title: this.eventForm.get('title')!.value,
+        description: this.eventForm.get('description')!.value,
+        artistId: this.artistId
+      };
+      this.isLoading = true;
+      this.apiService.put(`/events/${this.editingEventId}/`, payload).subscribe({
+        next: () => {
+          console.log('Evento actualizado');
+          const event = this.events.find(e => e.id === this.editingEventId);
+          if (event) {
+            event.title = payload.title;
+            event.description = payload.description;
+          }
+          this.isLoading = false;
+          this.closeEvent();
+        },
+        error: (error) => {
+          console.error('Error al actualizar evento:', error);
+          alert('Error al actualizar el evento');
+          this.isLoading = false;
+        }
+      });
+    } else {
+      // Crear nuevo evento
+      const payload = {
+        title: this.eventForm.get('title')!.value,
+        description: this.eventForm.get('description')!.value,
+        artistId: this.artistId
+      };
+      console.log('Publicar evento', payload);
+      this.closeEvent();
+    }
+  }
+
+  editSong(songId: number) {
+    const song = this.songs.find(s => s.id === songId);
+    if (song) {
+      this.editingSongId = songId;
+      this.songForm.patchValue({ title: song.title });
+      this.showSongModal = true;
+    }
+  }
+
+  editEvent(eventId: number) {
+    const event = this.events.find(e => e.id === eventId);
+    if (event) {
+      this.editingEventId = eventId;
+      this.eventForm.patchValue({ 
+        title: event.title,
+        description: event.description 
+      });
+      this.showEventModal = true;
+    }
+  }
+
+  deleteSong(songId: number) {
+    if (confirm('¿Estás seguro que quieres eliminar esta canción?')) {
+      this.isLoading = true;
+      this.apiService.delete(`/songs/${songId}/`).subscribe({
+        next: () => {
+          console.log('Canción eliminada');
+          this.songs = this.songs.filter(s => s.id !== songId);
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error('Error al eliminar canción:', error);
+          alert('Error al eliminar la canción');
+          this.isLoading = false;
+        }
+      });
+    }
+  }
+
+  deleteEvent(eventId: number) {
+    if (confirm('¿Estás seguro que quieres eliminar este evento?')) {
+      this.isLoading = true;
+      this.apiService.delete(`/events/${eventId}/`).subscribe({
+        next: () => {
+          console.log('Evento eliminado');
+          this.events = this.events.filter(e => e.id !== eventId);
+          this.isLoading = false;
+        },
+        error: (error) => {
+          console.error('Error al eliminar evento:', error);
+          alert('Error al eliminar el evento');
+          this.isLoading = false;
+        }
+      });
+    }
   }
 }

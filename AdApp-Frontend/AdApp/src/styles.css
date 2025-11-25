@@ -4,7 +4,9 @@
   --surface-700: #2a2a2a; 
   --bg-900: #1a1a1a;     
   --blue-500: #002266;
-  --blue-300: #2B78D4
+  --blue-400: #4A9EFF;
+  --blue-300: #2B78D4;
+  --red-100: #ff9c9c
   ;
   --gradient-blue: linear-gradient(90deg, var(--blue-500), var(--blue-300));
   --success-500: #2ecc71; 

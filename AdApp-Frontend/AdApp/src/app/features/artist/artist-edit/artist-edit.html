@@ -41,10 +41,15 @@
 						<img src="/media/icons/facebook.png" alt="Facebook" />
 						<input formControlName="facebook" placeholder="Facebook" />
 					</label>
-					<label class="field with-icon">
-						<img src="/media/icons/llamada.png" alt="Teléfono" />
+				<div class="field with-icon">
+					<img src="/media/icons/llamada.png" alt="Teléfono" />
+					<div class="field-wrapper">
 						<input formControlName="phone" placeholder="Teléfono" />
-					</label>
+						<span class="error-message" *ngIf="form.get('phone')?.invalid && form.get('phone')?.touched">
+							Formato de teléfono inválido
+						</span>
+					</div>
+				</div>
 					<label class="field with-icon">
 						<img src="/media/icons/gmail.png" alt="Email" />
 						<input formControlName="email" placeholder="Correo" />
@@ -62,60 +67,41 @@
 	<aside class="feed">
 		<h3>Eventos y canciones</h3>
 
-		<article class="post">
+		<article class="post" *ngFor="let event of events">
 			<header>
-				<a class="title" href="#">Concierto en Las Palmas</a>
-				<time>Publicado el 18/10/2025</time>
+				<span class="title">{{ event.title || 'Sin título' }}</span>
+				<time>Publicado el {{ event.date | date: 'dd/MM/yyyy' }}</time>
 			</header>
-			<p>
-				El día 18 de octubre de 2025 me presentaré en Las Palmas en un evento que realizamos entre
-				muchos otros artistas. El evento comenzará a las 8 de la noche. Te esperamos.
-			</p>
+			<p>{{ event.description }}</p>
 			<div class="post-actions">
-				<button class="icon" title="Editar"><img src="/media/icons/boton-editar.png" alt="edit" /></button>
-				<button class="icon" title="Eliminar"><img src="/media/icons/basura.png" alt="delete" /></button>
+				<button class="icon" type="button" title="Editar" (click)="editEvent(event.id)">
+					<img src="/media/icons/boton-editar.png" alt="edit" />
+				</button>
+				<button class="icon" type="button" title="Eliminar" (click)="deleteEvent(event.id)">
+					<img src="/media/icons/basura.png" alt="delete" />
+				</button>
 			</div>
 		</article>
 
-		<article class="post">
+		<article class="post" *ngFor="let song of songs">
 			<header>
-				<a class="title" href="#">Circles (demo)</a>
-				<time>Publicado el 18/10/2025</time>
+				<span class="title">{{ song.title || 'Sin título' }}</span>
+				<time>Publicado el {{ song.date | date: 'dd/MM/yyyy' }}</time>
 			</header>
-			<p>Canción demo subida para escuchas tempranas.</p>
+			<p>{{ song.description || 'Canción subida' }}</p>
 			<div class="post-actions">
-				<button class="icon" title="Editar"><img src="/media/icons/boton-editar.png" alt="edit" /></button>
-				<button class="icon" title="Eliminar"><img src="/media/icons/basura.png" alt="delete" /></button>
+				<button class="icon" type="button" title="Editar" (click)="editSong(song.id)">
+					<img src="/media/icons/boton-editar.png" alt="edit" />
+				</button>
+				<button class="icon" type="button" title="Eliminar" (click)="deleteSong(song.id)">
+					<img src="/media/icons/basura.png" alt="delete" />
+				</button>
 			</div>
 		</article>
-        		<article class="post">
-			<header>
-				<a class="title" href="#">Concierto en Las Palmas</a>
-				<time>Publicado el 18/10/2025</time>
-			</header>
-			<p>
-				El día 18 de octubre de 2025 me presentaré en Las Palmas en un evento que realizamos entre
-				muchos otros artistas. El evento comenzará a las 8 de la noche. Te esperamos.
-			</p>
-			<div class="post-actions">
-				<button class="icon" title="Editar"><img src="/media/icons/boton-editar.png" alt="edit" /></button>
-				<button class="icon" title="Eliminar"><img src="/media/icons/basura.png" alt="delete" /></button>
-			</div>
-		</article>
-        		<article class="post">
-			<header>
-				<a class="title" href="#">Concierto en Las Palmas</a>
-				<time>Publicado el 18/10/2025</time>
-			</header>
-			<p>
-				El día 18 de octubre de 2025 me presentaré en Las Palmas en un evento que realizamos entre
-				muchos otros artistas. El evento comenzará a las 8 de la noche. Te esperamos.
-			</p>
-			<div class="post-actions">
-				<button class="icon" title="Editar"><img src="/media/icons/boton-editar.png" alt="edit" /></button>
-				<button class="icon" title="Eliminar"><img src="/media/icons/basura.png" alt="delete" /></button>
-			</div>
-		</article>
+
+		<div class="empty-state" *ngIf="events.length === 0 && songs.length === 0">
+			<p>No hay eventos ni canciones publicadas aún.</p>
+		</div>
 	</aside>
 
 	<div class="modal-backdrop" *ngIf="showSongModal" (click)="closeSong()"></div>
@@ -165,4 +151,15 @@
 			</footer>
 		</form>
 		</div>
+
+	<div class="modal-backdrop" *ngIf="showSuccessModal" (click)="closeSuccessModal()"></div>
+	<div class="modal success-modal" *ngIf="showSuccessModal" role="dialog" aria-modal="true">
+		<header class="modal-header">
+			<h4>¡Cambios guardados!</h4>
+		</header>
+		<div class="modal-body success-body">
+			<div class="success-icon">✓</div>
+			<p>Tu información ha sido actualizada exitosamente.</p>
+		</div>
+	</div>
 </div>

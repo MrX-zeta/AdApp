@@ -74,6 +74,8 @@
 	border: 1px solid #3a3a3a;
 	background: #1f1f1f;
 	color: var(--white);
+	font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+	font-size: 12px;
 }
 .field textarea { 
 	resize: none;
@@ -114,11 +116,12 @@
 .feed::-webkit-scrollbar-thumb { background: #3a3a3a; border-radius: 6px; }
 .feed::-webkit-scrollbar-track { background: transparent; }
 .feed h3 { color: #ffffff; font-weight: 600; margin: 10px 0 16px; }
-.post { background: #222222; border: 1px solid #333333; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
-.post header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.post .title { color: var(--blue-300); text-decoration: none; font-weight: 600; }
+.post { background: #222222; border: 1px solid #333333; border-radius: 10px; padding: 16px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px; transition: all 0.3s ease; }
+.post:hover { border-color: #4a9eff; box-shadow: 0 0 12px rgba(74, 158, 255, 0.1); }
+.post header { display: flex; flex-direction: column; gap: 4px; margin-bottom: 0; }
+.post .title { color: var(--blue-300); text-decoration: none; font-weight: 600; font-size: 15px; }
 .post time { color: #7f90b8; font-size: 12px; }
-.post p { color: #ffffff; font-size: 14px; margin: 0; }
+.post p { color: #ffffff; font-size: 14px; margin: 0; line-height: 1.5; }
 .post-actions { display: flex; gap: 10px; margin-top: 12px; }
 .post-actions .icon { background: transparent; border: 0; padding: 6px; cursor: pointer; }
 .post-actions img { width: 18px; height: 18px; opacity: .85; }
@@ -173,3 +176,56 @@
 }
 .modal-body input[type="file"]:hover::file-selector-button,
 .modal-body input[type="file"]:hover::-webkit-file-upload-button { filter: brightness(1.06); }
+
+.field-wrapper {
+	display: grid;
+	gap: 4px;
+	width: 100%;
+	min-height: 53px;
+}
+
+.field-wrapper .error-message {
+	color: var(--red-100);
+	font-size: 11px;
+	margin-top: -2px;
+}
+
+.success-modal {
+	text-align: center;
+}
+
+.success-modal .modal-header {
+	border-bottom: none;
+	padding-bottom: 0;
+}
+
+.success-modal .modal-header h4 {
+	color: var(--success-500);
+}
+
+.success-body {
+	padding: 24px 16px ;
+	display: flex ;
+	flex-direction: column ;
+	align-items: center ;
+	gap: 16px ;
+}
+
+.success-icon {
+	width: 60px;
+	height: 60px;
+	background: var(--gradient-success);
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 36px;
+	color: #fff;
+	font-weight: bold;
+}
+
+.success-body p {
+	color: #ffffff;
+	font-size: 14px;
+	margin: 0;
+}
