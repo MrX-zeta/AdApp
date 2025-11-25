@@ -66,4 +66,14 @@ class KtorSocialMediaController(private val SMRepo: SocialMediaRepository) {
         SMRepo.delete(SocialMediaId(id))
     }
 
+    fun getByArtistId(artistId: Int): List<SocialMediaDTO> {
+        return SMRepo.getByArtistId(UserId(artistId)).map { SM ->
+            SocialMediaDTO(
+                id = SM.SocialMediaId.value,
+                artistId = SM.artistId.value,
+                url = SM.url.value
+            )
+        }
+    }
+
 }

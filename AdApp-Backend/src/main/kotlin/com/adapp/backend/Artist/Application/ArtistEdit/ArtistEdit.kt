@@ -3,6 +3,7 @@ package com.adapp.backend.Artist.Application.ArtistEdit
 import com.adapp.backend.Artist.Domain.Models.Artist
 import com.adapp.backend.Artist.Domain.Models.ArtistContactNum
 import com.adapp.backend.Artist.Domain.Models.ArtistFotoUrl
+import com.adapp.backend.Artist.Domain.Models.ArtistDescription
 import com.adapp.backend.Artist.Domain.Repositories.ArtistRepository
 import com.adapp.backend.User.Domain.Exceptions.UserNotFoundError
 import com.adapp.backend.User.Domain.Models.UserEmail
@@ -19,7 +20,8 @@ class ArtistEdit(private val artistRepo: ArtistRepository) {
         contrasena: String,
         rol: String,
         fotoUrl: String,
-        contactNum: String
+        contactNum: String,
+        description: String = ""
     ){
         val artist = Artist(
             UserId(id),
@@ -28,7 +30,8 @@ class ArtistEdit(private val artistRepo: ArtistRepository) {
             UserPsswd(contrasena),
             UserRol(rol),
             ArtistFotoUrl(fotoUrl),
-            ArtistContactNum(contactNum)
+            ArtistContactNum(contactNum),
+            ArtistDescription(description)
         )
 
         val artistExists = artistRepo.edit(artist)

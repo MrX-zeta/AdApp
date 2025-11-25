@@ -113,7 +113,7 @@
           >
             <use
               xlink:href="#image0_129_285"
-              transform="matrix(0.00180806 0 0 0.00159109 -0.313131 -0.187351)"
+              transform="matrix(0.00180816 0 0 0.00159109 -0.313131 -0.187351)"
             />
           </pattern>
           <image
@@ -237,8 +237,8 @@
           </div>
         </div>
         <div class="frame-74_129-400">
-          <span class="text-mac-miller_129-375">MAC MILLER</span>
-          <span class="text-1-000-seguidores_129-301">1,000 SEGUIDORES</span>
+          <span class="text-mac-miller_129-375">{{ artist.name.toUpperCase() }}</span>
+          <span class="text-1-000-seguidores_129-301">{{ artist.followers.toLocaleString('es-ES') }} SEGUIDORES</span>
         </div>
       </div>
       <div class="line-1_129-303">
@@ -301,7 +301,7 @@
               <line y1="0.5" x2="320" y2="0.5" stroke="#A9A9A9" />
             </svg>
           </div>
-          <span class="text-123-456-0789_129-384">123-456-0789</span>
+          <span class="text-123-456-0789_129-384">{{ artist.phone || 'Sin teléfono' }}</span>
         </div>
         <div class="frame-57_129-385">
           <div class="rectangle-35_129-386">
@@ -347,9 +347,7 @@
               <line y1="0.5" x2="320" y2="0.5" stroke="#A9A9A9" />
             </svg>
           </div>
-          <span class="text-macmiller-gmail-com_129-389"
-            >macmiller&#64;gmail.com</span
-          >
+          <span class="text-macmiller-gmail-com_129-389">{{ artist.email || 'Sin correo' }}</span>
         </div>
         <div class="frame-53_129-390">
           <div class="rectangle-35_129-391">
@@ -395,7 +393,9 @@
               <line y1="0.5" x2="320" y2="0.5" stroke="#A9A9A9" />
             </svg>
           </div>
-          <span class="text-mac-off_129-394">mac_off</span>
+          <a [href]="getInstagramLink()" target="_blank" rel="noopener noreferrer" class="text-mac-off_129-394">
+            {{ formatInstagram() || 'Sin Instagram' }}
+          </a>
         </div>
         <div class="frame-55_129-395">
           <div class="rectangle-35_129-396">
@@ -446,7 +446,9 @@
               <line y1="0.5" x2="320" y2="0.5" stroke="#A9A9A9" />
             </svg>
           </div>
-          <span class="text-mac-miller_129-399">Mac Miller</span>
+          <a [href]="getFacebookLink()" target="_blank" rel="noopener noreferrer" class="text-mac-miller_129-399">
+            {{ artist.facebook || 'Sin Facebook' }}
+          </a>
         </div>
       </div>
     </div>
@@ -455,7 +457,7 @@
       <div class="frame-66_129-402">
         <span
           class="text-m-sico-y-cantante-en-solitario--hip-hop-y-r-b--exploro-el-jazz-_129-404"
-          >Músico y cantante en solitario. Hip-Hop y R&B. Exploro el jazz.</span
+          >{{ artist.description || 'Sin descripción' }}</span
         >
         <div class="line-2_129-405">
           <svg

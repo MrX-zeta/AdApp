@@ -3,6 +3,7 @@ package com.adapp.backend.Artist.Infrastructure.Controllers
 import com.adapp.backend.Artist.Domain.Models.Artist
 import com.adapp.backend.Artist.Domain.Models.ArtistContactNum
 import com.adapp.backend.Artist.Domain.Models.ArtistFotoUrl
+import com.adapp.backend.Artist.Domain.Models.ArtistDescription
 import com.adapp.backend.Artist.Domain.Models.ArtistDTO
 import com.adapp.backend.Artist.Domain.Repositories.ArtistRepository
 import com.adapp.backend.User.Domain.Exceptions.UserNotFoundError
@@ -14,6 +15,7 @@ import com.adapp.backend.User.Domain.Models.UserRol
 
 class KtorArtistController(private val artistRepo: ArtistRepository) {
 
+
     fun getAll(): List<ArtistDTO> {
         return artistRepo.getAllArtists().map { artist ->
             ArtistDTO(
@@ -23,7 +25,8 @@ class KtorArtistController(private val artistRepo: ArtistRepository) {
                 contrasena = artist.contrasena.value,
                 rol = artist.rol.value,
                 fotoUrl = artist.fotoUrlValue(),
-                contactNum = artist.contactNumValue()
+                contactNum = artist.contactNumValue(),
+                description = artist.descriptionValue()
             )
         }
     }
@@ -37,11 +40,12 @@ class KtorArtistController(private val artistRepo: ArtistRepository) {
             contrasena = artist.contrasena.value,
             rol = artist.rol.value,
             fotoUrl = artist.fotoUrlValue(),
-            contactNum = artist.contactNumValue()
+            contactNum = artist.contactNumValue(),
+            description = artist.descriptionValue()
         )
     }
 
-    fun create(id: Int, name: String, email: String, passwd: String, rol: String, fotoUrl: String, contactNum: String) {
+    fun create(id: Int, name: String, email: String, passwd: String, rol: String, fotoUrl: String, contactNum: String, description: String = "") {
         val artist = Artist(
             UserId(id),
             UserName(name),
@@ -49,7 +53,8 @@ class KtorArtistController(private val artistRepo: ArtistRepository) {
             UserPsswd(passwd),
             UserRol(rol),
             ArtistFotoUrl(fotoUrl),
-            ArtistContactNum(contactNum)
+            ArtistContactNum(contactNum),
+            ArtistDescription(description)
         )
         artistRepo.create(artist)
     }
@@ -57,7 +62,7 @@ class KtorArtistController(private val artistRepo: ArtistRepository) {
     /**
      * Edita un artista. Si `newId` != `oldId` crea uno nuevo y borra el antiguo; lanza IllegalArgumentException si newId ya existe.
      */
-    fun edit(oldId: Int, newId: Int, name: String, email: String, passwd: String, rol: String, fotoUrl: String, contactNum: String) {
+    fun edit(oldId: Int, newId: Int, name: String, email: String, passwd: String, rol: String, fotoUrl: String, contactNum: String, description: String = "") {
         artistRepo.getOneById(UserId(oldId)) ?: throw UserNotFoundError("Artist not found")
 
         if (oldId != newId) {
@@ -71,7 +76,8 @@ class KtorArtistController(private val artistRepo: ArtistRepository) {
                 UserPsswd(passwd),
                 UserRol(rol),
                 ArtistFotoUrl(fotoUrl),
-                ArtistContactNum(contactNum)
+                ArtistContactNum(contactNum),
+                ArtistDescription(description)
             )
             artistRepo.create(created)
             artistRepo.delete(UserId(oldId))
@@ -85,7 +91,8 @@ class KtorArtistController(private val artistRepo: ArtistRepository) {
             UserPsswd(passwd),
             UserRol(rol),
             ArtistFotoUrl(fotoUrl),
-            ArtistContactNum(contactNum)
+            ArtistContactNum(contactNum),
+            ArtistDescription(description)
         )
         artistRepo.edit(updated)
     }

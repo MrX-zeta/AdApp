@@ -3,6 +3,8 @@ package com.adapp.backend.User.Infrastructure.Routes
 import com.adapp.backend.User.Infrastructure.Repositories.InMemoryUserRepository
 import com.adapp.backend.User.Infrastructure.Controllers.KtorUserController
 import com.adapp.backend.User.Domain.Exceptions.UserNotFoundError
+import com.adapp.backend.Artist.Infrastructure.Repositories.InMemoryArtistRepository
+import com.adapp.backend.Artist.Infrastructure.Controllers.KtorArtistController
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
@@ -10,9 +12,13 @@ import io.ktor.server.response.*
 import io.ktor.server.request.*
 import kotlinx.serialization.Serializable
 
-fun Application.configureRouting(){
-    val userRepo = InMemoryUserRepository()
+fun Application.configureRouting(
+    userRepo: InMemoryUserRepository,
+    artistRepo: InMemoryArtistRepository
+){
+    // Usar repositorios compartidos recibidos como parámetros
     val controller = KtorUserController(userRepo)
+    val artistController = KtorArtistController(artistRepo)
 
     // ContentNegotiation se instala en configureSerialization() a nivel de aplicación
 
@@ -41,7 +47,21 @@ fun Application.configureRouting(){
                 passwd = registerData.password,
                 rol = registerData.userType
             )
-            
+
+            // Si es artista, también crear registro en artists
+            if (registerData.userType.equals("artist", ignoreCase = true)) {
+                // pasar fotoUrl y contactNum vacíos por ahora
+                artistController.create(
+                    newId,
+                    registerData.username,
+                    registerData.email,
+                    registerData.password,
+                    registerData.userType,
+                    "",
+                    ""
+                )
+            }
+
             // Generar token JWT (mock)
             val token = "mock-jwt-token-$newId"
             

@@ -14,8 +14,8 @@ import io.ktor.server.routing.put
 import io.ktor.server.routing.routing
 import kotlinx.serialization.Serializable
 
-fun Application.configureRouting(){
-    val SMRepo = InMemorySocialMediaRepository()
+fun Application.configureRouting(SMRepo: InMemorySocialMediaRepository){
+    // Usar repositorio compartido recibido como parámetro
     val controller = KtorSocialMediaController(SMRepo)
 
     routing {
@@ -46,6 +46,27 @@ fun Application.configureRouting(){
                 call.respond(HttpStatusCode.OK, socialMedia)
             }catch (e: SocialMediaNotFoundError){
                 call.respond(HttpStatusCode.NotFound, mapOf("message" to e.toString()))
+            }
+        }
+
+        get("/socialMedia/artist/{artistId}/"){
+            val artistIdParam = call.parameters["artistId"]
+            if(artistIdParam == null){
+                call.respond(HttpStatusCode.BadRequest, mapOf("message" to "Missing artistId"))
+                return@get
+            }
+            val artistId = artistIdParam.toIntOrNull()
+            if(artistId == null){
+                call.respond(HttpStatusCode.BadRequest, mapOf("message" to "Invalid artistId"))
+                return@get
+            }
+
+            try{
+                val socialMedias = controller.getByArtistId(artistId)
+                call.respond(HttpStatusCode.OK, socialMedias)
+            }catch(e: Exception){
+                call.application.environment.log.error("Error in GET /socialMedia/artist/{artistId}/", e)
+                call.respond(HttpStatusCode.InternalServerError, mapOf("message" to (e.message ?: "")))
             }
         }
 
