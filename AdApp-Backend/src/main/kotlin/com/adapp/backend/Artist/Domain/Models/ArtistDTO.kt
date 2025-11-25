@@ -10,5 +10,6 @@ data class ArtistDTO(
     val contrasena: String,
     val rol: String,
     val fotoUrl: String,
-    val contactNum: String
+    val contactNum: String,
+    val description: String
 )

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { SocialMedia, ParsedSocialMedia } from '../../../shared/models/social-media.model';
 
 interface ArtistResponse {
   id: number;
@@ -10,8 +11,6 @@ interface ArtistResponse {
   rol: string;
   fotoUrl: string;
   contactNum: string;
-  instagram?: string;
-  facebook?: string;
   description?: string;
 }
 
@@ -40,6 +39,7 @@ export class ArtistProfile implements OnInit {
   events: any[] = [];
   isLoading = false;
   artistId?: number;
+  socialMedias: ParsedSocialMedia[] = [];
 
   constructor(
     private apiService: ApiService,
@@ -54,6 +54,7 @@ export class ArtistProfile implements OnInit {
         this.loadArtistProfile();
         this.loadSongs();
         this.loadEvents();
+        this.loadSocialMedias();
       }
     });
   }
@@ -73,8 +74,8 @@ export class ArtistProfile implements OnInit {
         this.artist = {
           name: data.nombre,
           description: data.description || 'Sin descripción',
-          instagram: data.instagram || '',
-          facebook: data.facebook || '',
+          instagram: '', // Se cargará desde loadSocialMedias()
+          facebook: '', // Se cargará desde loadSocialMedias()
           phone: data.contactNum || '',
           email: data.correo,
           profileImage: data.fotoUrl || '/media/icons/perfil.png',
@@ -174,5 +175,116 @@ export class ArtistProfile implements OnInit {
     if (this.artistId) {
       window.location.href = `/artist/edit/${this.artistId}`;
     }
+  }
+
+  loadSocialMedias() {
+    if (!this.artistId) {
+      console.error('No artist ID available');
+      return;
+    }
+
+    console.log('Loading social medias for artist:', this.artistId);
+    
+    this.apiService.get<SocialMedia[]>(`/socialMedia/artist/${this.artistId}/`).subscribe({
+      next: (data) => {
+        console.log('Social medias loaded:', data);
+        console.log('Number of social media entries:', data.length);
+        
+        this.socialMedias = data.map(sm => this.parseSocialMedia(sm));
+        
+        // Limpiar redes sociales previas
+        this.artist.instagram = '';
+        this.artist.facebook = '';
+        
+        // Actualizar el objeto artist con las redes sociales
+        data.forEach(sm => {
+          console.log('Processing social media:', sm);
+          const url = sm.url.toLowerCase();
+          if (url.startsWith('instagram:')) {
+            this.artist.instagram = sm.url.replace(/^instagram:/i, '').trim();
+            console.log('Instagram updated to:', this.artist.instagram);
+          } else if (url.startsWith('facebook:')) {
+            this.artist.facebook = sm.url.replace(/^facebook:/i, '').trim();
+            console.log('Facebook updated to:', this.artist.facebook);
+          }
+        });
+        
+        console.log('Artist object updated with social media:', this.artist);
+      },
+      error: (error) => {
+        console.error('Error loading social medias:', error);
+        console.error('Error details:', error);
+        this.socialMedias = [];
+        this.artist.instagram = '';
+        this.artist.facebook = '';
+      }
+    });
+  }
+
+  parseSocialMedia(socialMedia: SocialMedia): ParsedSocialMedia {
+    const url = socialMedia.url.toLowerCase();
+    
+    // Detectar la plataforma y extraer el username
+    if (url.includes('instagram:') || url.includes('instagram.com')) {
+      const username = url.replace('instagram:', '').replace('https://', '').replace('http://', '').replace('instagram.com/', '').replace('@', '').trim();
+      return {
+        platform: 'instagram',
+        username: username,
+        fullUrl: `https://instagram.com/${username}`,
+        displayName: `@${username}`
+      };
+    } else if (url.includes('facebook:') || url.includes('facebook.com')) {
+      const username = url.replace('facebook:', '').replace('https://', '').replace('http://', '').replace('facebook.com/', '').trim();
+      return {
+        platform: 'facebook',
+        username: username,
+        fullUrl: url.includes('http') ? socialMedia.url : `https://facebook.com/${username}`,
+        displayName: username
+      };
+    } else if (url.includes('twitter:') || url.includes('twitter.com') || url.includes('x.com')) {
+      const username = url.replace('twitter:', '').replace('https://', '').replace('http://', '').replace('twitter.com/', '').replace('x.com/', '').replace('@', '').trim();
+      return {
+        platform: 'twitter',
+        username: username,
+        fullUrl: `https://x.com/${username}`,
+        displayName: `@${username}`
+      };
+    } else if (url.includes('youtube:') || url.includes('youtube.com')) {
+      const username = url.replace('youtube:', '').replace('https://', '').replace('http://', '').replace('youtube.com/', '').trim();
+      return {
+        platform: 'youtube',
+        username: username,
+        fullUrl: url.includes('http') ? socialMedia.url : `https://youtube.com/${username}`,
+        displayName: username
+      };
+    } else if (url.includes('tiktok:') || url.includes('tiktok.com')) {
+      const username = url.replace('tiktok:', '').replace('https://', '').replace('http://', '').replace('tiktok.com/', '').replace('@', '').trim();
+      return {
+        platform: 'tiktok',
+        username: username,
+        fullUrl: `https://tiktok.com/@${username}`,
+        displayName: `@${username}`
+      };
+    }
+    
+    // Por defecto
+    return {
+      platform: 'other',
+      username: socialMedia.url,
+      fullUrl: socialMedia.url.includes('http') ? socialMedia.url : `https://${socialMedia.url}`,
+      displayName: socialMedia.url
+    };
+  }
+
+  getSocialMediaIcon(platform: string): string {
+    const icons: { [key: string]: string } = {
+      'instagram': '📷',
+      'facebook': '👍',
+      'twitter': '🐦',
+      'youtube': '▶️',
+      'tiktok': '🎵',
+      'other': '🔗'
+    };
+    return icons[platform] || icons['other'];
   }
 }

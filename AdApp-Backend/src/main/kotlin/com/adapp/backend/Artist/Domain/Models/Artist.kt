@@ -14,11 +14,13 @@ class Artist(
     contrasena: UserPsswd,
     rol: UserRol,
     val fotoUrl: ArtistFotoUrl,
-    val contactNum: ArtistContactNum
+    val contactNum: ArtistContactNum,
+    val description: ArtistDescription
 ): User(ArtistId, nombre, correo, contrasena, rol) {
     // Helper accessors to expose primitive values without relying on property access
     fun fotoUrlValue(): String = this.fotoUrl.value
     fun contactNumValue(): String = this.contactNum.value
+    fun descriptionValue(): String = this.description.value
 
     // Backwards-compatible secondary constructor that accepts ArtistSocialMedia (ignored)
     constructor(
@@ -29,6 +31,7 @@ class Artist(
         rol: UserRol,
         fotoUrl: ArtistFotoUrl,
         socialMedia: ArtistSocialMedia,
-        contactNum: ArtistContactNum
-    ) : this(ArtistId, nombre, correo, contrasena, rol, fotoUrl, contactNum)
+        contactNum: ArtistContactNum,
+        artistDescription: ArtistDescription
+    ) : this(ArtistId, nombre, correo, contrasena, rol, fotoUrl, contactNum, artistDescription)
 }
