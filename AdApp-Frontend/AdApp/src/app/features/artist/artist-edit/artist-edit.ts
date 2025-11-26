@@ -42,6 +42,7 @@ export class ArtistEdit implements OnInit {
   events: any[] = [];
   editingSongId?: number;
   editingEventId?: number;
+  followers: number = 0;
 
   phoneValidator(control: AbstractControl): ValidationErrors | null {
     if (!control.value) {
@@ -74,6 +75,8 @@ export class ArtistEdit implements OnInit {
     this.eventForm = this.fb.nonNullable.group({
       title: ['', [Validators.required, Validators.maxLength(80)]],
       description: ['', [Validators.required, Validators.maxLength(240)]],
+      eventDate: ['', Validators.required],
+      eventTime: ['', Validators.required],
     });
   }
 
@@ -197,14 +200,21 @@ export class ArtistEdit implements OnInit {
     });
   }
 
-  loadEvents(artistId: number): void {
-    this.apiService.get<any[]>('/events').subscribe({
+  loadEvents(artistId?: number): void {
+    const targetArtistId = artistId || this.artistId;
+    if (!targetArtistId) {
+      console.error('No artist ID available to load events');
+      return;
+    }
+
+    this.apiService.get<any[]>('/event').subscribe({
       next: (events) => {
-        this.events = events.filter(e => e.artistId === artistId);
+        this.events = events.filter(e => e.artistId === targetArtistId);
         console.log('Events loaded:', this.events);
       },
       error: (error) => {
         console.error('Error loading events:', error);
+        this.events = [];
       }
     });
   }
@@ -218,7 +228,20 @@ export class ArtistEdit implements OnInit {
 
   publishEvent() {
     this.editingEventId = undefined;
-    this.eventForm.reset();
+    
+    // Establecer valores predeterminados: mañana a las 6:00 PM
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    const dateString = tomorrow.toISOString().slice(0, 10); // YYYY-MM-DD
+    const defaultTime = '18:00'; // 6:00 PM
+    
+    this.eventForm.reset({
+      title: '',
+      description: '',
+      eventDate: dateString,
+      eventTime: defaultTime
+    });
+    
     this.showEventModal = true;
   }
 
@@ -334,17 +357,31 @@ export class ArtistEdit implements OnInit {
   }
 
   submitEvent() {
-    if (this.eventForm.invalid) { this.eventForm.markAllAsTouched(); return; }
+    if (this.eventForm.invalid) { 
+      this.eventForm.markAllAsTouched(); 
+      return; 
+    }
+
+    if (!this.artistId) {
+      alert('Error: No se pudo identificar el artista');
+      return;
+    }
     
     if (this.editingEventId) {
       // Editar evento existente
+      const dateStr = this.eventForm.get('eventDate')!.value;
+      const timeStr = this.eventForm.get('eventTime')!.value;
+      const dateTime = new Date(`${dateStr}T${timeStr}`);
+      
       const payload = {
+        artistId: this.artistId,
         title: this.eventForm.get('title')!.value,
         description: this.eventForm.get('description')!.value,
-        artistId: this.artistId
+        dateEvent: dateTime.getTime(),
+        status: 'active'
       };
       this.isLoading = true;
-      this.apiService.put(`/events/${this.editingEventId}/`, payload).subscribe({
+      this.apiService.put(`/event/${this.editingEventId}`, payload).subscribe({
         next: () => {
           console.log('Evento actualizado');
           const event = this.events.find(e => e.id === this.editingEventId);
@@ -354,6 +391,7 @@ export class ArtistEdit implements OnInit {
           }
           this.isLoading = false;
           this.closeEvent();
+          this.loadEvents(); // Recargar eventos
         },
         error: (error) => {
           console.error('Error al actualizar evento:', error);
@@ -363,13 +401,37 @@ export class ArtistEdit implements OnInit {
       });
     } else {
       // Crear nuevo evento
+      const newId = this.events.length > 0 ? Math.max(...this.events.map(e => e.id)) + 1 : 1;
+      const dateStr = this.eventForm.get('eventDate')!.value;
+      const timeStr = this.eventForm.get('eventTime')!.value;
+      const dateTime = new Date(`${dateStr}T${timeStr}`);
+      
       const payload = {
+        id: newId,
+        artistId: this.artistId,
         title: this.eventForm.get('title')!.value,
         description: this.eventForm.get('description')!.value,
-        artistId: this.artistId
+        dateEvent: dateTime.getTime(),
+        status: 'active'
       };
-      console.log('Publicar evento', payload);
-      this.closeEvent();
+      
+      console.log('Publicar evento:', payload);
+      this.isLoading = true;
+      
+      this.apiService.post('/event', payload).subscribe({
+        next: (response) => {
+          console.log('Evento creado exitosamente:', response);
+          this.isLoading = false;
+          this.closeEvent();
+          this.loadEvents(); // Recargar eventos
+          alert('Evento publicado exitosamente');
+        },
+        error: (error) => {
+          console.error('Error al crear evento:', error);
+          alert('Error al publicar el evento: ' + (error.error?.message || error.message));
+          this.isLoading = false;
+        }
+      });
     }
   }
 
@@ -386,9 +448,16 @@ export class ArtistEdit implements OnInit {
     const event = this.events.find(e => e.id === eventId);
     if (event) {
       this.editingEventId = eventId;
+      // Convertir timestamp a fecha y hora separadas
+      const eventDate = new Date(event.eventDate);
+      const dateString = eventDate.toISOString().slice(0, 10); // YYYY-MM-DD
+      const timeString = eventDate.toTimeString().slice(0, 5); // HH:MM
+      
       this.eventForm.patchValue({ 
         title: event.title,
-        description: event.description 
+        description: event.description,
+        eventDate: dateString,
+        eventTime: timeString
       });
       this.showEventModal = true;
     }
@@ -415,15 +484,16 @@ export class ArtistEdit implements OnInit {
   deleteEvent(eventId: number) {
     if (confirm('¿Estás seguro que quieres eliminar este evento?')) {
       this.isLoading = true;
-      this.apiService.delete(`/events/${eventId}/`).subscribe({
+      this.apiService.delete(`/event/${eventId}`).subscribe({
         next: () => {
           console.log('Evento eliminado');
           this.events = this.events.filter(e => e.id !== eventId);
           this.isLoading = false;
+          alert('Evento eliminado exitosamente');
         },
         error: (error) => {
           console.error('Error al eliminar evento:', error);
-          alert('Error al eliminar el evento');
+          alert('Error al eliminar el evento: ' + (error.error?.message || error.message));
           this.isLoading = false;
         }
       });

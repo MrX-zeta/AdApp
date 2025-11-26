@@ -17,18 +17,20 @@ class KtorArtistController(private val artistRepo: ArtistRepository) {
 
 
     fun getAll(): List<ArtistDTO> {
-        return artistRepo.getAllArtists().map { artist ->
-            ArtistDTO(
-                id = artist.Usuarioid.value,
-                nombre = artist.nombre.value,
-                correo = artist.correo.value,
-                contrasena = artist.contrasena.value,
-                rol = artist.rol.value,
-                fotoUrl = artist.fotoUrlValue(),
-                contactNum = artist.contactNumValue(),
-                description = artist.descriptionValue()
-            )
-        }
+        return artistRepo.getAllArtists()
+            .filter { artist -> artist.rol.value.equals("artist", ignoreCase = true) }
+            .map { artist ->
+                ArtistDTO(
+                    id = artist.Usuarioid.value,
+                    nombre = artist.nombre.value,
+                    correo = artist.correo.value,
+                    contrasena = artist.contrasena.value,
+                    rol = artist.rol.value,
+                    fotoUrl = artist.fotoUrlValue(),
+                    contactNum = artist.contactNumValue(),
+                    description = artist.descriptionValue()
+                )
+            }
     }
 
     fun getOneById(id: Int): ArtistDTO {

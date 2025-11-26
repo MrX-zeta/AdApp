@@ -7,9 +7,7 @@ import com.adapp.backend.Song.Infrastructure.Routes.configureSongRouting
 import com.adapp.backend.User.Infrastructure.Routes.configureRouting as configureUserRouting
 import com.adapp.backend.Artist.Infrastructure.Routes.configureArtistRouting as configureArtistRouting
 import com.adapp.backend.SocialMedia.Infrastructure.Routes.configureRouting as configureSocialMediaRouting
-import com.adapp.backend.User.Infrastructure.Repositories.InMemoryUserRepository
-import com.adapp.backend.Artist.Infrastructure.Repositories.InMemoryArtistRepository
-import com.adapp.backend.SocialMedia.Infrastructure.Repositories.InMemorySocialMediaRepository
+import com.adapp.examples.configureFrameworks
 
 import io.ktor.server.application.*
 import io.ktor.server.netty.EngineMain
@@ -22,16 +20,17 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
-    // Crear repositorios compartidos una sola vez para toda la aplicación
-    val userRepo = InMemoryUserRepository()
-    val artistRepo = InMemoryArtistRepository()
-    val socialMediaRepo = InMemorySocialMediaRepository()
+    // Configurar Koin (inyección de dependencias)
+    configureFrameworks()
 
+    // Configurar plugins
     configureSerialization()
-    configureUserRouting(userRepo, artistRepo)
-    configureArtistRouting(artistRepo, socialMediaRepo)
+
+    // Configurar rutas (los repositorios se inyectan automáticamente con Koin)
+    configureUserRouting()
+    configureArtistRouting()
     configureFollowerRouting()
     configureEventRouting()
     configureSongRouting()
-    configureSocialMediaRouting(socialMediaRepo)
+    configureSocialMediaRouting()
 }

@@ -6,6 +6,7 @@ import { ArtistEdit } from './artist-edit/artist-edit';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'profile' },
   { path: 'profile', component: ArtistProfile },
+  { path: 'profile/:id', component: ArtistProfile },
   { path: 'edit', component: ArtistEdit },
   { path: 'edit/:id', component: ArtistEdit },
 ];

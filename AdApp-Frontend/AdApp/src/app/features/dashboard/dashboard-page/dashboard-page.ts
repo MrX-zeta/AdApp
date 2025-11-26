@@ -1,21 +1,27 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 interface Artist {
-  id: string;
-  stageName: string;
-  fullName: string;
-  followers: number;
+  id: number;
+  nombre: string;
+  correo: string;
+  contrasena: string;
+  rol: string;
+  fotoUrl: string;
+  contactNum: string;
   description: string;
-  avatarUrl: string;
 }
 
 @Component({
   selector: 'app-dashboard-page',
   standalone: false,
-  templateUrl: './dashboard-page.html',
+  templateUrl: './dashboard-clean.html',
   styleUrl: './dashboard-page.css',
 })
 export class DashboardPage implements OnInit {
+  private readonly API_URL = 'http://localhost:8081';
+  
   // Featured artists for main section
   featuredArtists: Artist[] = [];
   
@@ -25,7 +31,10 @@ export class DashboardPage implements OnInit {
   // Loading state
   isLoading = false;
 
-  constructor() {}
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadFeaturedArtists();
@@ -33,83 +42,51 @@ export class DashboardPage implements OnInit {
   }
 
   loadFeaturedArtists() {
-    // TODO: Load featured artists from service
     console.log('Loading featured artists');
     this.isLoading = true;
     
-    // Example data - replace with actual API call
-    this.featuredArtists = [
-      {
-        id: '1',
-        stageName: 'Mac Miller',
-        fullName: 'Malcolm James McCormick',
-        followers: 1000,
-        description: 'Músico y cantante en solitario. Hip-Hop y R&B. Exploro el jazz.',
-        avatarUrl: '/assets/avatars/mac_miller.jpg'
+    this.http.get<Artist[]>(`${this.API_URL}/artists`).subscribe({
+      next: (artists) => {
+        this.featuredArtists = artists;
+        this.isLoading = false;
+        
+        // Mostrar mensaje si no hay artistas
+        if (artists.length === 0) {
+          console.log('No hay artistas disponibles en este momento');
+        } else {
+          console.log(`Se cargaron ${artists.length} artistas`);
+        }
       },
-      {
-        id: '2',
-        stageName: 'Sarah J',
-        fullName: 'Sarah Johnson',
-        followers: 2500,
-        description: 'Cantante de jazz y soul. Me inspiro en los clásicos.',
-        avatarUrl: '/assets/avatars/sarah_j.jpg'
-      },
-      {
-        id: '3',
-        stageName: 'DJ Dave',
-        fullName: 'David Martinez',
-        followers: 5000,
-        description: 'Productor de música electrónica. House, techno y trance.',
-        avatarUrl: '/assets/avatars/dj_dave.jpg'
+      error: (error) => {
+        console.error('Error loading featured artists:', error);
+        this.featuredArtists = [];
+        this.isLoading = false;
       }
-    ];
-    
-    this.isLoading = false;
+    });
   }
 
   loadRecommendedArtists() {
-    // TODO: Load recommended artists from service
     console.log('Loading recommended artists');
     
-    // Example data - could be same or different artists
-    this.recommendedArtists = [
-      {
-        id: '1',
-        stageName: 'Mac Miller',
-        fullName: 'Malcolm James McCormick',
-        followers: 1000,
-        description: 'Músico y cantante en solitario. Hip-Hop y R&B. Exploro el jazz.',
-        avatarUrl: '/assets/avatars/mac_miller.jpg'
+    this.http.get<Artist[]>(`${this.API_URL}/artists`).subscribe({
+      next: (artists) => {
+        this.recommendedArtists = artists;
       },
-      {
-        id: '2',
-        stageName: 'Sarah J',
-        fullName: 'Sarah Johnson',
-        followers: 2500,
-        description: 'Cantante de jazz y soul. Me inspiro en los clásicos.',
-        avatarUrl: '/assets/avatars/sarah_j.jpg'
-      },
-      {
-        id: '4',
-        stageName: 'DJ Dave',
-        fullName: 'David Martinez',
-        followers: 5000,
-        description: 'Productor de música electrónica. House, techno y trance.',
-        avatarUrl: '/assets/avatars/dj_dave.jpg'
+      error: (error) => {
+        console.error('Error loading recommended artists:', error);
+        this.recommendedArtists = [];
       }
-    ];
+    });
   }
 
   viewArtistProfile(artist: Artist) {
-    console.log('Navigating to artist profile:', artist.stageName);
-    // TODO: Navigate to artist profile route
-    // Example: this.router.navigate(['/artist', artist.id]);
+    console.log('Navigating to artist profile:', artist.nombre);
+    this.router.navigate(['/artist/profile', artist.id]);
   }
 
   followArtist(artist: Artist) {
-    console.log('Following artist:', artist.stageName);
-    // TODO: Call follow service
+    console.log('Following artist:', artist.nombre);
+    // TODO: Call follow service to create follower relationship
   }
 
   formatFollowers(count: number): string {
@@ -121,5 +98,13 @@ export class DashboardPage implements OnInit {
 
   getFollowersText(count: number): string {
     return `${count.toLocaleString('es-ES')} seguidores`;
+  }
+
+  getArtistName(artist: Artist): string {
+    return artist.nombre;
+  }
+
+  getArtistDescription(artist: Artist): string {
+    return artist.description || 'Sin descripción';
   }
 }

@@ -3,7 +3,7 @@
 		<header class="profile-header">
 			<img class="avatar" src="/media/icons/perfil.png" alt="avatar" />
 			<div class="stats">
-				<div class="followers"><strong>1,000</strong> seguidores</div>
+				<div class="followers"><strong>{{ followers | number }}</strong> seguidores</div>
 				<div class="actions">
 					<button class="btn secondary" type="button" (click)="addSong()">
 						<img src="/media/icons/musica.png" alt="icon" />
@@ -140,6 +140,29 @@
 					<label class="field">
 						<span>Título</span>
 						<input formControlName="title" placeholder="Nombre del evento" />
+					</label>
+					<label class="field">
+						<span>📅 Fecha del evento</span>
+						<input 
+							type="date" 
+							formControlName="eventDate"
+							style="cursor: pointer; padding: 10px; font-size: 16px;"
+						/>
+						<small style="color: #888; display: block; margin-top: 4px;">
+							💡 Haz clic en el calendario para seleccionar la fecha
+						</small>
+					</label>
+					<label class="field">
+						<span>🕐 Hora del evento</span>
+						<input 
+							type="time" 
+							formControlName="eventTime"
+							step="900"
+							style="cursor: pointer; padding: 10px; font-size: 16px;"
+						/>
+						<small style="color: #888; display: block; margin-top: 4px;">
+							💡 Usa las flechas ↑↓ o haz clic para ajustar la hora (formato 24h: 14:00 = 2:00 PM, 18:00 = 6:00 PM)
+						</small>
 					</label>
 					<label class="field">
 						<span>Descripción</span>

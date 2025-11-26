@@ -1,0 +1,77 @@
+<div class="panel-de-inicio_129-100">
+  <!-- Título: ARTISTAS DESTACADOS -->
+  <div class="paragraph_129-275">
+    <span class="text-artistas-destacados_129-276">ARTISTAS DESTACADOS</span>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" style="color: white; text-align: center; padding: 40px;">
+    <p>Cargando artistas...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!isLoading && featuredArtists.length === 0" style="color: white; text-align: center; padding: 40px;">
+    <p>No hay artistas disponibles en este momento.</p>
+  </div>
+
+  <!-- Grid de Artistas Destacados -->
+  <div class="container_129-10" *ngIf="!isLoading && featuredArtists.length > 0">
+    <div class="container_129-11" *ngFor="let artist of featuredArtists" (click)="viewArtistProfile(artist)" style="cursor: pointer;">
+      <div class="container_129-12">
+        <div class="imagewithfallback_129-13">
+          <img [src]="artist.fotoUrl || '/media/icons/perfil.png'" [alt]="artist.nombre" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+        </div>
+        <div class="container_129-14">
+          <div class="paragraph_129-15">
+            <span class="text-mac-miller_129-16">{{ artist.nombre }}</span>
+          </div>
+          <div class="paragraph_129-17">
+            <span class="text-malcolm-james-mccormick_129-18">{{ artist.correo }}</span>
+          </div>
+          <div class="paragraph_129-19">
+            <span class="text-1-000-seguidores_129-20">0 seguidores</span>
+          </div>
+        </div>
+      </div>
+      <div class="paragraph_129-21">
+        <span class="text-m-sico-y-cantante-en-solitario--hip-hop-y-r-b--exp_129-22">
+          {{ getArtistDescription(artist) }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Título: ARTISTAS QUE SIGUES -->
+  <div class="paragraph_129-8" *ngIf="!isLoading && recommendedArtists.length > 0">
+    <span class="text-artistas-que-sigues_129-9">ARTISTAS QUE SIGUES</span>
+  </div>
+
+  <!-- Grid de Artistas Que Sigues -->
+  <div class="frame-73_129-274" *ngIf="!isLoading && recommendedArtists.length > 0">
+    <div class="container_129-200">
+      <div class="container_129-201" *ngFor="let artist of recommendedArtists" (click)="viewArtistProfile(artist)" style="cursor: pointer;">
+        <div class="container_129-202">
+          <div class="imagewithfallback_129-203">
+            <img [src]="artist.fotoUrl || '/media/icons/perfil.png'" [alt]="artist.nombre" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+          </div>
+          <div class="container_129-204">
+            <div class="paragraph_129-205">
+              <span class="text-mac-miller_129-206">{{ artist.nombre }}</span>
+            </div>
+            <div class="paragraph_129-207">
+              <span class="text-malcolm-james-mccormick_129-208">{{ artist.correo }}</span>
+            </div>
+            <div class="paragraph_129-209">
+              <span class="text-1-000-seguidores_129-210">0 seguidores</span>
+            </div>
+          </div>
+        </div>
+        <div class="paragraph_129-211">
+          <span class="text-m-sico-y-cantante-en-solitario--hip-hop-y-r-b--exp_129-212">
+            {{ getArtistDescription(artist) }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -14,12 +14,13 @@ import io.ktor.server.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.request.*
 import kotlinx.serialization.Serializable
+import org.koin.ktor.ext.inject
 
-fun Application.configureArtistRouting(
-    repo: InMemoryArtistRepository,
-    socialMediaRepo: InMemorySocialMediaRepository
-){
-    // Usar repositorio compartido recibido como parámetro
+fun Application.configureArtistRouting(){
+    // Inyectar repositorios usando Koin
+    val repo: InMemoryArtistRepository by inject()
+    val socialMediaRepo: InMemorySocialMediaRepository by inject()
+
     val controller = KtorArtistController(repo)
 
     routing {

@@ -2,13 +2,13 @@
     <main class="content">
         <p class="page-title">perfil del seguidor</p>
 
-        <div class="user-card">
+        <div class="user-card" *ngIf="follower">
             <img src="/media/icons/perfil.png" alt="Avatar de usuario" class="user-avatar" />
             <div class="user-info">
-                <h3>{{ follower.name }}</h3>
+                <h3>{{ follower.nombre }}</h3>
                 <div class="user-stats">
                     <span>Seguidor</span>
-                <span class="count">{{ follower.followingCount }}</span>
+                <span class="count">{{ followingCount }}</span>
                     <span>SIGUIENDO</span>
                 </div>
             </div>
@@ -16,9 +16,9 @@
 
         <h4 class="artists-header">MIS ARTISTAS</h4>
         <div class="artists-grid">
-            <div class="artist-card" *ngFor="let artist of artists">
-                <img src="/media/icons/perfil.png" [alt]="'Avatar de ' + artist.name" class="artist-avatar" />
-                <p class="artist-name">{{ artist.name }}</p>
+            <div class="artist-card" *ngFor="let artist of artists" (click)="viewArtistProfile(artist)">
+                <img src="/media/icons/perfil.png" [alt]="'Avatar de ' + artist.nombre" class="artist-avatar" />
+                <p class="artist-name">{{ artist.nombre }}</p>
             </div>
             
             </div>

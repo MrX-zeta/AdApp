@@ -21,7 +21,7 @@ class KtorEventController(private val eventRepo: EventRepository) {
                 artistId = event.ArtistId.value,
                 title = event.title.title,
                 description = event.description.description,
-                eventDate = event.Event_Date.date.time,
+                eventDate = event.Event_Date.date.toInstant().toString(),
                 status = event.Status.status
             )
         }
@@ -34,7 +34,7 @@ class KtorEventController(private val eventRepo: EventRepository) {
             artistId = event.ArtistId.value,
             title = event.title.title,
             description = event.description.description,
-            eventDate = event.Event_Date.date.time,
+            eventDate = event.Event_Date.date.toInstant().toString(),
             status = event.Status.status
         )
     }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../../core/services/api.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { SocialMedia, ParsedSocialMedia } from '../../../shared/models/social-media.model';
@@ -31,7 +32,7 @@ export class ArtistProfile implements OnInit {
     email: '',
     profileImage: '',
     coverImage: '',
-    followers: 1000
+    followers: 0
   };
 
   // Lists for songs and events
@@ -43,18 +44,33 @@ export class ArtistProfile implements OnInit {
 
   constructor(
     private apiService: ApiService,
-    private authService: AuthService
+    private authService: AuthService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    // Obtener el ID del usuario actual
-    this.authService.currentUser$.subscribe(user => {
-      if (user?.id) {
-        this.artistId = user.id;
+    // Intentar obtener el ID de la ruta primero
+    this.route.params.subscribe(params => {
+      const routeId = params['id'];
+      
+      if (routeId) {
+        // Si hay ID en la ruta, usarlo (caso: follower viendo perfil de artista)
+        this.artistId = parseInt(routeId, 10);
+        console.log('Loading artist profile from route ID:', this.artistId);
         this.loadArtistProfile();
         this.loadSongs();
         this.loadEvents();
-        this.loadSocialMedias();
+      } else {
+        // Si no hay ID en la ruta, obtener el ID del usuario autenticado (caso: artista viendo su propio perfil)
+        this.authService.currentUser$.subscribe(user => {
+          if (user?.id) {
+            this.artistId = user.id;
+            console.log('Loading artist profile from current user ID:', this.artistId);
+            this.loadArtistProfile();
+            this.loadSongs();
+            this.loadEvents();
+          }
+        });
       }
     });
   }
@@ -80,9 +96,11 @@ export class ArtistProfile implements OnInit {
           email: data.correo,
           profileImage: data.fotoUrl || '/media/icons/perfil.png',
           coverImage: '',
-          followers: 1000 // Por ahora estático
+          followers: 0 // Inicia en 0, se incrementará con seguidores reales
         };
         this.isLoading = false;
+        // Cargar redes sociales después de cargar el perfil
+        this.loadSocialMedias();
       },
       error: (error) => {
         console.error('Error loading artist profile:', error);
@@ -97,7 +115,7 @@ export class ArtistProfile implements OnInit {
           email: '',
           profileImage: '/media/icons/perfil.png',
           coverImage: '',
-          followers: 1000
+          followers: 0
         };
       }
     });
@@ -117,22 +135,36 @@ export class ArtistProfile implements OnInit {
   }
 
   loadEvents() {
-    // TODO: Load events from service
-    console.log('Loading events');
-    this.events = [
-      {
-        type: 'event',
-        title: 'Concierto en Las Palmas',
-        description: 'El día 18 de octubre de 2025 me presentaré en Las Palmas en un evento que realizamos entre muchos otros artistas. El evento comenzará a las 8 de la noche. Te esperamos.',
-        date: new Date('2025-10-18')
+    if (!this.artistId) {
+      console.error('No artist ID available to load events');
+      return;
+    }
+
+    console.log('Loading events for artist:', this.artistId);
+    
+    this.apiService.get<any[]>('/event').subscribe({
+      next: (events) => {
+        // Filtrar solo los eventos del artista actual
+        const artistEvents = events.filter(e => e.artistId === this.artistId);
+        
+        // Transformar los eventos al formato esperado por la vista
+        this.events = artistEvents.map(event => ({
+          id: event.id,
+          type: 'event',
+          title: event.title,
+          description: event.description,
+          date: new Date(event.eventDate), // Convertir ISO string a Date
+          eventDate: event.eventDate,
+          status: event.status
+        }));
+        
+        console.log('Events loaded:', this.events);
       },
-      {
-        type: 'event',
-        title: 'Concierto en Las Palmas',
-        description: 'El día 18 de octubre de 2025 me presentaré en Las Palmas en un evento que realizamos entre muchos otros artistas. El evento comenzará a las 8 de la noche. Te esperamos.',
-        date: new Date('2025-10-16')
+      error: (error) => {
+        console.error('Error loading events:', error);
+        this.events = [];
       }
-    ];
+    });
   }
 
   formatInstagram(): string {

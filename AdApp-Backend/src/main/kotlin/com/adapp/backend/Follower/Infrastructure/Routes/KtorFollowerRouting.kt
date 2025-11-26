@@ -9,9 +9,11 @@ import io.ktor.server.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.request.*
 import kotlinx.serialization.Serializable
+import org.koin.ktor.ext.inject
 
 fun Application.configureFollowerRouting(){
-    val repo = InMemoryFollowerRepository()
+    // Inyectar repositorio usando Koin
+    val repo: InMemoryFollowerRepository by inject()
     val controller = KtorFollowerController(repo)
 
     routing {

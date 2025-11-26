@@ -13,9 +13,12 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.routing
 import kotlinx.serialization.Serializable
+import org.koin.ktor.ext.inject
 
-fun Application.configureRouting(SMRepo: InMemorySocialMediaRepository){
-    // Usar repositorio compartido recibido como parámetro
+fun Application.configureRouting(){
+    // Inyectar repositorio usando Koin
+    val SMRepo: InMemorySocialMediaRepository by inject()
+
     val controller = KtorSocialMediaController(SMRepo)
 
     routing {

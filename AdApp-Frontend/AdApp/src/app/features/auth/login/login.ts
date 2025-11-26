@@ -45,6 +45,7 @@ export class Login {
     this.authService.login({ email, password }).subscribe({
       next: (response) => {
         console.log('Login exitoso:', response);
+        // Siempre redirigir a dashboard después del login
         this.router.navigate(['/dashboard']);
       },
       error: (error) => {

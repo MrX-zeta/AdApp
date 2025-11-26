@@ -41,24 +41,38 @@
 	<aside class="feed">
 		<h3>Eventos y canciones</h3>
 
-		<article class="post" *ngFor="let event of events">
-			<header>
-				<span class="title">{{ event.title || 'Sin título' }}</span>
-				<time>Publicado el {{ event.date | date: 'dd/MM/yyyy' }}</time>
-			</header>
-			<p>{{ event.description }}</p>
-		</article>
+		<!-- Eventos -->
+		<div *ngIf="events.length > 0">
+			<article class="post" *ngFor="let event of events">
+				<header>
+					<span class="title">{{ event.title || 'Sin título' }}</span>
+					<time>Publicado el {{ event.date | date: 'dd/MM/yyyy' }}</time>
+				</header>
+				<p>{{ event.description }}</p>
+			</article>
+		</div>
 
-		<article class="post" *ngFor="let song of songs">
-			<header>
-				<span class="title">{{ song.title || 'Sin título' }}</span>
-				<time>Publicado el {{ song.date | date: 'dd/MM/yyyy' }}</time>
-			</header>
-			<p>{{ song.description }}</p>
-		</article>
+		<!-- Mensaje cuando no hay eventos -->
+		<div class="empty-state" *ngIf="events.length === 0" style="background-color: #2a2a2a; padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
+			<p style="color: #888; margin-bottom: 10px;">📅 No hay eventos publicados</p>
+			<p style="color: #666; font-size: 14px;">Agrega un evento desde la página de edición para que tus seguidores puedan verlo aquí</p>
+		</div>
 
-		<div class="empty-state" *ngIf="events.length === 0 && songs.length === 0">
-			<p>No hay eventos ni canciones publicadas aún.</p>
+		<!-- Canciones -->
+		<div *ngIf="songs.length > 0">
+			<article class="post" *ngFor="let song of songs">
+				<header>
+					<span class="title">{{ song.title || 'Sin título' }}</span>
+					<time>Publicado el {{ song.date | date: 'dd/MM/yyyy' }}</time>
+				</header>
+				<p>{{ song.description }}</p>
+			</article>
+		</div>
+
+		<!-- Mensaje cuando no hay canciones -->
+		<div class="empty-state" *ngIf="songs.length === 0" style="background-color: #2a2a2a; padding: 20px; border-radius: 8px; text-align: center;">
+			<p style="color: #888; margin-bottom: 10px;">🎵 No hay canciones publicadas</p>
+			<p style="color: #666; font-size: 14px;">Agrega una canción desde la página de edición para que tus seguidores puedan escucharla aquí</p>
 		</div>
 	</aside>
 </div>

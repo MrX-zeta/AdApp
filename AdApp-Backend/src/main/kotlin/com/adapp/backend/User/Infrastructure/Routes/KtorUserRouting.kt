@@ -5,20 +5,25 @@ import com.adapp.backend.User.Infrastructure.Controllers.KtorUserController
 import com.adapp.backend.User.Domain.Exceptions.UserNotFoundError
 import com.adapp.backend.Artist.Infrastructure.Repositories.InMemoryArtistRepository
 import com.adapp.backend.Artist.Infrastructure.Controllers.KtorArtistController
+import com.adapp.backend.Follower.Infrastructure.Repositories.InMemoryFollowerRepository
+import com.adapp.backend.Follower.Infrastructure.Controllers.KtorFollowerController
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
 import io.ktor.server.response.*
 import io.ktor.server.request.*
 import kotlinx.serialization.Serializable
+import org.koin.ktor.ext.inject
 
-fun Application.configureRouting(
-    userRepo: InMemoryUserRepository,
-    artistRepo: InMemoryArtistRepository
-){
-    // Usar repositorios compartidos recibidos como parámetros
+fun Application.configureRouting(){
+    // Inyectar repositorios usando Koin
+    val userRepo: InMemoryUserRepository by inject()
+    val artistRepo: InMemoryArtistRepository by inject()
+    val followerRepo: InMemoryFollowerRepository by inject()
+
     val controller = KtorUserController(userRepo)
     val artistController = KtorArtistController(artistRepo)
+    val followerController = KtorFollowerController(followerRepo)
 
     // ContentNegotiation se instala en configureSerialization() a nivel de aplicación
 
@@ -59,6 +64,16 @@ fun Application.configureRouting(
                     registerData.userType,
                     "",
                     ""
+                )
+            }
+            // Si es follower, también crear registro en followers
+            else if (registerData.userType.equals("follower", ignoreCase = true)) {
+                followerController.create(
+                    newId,
+                    registerData.username,
+                    registerData.email,
+                    registerData.password,
+                    registerData.userType
                 )
             }
 

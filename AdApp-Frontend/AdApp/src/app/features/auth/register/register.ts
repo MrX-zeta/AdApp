@@ -58,6 +58,7 @@ export class RegisterComponent implements OnInit {
     this.authService.register({ username, email, userType, password }).subscribe({
       next: (response) => {
         console.log('Registro exitoso:', response);
+        // Siempre redirigir a dashboard después del registro
         this.router.navigate(['/dashboard']);
       },
       error: (error) => {
