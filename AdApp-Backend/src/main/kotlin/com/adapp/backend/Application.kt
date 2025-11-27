@@ -7,6 +7,7 @@ import com.adapp.backend.Song.Infrastructure.Routes.configureSongRouting
 import com.adapp.backend.User.Infrastructure.Routes.configureRouting as configureUserRouting
 import com.adapp.backend.Artist.Infrastructure.Routes.configureArtistRouting as configureArtistRouting
 import com.adapp.backend.SocialMedia.Infrastructure.Routes.configureRouting as configureSocialMediaRouting
+import com.adapp.backend.FollowerArtist.Infraestructure.Routes.configureFollowerArtistRouting
 import com.adapp.examples.configureFrameworks
 
 import io.ktor.server.application.*
@@ -30,6 +31,7 @@ fun Application.module() {
     configureUserRouting()
     configureArtistRouting()
     configureFollowerRouting()
+    configureFollowerArtistRouting()
     configureEventRouting()
     configureSongRouting()
     configureSocialMediaRouting()

@@ -41,6 +41,9 @@ export class ArtistProfile implements OnInit {
   isLoading = false;
   artistId?: number;
   socialMedias: ParsedSocialMedia[] = [];
+  isFollowing = false;
+  currentUserId?: number;
+  currentUserRole?: string;
 
   constructor(
     private apiService: ApiService,
@@ -49,6 +52,14 @@ export class ArtistProfile implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Obtener información del usuario actual
+    this.authService.currentUser$.subscribe(user => {
+      if (user) {
+        this.currentUserId = user.id;
+        this.currentUserRole = user.rol;
+      }
+    });
+
     // Intentar obtener el ID de la ruta primero
     this.route.params.subscribe(params => {
       const routeId = params['id'];
@@ -96,11 +107,13 @@ export class ArtistProfile implements OnInit {
           email: data.correo,
           profileImage: data.fotoUrl || '/media/icons/perfil.png',
           coverImage: '',
-          followers: 0 // Inicia en 0, se incrementará con seguidores reales
+          followers: 0 // Se cargará desde loadFollowersCount()
         };
         this.isLoading = false;
-        // Cargar redes sociales después de cargar el perfil
+        // Cargar redes sociales y cantidad de seguidores después de cargar el perfil
         this.loadSocialMedias();
+        this.loadFollowersCount();
+        this.checkIfFollowing();
       },
       error: (error) => {
         console.error('Error loading artist profile:', error);
@@ -318,5 +331,78 @@ export class ArtistProfile implements OnInit {
       'other': '🔗'
     };
     return icons[platform] || icons['other'];
+  }
+
+  loadFollowersCount(): void {
+    if (!this.artistId) {
+      console.error('No artist ID available');
+      return;
+    }
+
+    this.apiService.get<{ followersCount: number }>(`/artist/${this.artistId}/followersCount`).subscribe({
+      next: (data) => {
+        this.artist.followers = data.followersCount;
+        console.log('Followers count loaded:', data.followersCount);
+      },
+      error: (error) => {
+        console.error('Error loading followers count:', error);
+        this.artist.followers = 0;
+      }
+    });
+  }
+
+  checkIfFollowing(): void {
+    if (!this.currentUserId || !this.artistId || this.currentUserRole !== 'follower') {
+      this.isFollowing = false;
+      return;
+    }
+
+    this.apiService.get<{ isFollowing: boolean }>(`/follower/${this.currentUserId}/isFollowing/${this.artistId}`).subscribe({
+      next: (data) => {
+        this.isFollowing = data.isFollowing;
+        console.log('Is following:', data.isFollowing);
+      },
+      error: (error) => {
+        console.error('Error checking if following:', error);
+        this.isFollowing = false;
+      }
+    });
+  }
+
+  toggleFollow(): void {
+    if (!this.currentUserId || !this.artistId || this.currentUserRole !== 'follower') {
+      console.error('Cannot follow: missing user info or not a follower');
+      return;
+    }
+
+    if (this.isFollowing) {
+      // Dejar de seguir
+      this.apiService.delete(`/follower/${this.currentUserId}/follow/${this.artistId}`).subscribe({
+        next: () => {
+          this.isFollowing = false;
+          this.artist.followers--;
+          console.log('Unfollowed artist');
+        },
+        error: (error) => {
+          console.error('Error unfollowing artist:', error);
+        }
+      });
+    } else {
+      // Seguir
+      this.apiService.post(`/follower/${this.currentUserId}/follow/${this.artistId}`, {}).subscribe({
+        next: () => {
+          this.isFollowing = true;
+          this.artist.followers++;
+          console.log('Followed artist');
+        },
+        error: (error) => {
+          console.error('Error following artist:', error);
+        }
+      });
+    }
+  }
+
+  canFollow(): boolean {
+    return this.currentUserRole === 'follower' && this.currentUserId !== this.artistId;
   }
 }

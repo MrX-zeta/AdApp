@@ -69,9 +69,18 @@ export class FollowerProfileComponent implements OnInit {
   }
 
   loadFollowedArtists(): void {
-    // TODO: Implementar endpoint para obtener artistas seguidos por el follower
-    // Por ahora, cargar todos los artistas disponibles
-    this.http.get<Artist[]>(`${this.API_URL}/artists`).subscribe({
+    const currentUser = localStorage.getItem('currentUser');
+    if (!currentUser) {
+      console.error('No current user found');
+      return;
+    }
+
+    const user = JSON.parse(currentUser);
+    const followerId = user.id;
+
+    console.log('Loading followed artists for follower:', followerId);
+    
+    this.http.get<Artist[]>(`${this.API_URL}/follower/${followerId}/following`).subscribe({
       next: (artists) => {
         this.artists = artists;
         this.followingCount = artists.length;

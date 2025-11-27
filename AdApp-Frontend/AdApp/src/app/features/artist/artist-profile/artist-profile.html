@@ -5,6 +5,15 @@
 			<div class="header-info">
 				<h2 class="artist-name">{{ artist.name | uppercase }}</h2>
 				<p class="followers"><strong>{{ artist.followers | number }}</strong> SEGUIDORES</p>
+				
+				<!-- Botón de seguir (solo visible para followers) -->
+				<button 
+					*ngIf="canFollow()" 
+					class="follow-button"
+					[class.following]="isFollowing"
+					(click)="toggleFollow()">
+					{{ isFollowing ? 'Dejar de seguir' : 'Seguir' }}
+				</button>
 			</div>
 		</header>
 

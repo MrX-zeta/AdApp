@@ -12,7 +12,7 @@ import kotlinx.serialization.Serializable
 import org.koin.ktor.ext.inject
 
 fun Application.configureFollowerRouting(){
-    // Inyectar repositorio usando Koin
+    // Inyectar repositorios usando Koin
     val repo: InMemoryFollowerRepository by inject()
     val controller = KtorFollowerController(repo)
 
@@ -94,6 +94,8 @@ fun Application.configureFollowerRouting(){
                 call.respond(HttpStatusCode.NotFound, mapOf("message" to e.message))
             }
         }
+
+
     }
 }
 

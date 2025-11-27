@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
 
 interface Artist {
   id: number;
@@ -11,6 +12,7 @@ interface Artist {
   fotoUrl: string;
   contactNum: string;
   description: string;
+  followersCount?: number;
 }
 
 @Component({
@@ -30,15 +32,31 @@ export class DashboardPage implements OnInit {
   
   // Loading state
   isLoading = false;
+  
+  // Current user role
+  currentUserRole?: string;
 
   constructor(
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    // Obtener el rol del usuario actual
+    this.authService.currentUser$.subscribe(user => {
+      if (user) {
+        this.currentUserRole = user.rol;
+        console.log('Current user role:', this.currentUserRole);
+      }
+    });
+    
     this.loadFeaturedArtists();
-    this.loadRecommendedArtists();
+    
+    // Solo cargar artistas seguidos si el usuario es un follower
+    if (this.isFollower()) {
+      this.loadRecommendedArtists();
+    }
   }
 
   loadFeaturedArtists() {
@@ -48,6 +66,12 @@ export class DashboardPage implements OnInit {
     this.http.get<Artist[]>(`${this.API_URL}/artists`).subscribe({
       next: (artists) => {
         this.featuredArtists = artists;
+        
+        // Cargar el contador de seguidores para cada artista
+        this.featuredArtists.forEach(artist => {
+          this.loadFollowersCount(artist);
+        });
+        
         this.isLoading = false;
         
         // Mostrar mensaje si no hay artistas
@@ -71,6 +95,11 @@ export class DashboardPage implements OnInit {
     this.http.get<Artist[]>(`${this.API_URL}/artists`).subscribe({
       next: (artists) => {
         this.recommendedArtists = artists;
+        
+        // Cargar el contador de seguidores para cada artista
+        this.recommendedArtists.forEach(artist => {
+          this.loadFollowersCount(artist);
+        });
       },
       error: (error) => {
         console.error('Error loading recommended artists:', error);
@@ -106,5 +135,26 @@ export class DashboardPage implements OnInit {
 
   getArtistDescription(artist: Artist): string {
     return artist.description || 'Sin descripción';
+  }
+
+  loadFollowersCount(artist: Artist): void {
+    this.http.get<{ followersCount: number }>(`${this.API_URL}/artist/${artist.id}/followersCount`).subscribe({
+      next: (data) => {
+        artist.followersCount = data.followersCount;
+      },
+      error: (error) => {
+        console.error(`Error loading followers count for artist ${artist.id}:`, error);
+        artist.followersCount = 0;
+      }
+    });
+  }
+
+  getFollowersCountText(artist: Artist): string {
+    const count = artist.followersCount ?? 0;
+    return count === 1 ? '1 seguidor' : `${count} seguidores`;
+  }
+
+  isFollower(): boolean {
+    return this.currentUserRole === 'follower';
   }
 }

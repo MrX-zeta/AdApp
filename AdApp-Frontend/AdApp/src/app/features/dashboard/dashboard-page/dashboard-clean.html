@@ -29,7 +29,7 @@
             <span class="text-malcolm-james-mccormick_129-18">{{ artist.correo }}</span>
           </div>
           <div class="paragraph_129-19">
-            <span class="text-1-000-seguidores_129-20">0 seguidores</span>
+            <span class="text-1-000-seguidores_129-20">{{ getFollowersCountText(artist) }}</span>
           </div>
         </div>
       </div>
@@ -41,13 +41,13 @@
     </div>
   </div>
 
-  <!-- Título: ARTISTAS QUE SIGUES -->
-  <div class="paragraph_129-8" *ngIf="!isLoading && recommendedArtists.length > 0">
+  <!-- Título: ARTISTAS QUE SIGUES (solo para followers) -->
+  <div class="paragraph_129-8" *ngIf="isFollower() && !isLoading && recommendedArtists.length > 0">
     <span class="text-artistas-que-sigues_129-9">ARTISTAS QUE SIGUES</span>
   </div>
 
-  <!-- Grid de Artistas Que Sigues -->
-  <div class="frame-73_129-274" *ngIf="!isLoading && recommendedArtists.length > 0">
+  <!-- Grid de Artistas Que Sigues (solo para followers) -->
+  <div class="frame-73_129-274" *ngIf="isFollower() && !isLoading && recommendedArtists.length > 0">
     <div class="container_129-200">
       <div class="container_129-201" *ngFor="let artist of recommendedArtists" (click)="viewArtistProfile(artist)" style="cursor: pointer;">
         <div class="container_129-202">
@@ -62,7 +62,7 @@
               <span class="text-malcolm-james-mccormick_129-208">{{ artist.correo }}</span>
             </div>
             <div class="paragraph_129-209">
-              <span class="text-1-000-seguidores_129-210">0 seguidores</span>
+              <span class="text-1-000-seguidores_129-210">{{ getFollowersCountText(artist) }}</span>
             </div>
           </div>
         </div>
