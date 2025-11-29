@@ -141,16 +141,35 @@ export class ArtistProfile implements OnInit {
   }
 
   loadSongs() {
-    // TODO: Load songs from service
-    console.log('Loading songs');
-    this.songs = [
-      {
-        type: 'song',
-        title: 'Circles (demo)',
-        description: 'Canción demo subida para escuchas tempranas.',
-        date: new Date('2025-10-18')
+    if (!this.artistId) {
+      console.error('No artist ID available to load songs');
+      return;
+    }
+
+    console.log('Loading songs for artist:', this.artistId);
+    
+    this.apiService.get<any[]>('/songs').subscribe({
+      next: (songs) => {
+        // Filtrar solo las canciones del artista actual
+        const artistSongs = songs.filter(s => s.artistId === this.artistId);
+        
+        // Transformar las canciones al formato esperado por la vista
+        this.songs = artistSongs.map(song => ({
+          id: song.id,
+          type: 'song',
+          title: song.title,
+          description: song.description || 'Sin descripción',
+          date: new Date(song.date), // Convertir ISO string a Date
+          status: song.status
+        }));
+        
+        console.log('Songs loaded:', this.songs);
+      },
+      error: (error) => {
+        console.error('Error loading songs:', error);
+        this.songs = [];
       }
-    ];
+    });
   }
 
   loadEvents() {

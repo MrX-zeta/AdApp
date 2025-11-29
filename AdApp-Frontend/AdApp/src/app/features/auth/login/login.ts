@@ -50,7 +50,20 @@ export class Login {
       },
       error: (error) => {
         console.error('Error en login:', error);
-        this.errorMessage = error.error?.message || 'Error al iniciar sesión. Verifica tus credenciales.';
+        
+        // Detectar si es un error 401 (credenciales inválidas)
+        if (error.status === 401) {
+          this.errorMessage = 'Correo o contraseña incorrectos.';
+        }
+        // Detectar si es un error 404 (usuario no encontrado)
+        else if (error.status === 404) {
+          this.errorMessage = 'No existe una cuenta con este correo.';
+        }
+        // Otros errores
+        else {
+          this.errorMessage = error.error?.message || 'Error al iniciar sesión. Verifica tus credenciales.';
+        }
+        
         this.isLoading = false;
       },
       complete: () => {

@@ -18,7 +18,7 @@ interface Artist {
 @Component({
   selector: 'app-dashboard-page',
   standalone: false,
-  templateUrl: './dashboard-clean.html',
+  templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.css',
 })
 export class DashboardPage implements OnInit {

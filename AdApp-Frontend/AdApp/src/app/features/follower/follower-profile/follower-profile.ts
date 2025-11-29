@@ -98,4 +98,8 @@ export class FollowerProfileComponent implements OnInit {
     console.log('Navigating to artist profile:', artist.nombre);
     this.router.navigate(['/artist/profile', artist.id]);
   }
+
+  getArtistPhotoUrl(artist: Artist): string {
+    return artist.fotoUrl ? `${this.API_URL}${artist.fotoUrl}` : '/media/icons/perfil.png';
+  }
 }

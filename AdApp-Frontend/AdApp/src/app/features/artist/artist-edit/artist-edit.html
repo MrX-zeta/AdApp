@@ -4,7 +4,7 @@
 			<div class="avatar-container" (click)="triggerFileInput()" [class.uploading]="isUploadingImage">
 				<img class="avatar" [src]="profileImageUrl" alt="avatar" />
 				<div class="avatar-overlay">
-					<span *ngIf="!isUploadingImage">📷 Cambiar foto</span>
+					<span *ngIf="!isUploadingImage">Cambiar foto</span>
 					<span *ngIf="isUploadingImage">Subiendo...</span>
 				</div>
 			</div>
@@ -69,10 +69,10 @@
 				</div>
 			</div>
 
-						<footer class="form-actions">
-									<button class="btn success" type="submit">Guardar</button>
-							<button class="btn ghost" type="button" (click)="cancel()">Cancelar</button>
-						</footer>
+				<footer class="form-actions">
+							<button class="btn success" type="submit">Guardar</button>
+					<button class="btn ghost" type="button" (click)="cancel()">Cancelar</button>
+				</footer>
 		</form>
 	</section>
 
@@ -154,18 +154,18 @@
 						<input formControlName="title" placeholder="Nombre del evento" />
 					</label>
 					<label class="field">
-						<span>📅 Fecha del evento</span>
+						<span>Fecha del evento</span>
 						<input 
 							type="date" 
 							formControlName="eventDate"
 							style="cursor: pointer; padding: 10px; font-size: 16px;"
 						/>
 						<small style="color: #888; display: block; margin-top: 4px;">
-							💡 Haz clic en el calendario para seleccionar la fecha
+							Haz clic en el calendario para seleccionar la fecha
 						</small>
 					</label>
 					<label class="field">
-						<span>🕐 Hora del evento</span>
+						<span>Hora del evento</span>
 						<input 
 							type="time" 
 							formControlName="eventTime"
@@ -173,7 +173,7 @@
 							style="cursor: pointer; padding: 10px; font-size: 16px;"
 						/>
 						<small style="color: #888; display: block; margin-top: 4px;">
-							💡 Usa las flechas ↑↓ o haz clic para ajustar la hora (formato 24h: 14:00 = 2:00 PM, 18:00 = 6:00 PM)
+							Usa las flechas ↑↓ o haz clic para ajustar la hora (formato 24h: 14:00 = 2:00 PM, 18:00 = 6:00 PM)
 						</small>
 					</label>
 					<label class="field">

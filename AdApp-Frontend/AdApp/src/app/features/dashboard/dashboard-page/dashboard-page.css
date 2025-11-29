@@ -1,1501 +1,268 @@
-.panel-de-inicio_129-100 {
-  width: 100%;
-  min-height: 100vh;
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  align-items: flex-start;
-}
-.frame-44_129-101 {
-  display: none !important;
-}
-.rectangle-1_129-102 {
-  display: none;
-}
-
-.rectangle-14_129-103 {
-  display: none;
-}
-
-.text-perfil_129-104 {
-  display: none;
-}
-
-.text-inicio_129-105 {
-  display: none;
-}
-
-.frame-43_129-106 {
-  display: none !important;
-}
-.rectangle-2_129-107 {
-  display: none;
-}
-
-.rectangle-17_129-108 {
-  display: none;
-}
-
-.rectangle-18_129-109 {
-  display: none;
-}
-
-.rectangle-19_129-110 {
-  display: none;
-}
-
-.container_129-10 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  width: 100%;
-  margin-bottom: 40px;
-}
-
-/* Asegurar tamaño correcto de imágenes en artistas destacados */
-.container_129-10 img {
-  max-width: 80px;
-  max-height: 80px;
-}
-
-/* Asegurar que todas las tarjetas tengan el mismo tamaño */
-.container_129-10 > .container_129-11 {
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-}
-
-.container_129-11 {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 16px;
-  border-radius: 10px;
-  background: var(--surface-700);
-  min-height: 192px;
-  box-sizing: border-box;
-}
-.container_129-12 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 16px;
-  box-sizing: content-box;
-  height: 80px;
-  width: -webkit-fill-available;
-}
-.imagewithfallback_129-13 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  border-radius: 50%;
-  background: #f3f4f6;
-  width: 80px;
-  height: 80px;
-  flex-shrink: 0;
-}
-
-.imagewithfallback_129-13 img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
-}
-
-.container_129-14 {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: border-box;
-  height: 72px;
-  width: -webkit-fill-available;
-}
-.paragraph_129-15 {
-  position: relative;
-  box-sizing: border-box;
-  height: 30px;
-  width: -webkit-fill-available;
-}
-.text-mac-miller_129-16 {
-  top: 1px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 20px;
-  font-family: Poppins;
-  line-height: 30px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 500;
-  text-align: left;
-  text-wrap: nowrap;
-  width: 102px;
-  height: 30px;
-}
-
-.paragraph_129-17 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: content-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-malcolm-james-mccormick_129-18 {
-  color: #a9a9a9;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: -webkit-fill-available;
-}
-
-.paragraph_129-19 {
-  position: relative;
-  box-sizing: border-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-1-000-seguidores_129-20 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 113px;
-  height: 21px;
-}
-
-.paragraph_129-21 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  height: 48px;
-  width: -webkit-fill-available;
-}
-.text-m-sico-y-cantante-en-solitario--hip-hop-y-r-b--exp_129-22 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 16px;
-  font-family: Poppins;
-  line-height: 24px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 361px;
-  height: 48px;
-}
-
-.container_129-23 {
-  padding: 24px 24px 0px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 16px;
-  border-radius: 10px;
-  background: var(--surface-700);
-  min-height: 192px;
-}
-.container_129-24 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 16px;
-  box-sizing: content-box;
-  height: 80px;
-  width: -webkit-fill-available;
-}
-.imagewithfallback_129-25 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  flex-shrink: 0;
-  background: #f3f4f6;
-}
-
-.imagewithfallback_129-25 img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
-}
-
-.container_129-26 {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: border-box;
-  height: 72px;
-  width: -webkit-fill-available;
-}
-.paragraph_129-27 {
-  position: relative;
-  box-sizing: border-box;
-  height: 30px;
-  width: -webkit-fill-available;
-}
-.text-sarah-j_129-28 {
-  top: 1px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 20px;
-  font-family: Poppins;
-  line-height: 30px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 500;
-  text-align: left;
-  text-wrap: nowrap;
-  width: 77px;
-  height: 30px;
-}
-
-.paragraph_129-29 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: content-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-sarah-johnson_129-30 {
-  color: #a9a9a9;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: -webkit-fill-available;
-}
-
-.paragraph_129-31 {
-  position: relative;
-  box-sizing: border-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-2-500-seguidores_129-32 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 117px;
-  height: 21px;
-}
-
-.paragraph_129-33 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  height: 48px;
-  width: -webkit-fill-available;
-}
-.text-cantante-de-jazz-y-soul--me-inspiro-en-los-cl-sico_129-34 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 16px;
-  font-family: Poppins;
-  line-height: 24px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 404px;
-  height: 48px;
-}
-
-.container_129-35 {
-  padding: 24px 24px 0px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 16px;
-  border-radius: 10px;
-  background: var(--surface-700);
-  min-height: 192px;
-}
-.container_129-36 {
-  display: flex;
-.imagewithfallback_129-37 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  flex-shrink: 0;
-  background: #f3f4f6;
-}
-
-.imagewithfallback_129-37 img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
-}imagewithfallback_129-37 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-}
-
-.container_129-38 {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: border-box;
-  height: 72px;
-  width: -webkit-fill-available;
-}
-.paragraph_129-39 {
-  position: relative;
-  box-sizing: border-box;
-  height: 30px;
-  width: -webkit-fill-available;
-}
-.text-dj-dave_129-40 {
-  top: 1px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 20px;
-  font-family: Poppins;
-  line-height: 30px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 500;
-  text-align: left;
-  text-wrap: nowrap;
-  width: 83px;
-  height: 30px;
-}
-
-.paragraph_129-41 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: content-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-david-martinez_129-42 {
-  color: #a9a9a9;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: -webkit-fill-available;
-}
-
-.paragraph_129-43 {
-  position: relative;
-  box-sizing: border-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-5-000-seguidores_129-44 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 118px;
-  height: 21px;
-}
-
-.paragraph_129-45 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  height: 48px;
-  width: -webkit-fill-available;
-}
-.text-productor-de-m-sica-electr-nica--house--techno-y-t_129-46 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 16px;
-  font-family: Poppins;
-  line-height: 24px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 393px;
-  height: 48px;
-}
-
-.frame-73_129-274 {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  width: 100%;
-}
-
-/* Asegurar que ninguna imagen sea demasiado grande */
-.frame-73_129-274 img {
-  max-width: 80px !important;
-  max-height: 80px !important;
-  width: 80px !important;
-  height: 80px !important;
-  object-fit: cover !important;
-  border-radius: 50% !important;
-}
-
-.container_129-200 img {
-  max-width: 80px !important;
-  max-height: 80px !important;
-  width: 80px !important;
-  height: 80px !important;
-  object-fit: cover !important;
-  border-radius: 50% !important;
-}
-
-/* Asegurar que todos los contenedores de imagen tengan el tamaño correcto */
-.frame-73_129-274 [class*="imagewithfallback"] {
-  width: 80px !important;
-  height: 80px !important;
-  min-width: 80px !important;
-  min-height: 80px !important;
-  max-width: 80px !important;
-  max-height: 80px !important;
-  border-radius: 50% !important;
-  overflow: hidden !important;
-  flex-shrink: 0 !important;
-}
-.container_129-200 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  width: 100%;
-}
-
-.container_129-201 {
-  padding: 24px 24px 0px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 16px;
-  border-radius: 10px;
-  background: var(--surface-700);
-  min-height: 192px;
-}
-.container_129-202 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 16px;
-  box-sizing: content-box;
-  height: 80px;
-  width: -webkit-fill-available;
-}
-.imagewithfallback_129-203 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  border-radius: 50%;
-  background: #f3f4f6;
-  width: 80px;
-  height: 80px;
-  flex-shrink: 0;
-}
-
-.imagewithfallback_129-203 img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
-}
-
-.container_129-204 {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: border-box;
-  height: 72px;
-  width: -webkit-fill-available;
-}
-.paragraph_129-205 {
-  position: relative;
-  box-sizing: border-box;
-  height: 30px;
-  width: -webkit-fill-available;
-}
-.text-mac-miller_129-206 {
-  top: 1px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 20px;
-  font-family: Poppins;
-  line-height: 30px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 500;
-  text-align: left;
-  text-wrap: nowrap;
-  width: 102px;
-  height: 30px;
-}
-
-.paragraph_129-207 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: content-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-malcolm-james-mccormick_129-208 {
-  color: #a9a9a9;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: -webkit-fill-available;
-}
-
-.paragraph_129-209 {
-  position: relative;
-  box-sizing: border-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-1-000-seguidores_129-210 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 113px;
-  height: 21px;
-}
-
-.paragraph_129-211 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  height: 48px;
-  width: -webkit-fill-available;
-}
-.text-m-sico-y-cantante-en-solitario--hip-hop-y-r-b--exp_129-212 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 16px;
-  font-family: Poppins;
-  line-height: 24px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 361px;
-  height: 48px;
-}
-
-.container_129-213 {
-  padding: 24px 24px 0px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 16px;
-  border-radius: 10px;
-  background: var(--surface-700);
-.imagewithfallback_129-215 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  flex-shrink: 0;
-  background: #f3f4f6;
-}
-
-.imagewithfallback_129-215 img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
-}imagewithfallback_129-215 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-} position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-}
-
-.container_129-216 {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: border-box;
-  height: 72px;
-  width: -webkit-fill-available;
-}
-.paragraph_129-217 {
-  position: relative;
-  box-sizing: border-box;
-  height: 30px;
-  width: -webkit-fill-available;
-}
-.text-sarah-j_129-218 {
-  top: 1px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 20px;
-  font-family: Poppins;
-  line-height: 30px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 500;
-  text-align: left;
-  text-wrap: nowrap;
-  width: 77px;
-  height: 30px;
-}
-
-.paragraph_129-219 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: content-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-sarah-johnson_129-220 {
-  color: #a9a9a9;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: -webkit-fill-available;
-}
-
-.paragraph_129-221 {
-  position: relative;
-  box-sizing: border-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-2-500-seguidores_129-222 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 117px;
-  height: 21px;
-}
-
-.paragraph_129-223 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  height: 48px;
-  width: -webkit-fill-available;
-}
-.text-cantante-de-jazz-y-soul--me-inspiro-en-los-cl-sico_129-224 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 16px;
-  font-family: Poppins;
-  line-height: 24px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 404px;
-  height: 48px;
-}
-
-.container_129-225 {
-  padding: 24px 24px 0px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 16px;
-  border-radius: 10px;
-  background: var(--surface-700);
-.imagewithfallback_129-227 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  flex-shrink: 0;
-  background: #f3f4f6;
-}
-
-.imagewithfallback_129-227 img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
-}imagewithfallback_129-227 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-} position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-}
-
-.container_129-228 {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: border-box;
-  height: 72px;
-  width: -webkit-fill-available;
-}
-.paragraph_129-229 {
-  position: relative;
-  box-sizing: border-box;
-  height: 30px;
-  width: -webkit-fill-available;
-}
-.text-dj-dave_129-230 {
-  top: 1px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 20px;
-  font-family: Poppins;
-  line-height: 30px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 500;
-  text-align: left;
-  text-wrap: nowrap;
-  width: 83px;
-  height: 30px;
-}
-
-.paragraph_129-231 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: content-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-david-martinez_129-232 {
-  color: #a9a9a9;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: -webkit-fill-available;
-}
-
-.paragraph_129-233 {
-  position: relative;
-  box-sizing: border-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-5-000-seguidores_129-234 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 118px;
-  height: 21px;
-}
-
-.paragraph_129-235 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  height: 48px;
-  width: -webkit-fill-available;
-}
-.text-productor-de-m-sica-electr-nica--house--techno-y-t_129-236 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 16px;
-  font-family: Poppins;
-  line-height: 24px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 393px;
-  height: 48px;
-}
-
-.container_129-237 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  width: 100%;
-}
-
-.container_129-238 {
-  padding: 24px 24px 0px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 16px;
-  border-radius: 10px;
-  background: var(--surface-700);
-  min-height: 192px;
-}
-.container_129-239 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 16px;
-  box-sizing: content-box;
-  height: 80px;
-  width: -webkit-fill-available;
-}
-.imagewithfallback_129-240 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  border-radius: 50%;
-  background: #f3f4f6;
-  width: 80px;
-  height: 80px;
-  flex-shrink: 0;
-}
-
-.imagewithfallback_129-240 img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
-}
-
-.container_129-241 {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: border-box;
-  height: 72px;
-  width: -webkit-fill-available;
-}
-.paragraph_129-242 {
-  position: relative;
-  box-sizing: border-box;
-  height: 30px;
-  width: -webkit-fill-available;
-}
-.text-mac-miller_129-243 {
-  top: 1px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 20px;
-  font-family: Poppins;
-  line-height: 30px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 500;
-  text-align: left;
-  text-wrap: nowrap;
-  width: 102px;
-  height: 30px;
-}
-
-.paragraph_129-244 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: content-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-malcolm-james-mccormick_129-245 {
-  color: #a9a9a9;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: -webkit-fill-available;
-}
-
-.paragraph_129-246 {
-  position: relative;
-  box-sizing: border-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-1-000-seguidores_129-247 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 113px;
-  height: 21px;
-}
-
-.paragraph_129-248 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  height: 48px;
-  width: -webkit-fill-available;
-}
-.text-m-sico-y-cantante-en-solitario--hip-hop-y-r-b--exp_129-249 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 16px;
-  font-family: Poppins;
-  line-height: 24px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 361px;
-  height: 48px;
-}
-
-.container_129-250 {
-  padding: 24px 24px 0px 24px;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 16px;
-  border-radius: 10px;
-  background: var(--surface-700);
-.imagewithfallback_129-252 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  flex-shrink: 0;
-  background: #f3f4f6;
-}
-
-.imagewithfallback_129-252 img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
-}imagewithfallback_129-252 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-} position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-}
-
-.container_129-253 {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: border-box;
-  height: 72px;
-  width: -webkit-fill-available;
-}
-.paragraph_129-254 {
-  position: relative;
-  box-sizing: border-box;
-  height: 30px;
-  width: -webkit-fill-available;
-}
-.text-sarah-j_129-255 {
-  top: 1px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 20px;
-  font-family: Poppins;
-  line-height: 30px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 500;
-  text-align: left;
-  text-wrap: nowrap;
-  width: 77px;
-  height: 30px;
-}
-
-.paragraph_129-256 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: content-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-sarah-johnson_129-257 {
-  color: #a9a9a9;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: -webkit-fill-available;
-}
-
-.paragraph_129-258 {
-  position: relative;
-  box-sizing: border-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-2-500-seguidores_129-259 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 117px;
-  height: 21px;
-}
-
-.paragraph_129-260 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  height: 48px;
-  width: -webkit-fill-available;
-}
-.text-cantante-de-jazz-y-soul--me-inspiro-en-los-cl-sico_129-261 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 16px;
-  font-family: Poppins;
-  line-height: 24px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 404px;
-  height: 48px;
-}
-
-.imagewithfallback_129-264 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  flex-shrink: 0;
-  background: #f3f4f6;
-}
-
-.imagewithfallback_129-264 img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
-} min-height: 192px;
-}
-.container_129-263 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 16px;
-.imagewithfallback_129-264 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-} position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-}
-
-.container_129-265 {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: border-box;
-  height: 72px;
-  width: -webkit-fill-available;
-}
-.paragraph_129-266 {
-  position: relative;
-  box-sizing: border-box;
-  height: 30px;
-  width: -webkit-fill-available;
-}
-.text-dj-dave_129-267 {
-  top: 1px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 20px;
-  font-family: Poppins;
-  line-height: 30px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 500;
-  text-align: left;
-  text-wrap: nowrap;
-  width: 83px;
-  height: 30px;
-}
-
-.paragraph_129-268 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  gap: 0px;
-  box-sizing: content-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-david-martinez_129-269 {
-  color: #a9a9a9;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: -webkit-fill-available;
-}
-
-.paragraph_129-270 {
-  position: relative;
-  box-sizing: border-box;
-  height: 21px;
-  width: -webkit-fill-available;
-}
-.text-5-000-seguidores_129-271 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 14px;
-  font-family: Poppins;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 118px;
-  height: 21px;
-}
-
-.paragraph_129-272 {
-  position: relative;
-  box-sizing: border-box;
-  overflow: hidden;
-  height: 48px;
-  width: -webkit-fill-available;
-}
-.text-productor-de-m-sica-electr-nica--house--techno-y-t_129-273 {
-  top: 0px;
-  left: 0px;
-  position: absolute;
-  display: flex;
-  color: #ffffff;
-  font-size: 16px;
-  font-family: Poppins;
-  line-height: 24px;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 300;
-  text-align: left;
-  text-wrap: wrap;
-  width: 393px;
-  height: 48px;
-}
-
-.paragraph_129-8 {
-  display: block;
-  margin-bottom: 24px;
-}
-
-.text-artistas-que-sigues_129-9 {
-  display: block;
-  color: var(--white);
-  font-size: 26px;
-  font-family: inherit;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 500;
-  text-align: left;
-  text-transform: uppercase;
-}
-
-.paragraph_129-275 {
-  display: block;
-  margin-bottom: 24px;
-}
-
-.text-artistas-destacados_129-276 {
-  display: block;
-  color: var(--white);
-  font-size: 26px;
-  font-family: inherit;
-  letter-spacing: 0px;
-  text-decoration: none;
-  font-weight: 500;
-  text-align: left;
-  text-transform: uppercase;
+.dashboard-container {
+	width: 100%;
+	min-height: 100vh;
+	padding: 40px;
+	display: flex;
+	flex-direction: column;
+	gap: 60px;
+	background: linear-gradient(180deg, #1a1a1a 0%, #2a2a2a 100%);
+}
+
+.section {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+}
+
+.section-title {
+	color: #ffffff;
+	font-size: 22px;
+	font-weight: 700;
+	margin: 0;
+	padding: 0;
+	letter-spacing: 0.5px;
+	text-transform: uppercase;
+}
+
+.artists-grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 24px;
+	width: 100%;
+}
+
+.artist-card {
+	background: #222222;
+	border: 1px solid #333333;
+	border-radius: 12px;
+	padding: 24px;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.artist-card:hover {
+	border-color: #4a9eff;
+	box-shadow: 0 0 20px rgba(74, 158, 255, 0.15);
+	transform: translateY(-2px);
+}
+
+/* ARTIST HEADER */
+.artist-header {
+	display: flex;
+	gap: 16px;
+	align-items: flex-start;
+}
+
+.artist-avatar {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	object-fit: cover;
+	flex-shrink: 0;
+	background: #3a3a3a;
+}
+
+.artist-info {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	flex: 1;
+	min-width: 0;
+}
+
+.artist-name {
+	color: #ffffff;
+	font-size: 18px;
+	font-weight: 600;
+	margin: 0;
+	padding: 0;
+}
+
+.artist-email {
+	color: #a9a9a9;
+	font-size: 13px;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.artist-followers {
+	color: #ffffff;
+	font-size: 13px;
+	margin: 0;
+	padding: 0;
+	font-weight: 500;
+}
+
+/* ARTIST DESCRIPTION */
+.artist-description {
+	color: #ffffff;
+	font-size: 14px;
+	line-height: 1.6;
+	margin: 0;
+	padding: 0;
+	text-align: justify;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	line-clamp: 3;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+/* LOADING & EMPTY STATES */
+.loading-state,
+.empty-state {
+	text-align: center;
+	padding: 60px 20px;
+	color: #a9a9a9;
+	font-size: 16px;
+}
+
+.loading-state p,
+.empty-state p {
+	margin: 0;
+}
+
+/* FOOTER */
+.dashboard-footer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 60px 20px;
+	gap: 60px;
+	border-top: 1px solid #333333;
+	margin-top: 40px;
+}
+
+.footer-logos {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 60px;
+	flex-wrap: wrap;
+}
+
+.footer-logo {
+	height: 60px;
+	object-fit: contain;
+	opacity: 0.8;
+	transition: opacity 0.3s ease;
+}
+
+.footer-logo:hover {
+	opacity: 1;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+	.artists-grid {
+		grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	}
+}
+
+@media (max-width: 768px) {
+	.dashboard-container {
+		padding: 24px;
+		gap: 40px;
+	}
+
+	.section-title {
+		font-size: 24px;
+	}
+
+	.artists-grid {
+		grid-template-columns: repeat(2, 1fr);
+		gap: 16px;
+	}
+
+	.artist-card {
+		padding: 16px;
+		gap: 12px;
+	}
+
+	.artist-avatar {
+		width: 64px;
+		height: 64px;
+	}
+
+	.artist-name {
+		font-size: 16px;
+	}
+
+	.artist-description {
+		font-size: 13px;
+		-webkit-line-clamp: 2;
+		line-clamp: 2;
+	}
+
+	.dashboard-footer {
+		padding: 40px 20px;
+		gap: 40px;
+	}
+
+	.footer-logo {
+		height: 48px;
+	}
+}
+
+@media (max-width: 480px) {
+	.dashboard-container {
+		padding: 16px;
+		gap: 32px;
+	}
+
+	.section-title {
+		font-size: 20px;
+	}
+
+	.artists-grid {
+		grid-template-columns: 1fr;
+		gap: 12px;
+	}
+
+	.artist-card {
+		padding: 16px;
+		gap: 12px;
+	}
+
+	.artist-avatar {
+		width: 56px;
+		height: 56px;
+	}
+
+	.artist-name {
+		font-size: 15px;
+	}
+
+	.artist-email {
+		font-size: 12px;
+	}
+
+	.artist-followers {
+		font-size: 12px;
+	}
+
+	.artist-description {
+		font-size: 12px;
+		-webkit-line-clamp: 2;
+		line-clamp: 2;
+	}
+
+	.dashboard-footer {
+		padding: 32px 16px;
+		gap: 32px;
+	}
+
+	.footer-logos {
+		gap: 32px;
+	}
+
+	.footer-logo {
+		height: 40px;
+	}
 }
