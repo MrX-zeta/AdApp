@@ -98,6 +98,12 @@ export class ArtistProfile implements OnInit {
     this.apiService.get<ArtistResponse>(`/artist/${this.artistId}/`).subscribe({
       next: (data) => {
         console.log('Artist profile loaded:', data);
+        
+        // Construir URL completa de la foto si existe
+        const photoUrl = data.fotoUrl 
+          ? `http://localhost:8081${data.fotoUrl}` 
+          : '/media/icons/perfil.png';
+        
         this.artist = {
           name: data.nombre,
           description: data.description || 'Sin descripción',
@@ -105,7 +111,7 @@ export class ArtistProfile implements OnInit {
           facebook: '', // Se cargará desde loadSocialMedias()
           phone: data.contactNum || '',
           email: data.correo,
-          profileImage: data.fotoUrl || '/media/icons/perfil.png',
+          profileImage: photoUrl,
           coverImage: '',
           followers: 0 // Se cargará desde loadFollowersCount()
         };
@@ -382,6 +388,8 @@ export class ArtistProfile implements OnInit {
           this.isFollowing = false;
           this.artist.followers--;
           console.log('Unfollowed artist');
+          // Disparar evento personalizado para notificar el cambio
+          window.dispatchEvent(new CustomEvent('followStatusChanged'));
         },
         error: (error) => {
           console.error('Error unfollowing artist:', error);
@@ -394,6 +402,8 @@ export class ArtistProfile implements OnInit {
           this.isFollowing = true;
           this.artist.followers++;
           console.log('Followed artist');
+          // Disparar evento personalizado para notificar el cambio
+          window.dispatchEvent(new CustomEvent('followStatusChanged'));
         },
         error: (error) => {
           console.error('Error following artist:', error);

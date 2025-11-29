@@ -1,7 +1,19 @@
 <div class="page">
 	<section class="profile-card">
 		<header class="profile-header">
-			<img class="avatar" src="/media/icons/perfil.png" alt="avatar" />
+			<div class="avatar-container" (click)="triggerFileInput()" [class.uploading]="isUploadingImage">
+				<img class="avatar" [src]="profileImageUrl" alt="avatar" />
+				<div class="avatar-overlay">
+					<span *ngIf="!isUploadingImage">📷 Cambiar foto</span>
+					<span *ngIf="isUploadingImage">Subiendo...</span>
+				</div>
+			</div>
+			<input 
+				type="file" 
+				id="profileImageInput" 
+				accept="image/*" 
+				style="display: none;" 
+				(change)="onProfileImageSelected($event)" />
 			<div class="stats">
 				<div class="followers"><strong>{{ followers | number }}</strong> seguidores</div>
 				<div class="actions">

@@ -25,8 +25,12 @@ export class ApiService {
   }
 
   post<T>(endpoint: string, data: any): Observable<T> {
+    // Si es FormData, no agregar Content-Type (el navegador lo maneja automáticamente)
+    const isFormData = data instanceof FormData;
+    const headers = isFormData ? new HttpHeaders() : this.getHeaders();
+    
     return this.http.post<T>(`${this.API_URL}${endpoint}`, data, {
-      headers: this.getHeaders()
+      headers: headers
     });
   }
 

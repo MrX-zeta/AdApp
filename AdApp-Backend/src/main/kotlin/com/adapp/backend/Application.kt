@@ -3,6 +3,8 @@ package com.adapp.backend
 import com.adapp.backend.Event.Infrastructure.Routes.configureEventRouting
 import com.adapp.backend.Follower.Infrastructure.Routes.configureFollowerRouting
 import com.adapp.backend.Shared.Infrastructure.Plugins.configureSerialization
+import com.adapp.backend.Shared.Infrastructure.Plugins.configureStaticFiles
+import com.adapp.backend.Shared.Infrastructure.Routes.configureFileUploadRouting
 import com.adapp.backend.Song.Infrastructure.Routes.configureSongRouting
 import com.adapp.backend.User.Infrastructure.Routes.configureRouting as configureUserRouting
 import com.adapp.backend.Artist.Infrastructure.Routes.configureArtistRouting as configureArtistRouting
@@ -26,6 +28,7 @@ fun Application.module() {
 
     // Configurar plugins
     configureSerialization()
+    configureStaticFiles()
 
     // Configurar rutas (los repositorios se inyectan automáticamente con Koin)
     configureUserRouting()
@@ -35,4 +38,5 @@ fun Application.module() {
     configureEventRouting()
     configureSongRouting()
     configureSocialMediaRouting()
+    configureFileUploadRouting()
 }

@@ -11,6 +11,7 @@ import com.adapp.backend.FollowerArtist.Application.UnfollowArtist.UnfollowArtis
 import com.adapp.backend.FollowerArtist.Application.GetFollowedArtists.GetFollowedArtists
 import com.adapp.backend.FollowerArtist.Application.GetArtistFollowers.GetArtistFollowers
 import com.adapp.backend.FollowerArtist.Infraestructure.Controllers.KtorFollowerArtistController
+import com.adapp.backend.Shared.Infrastructure.Services.FileUploadService
 import org.koin.dsl.module
 
 val repositoryModule = module {
@@ -29,5 +30,7 @@ val repositoryModule = module {
     
     // FollowerArtist Controller
     single { KtorFollowerArtistController(get(), get(), get(), get(), get()) }
-}
 
+    // Servicios
+    single { FileUploadService() }
+}

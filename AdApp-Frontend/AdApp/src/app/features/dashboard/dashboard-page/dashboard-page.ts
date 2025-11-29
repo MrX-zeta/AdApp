@@ -35,6 +35,7 @@ export class DashboardPage implements OnInit {
   
   // Current user role
   currentUserRole?: string;
+  currentUserId?: number;
 
   constructor(
     private http: HttpClient,
@@ -43,20 +44,29 @@ export class DashboardPage implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Obtener el rol del usuario actual
+    // Obtener el rol y el ID del usuario actual
     this.authService.currentUser$.subscribe(user => {
       if (user) {
         this.currentUserRole = user.rol;
-        console.log('Current user role:', this.currentUserRole);
+        this.currentUserId = user.id;
+        console.log('Current user role:', this.currentUserRole, 'ID:', this.currentUserId);
+        
+        // Cargar artistas seguidos después de obtener el usuario
+        if (this.isFollower()) {
+          this.loadRecommendedArtists();
+        }
       }
     });
     
     this.loadFeaturedArtists();
-    
-    // Solo cargar artistas seguidos si el usuario es un follower
-    if (this.isFollower()) {
-      this.loadRecommendedArtists();
-    }
+
+    // Escuchar eventos de actualización de seguimiento
+    window.addEventListener('followStatusChanged', () => {
+      console.log('Follow status changed, reloading followed artists');
+      if (this.isFollower() && this.currentUserId) {
+        this.loadRecommendedArtists();
+      }
+    });
   }
 
   loadFeaturedArtists() {
@@ -90,19 +100,37 @@ export class DashboardPage implements OnInit {
   }
 
   loadRecommendedArtists() {
-    console.log('Loading recommended artists');
+    if (!this.currentUserId) {
+      console.log('No user ID available to load followed artists');
+      this.recommendedArtists = [];
+      return;
+    }
+
+    console.log('Loading followed artists for user:', this.currentUserId);
     
-    this.http.get<Artist[]>(`${this.API_URL}/artists`).subscribe({
-      next: (artists) => {
-        this.recommendedArtists = artists;
+    // El endpoint /follower/{id}/following ya devuelve los artistas completos
+    this.http.get<Artist[]>(`${this.API_URL}/follower/${this.currentUserId}/following`).subscribe({
+      next: (followedArtists) => {
+        console.log('Followed artists received:', followedArtists);
         
-        // Cargar el contador de seguidores para cada artista
-        this.recommendedArtists.forEach(artist => {
-          this.loadFollowersCount(artist);
-        });
+        if (followedArtists && followedArtists.length > 0) {
+          this.recommendedArtists = followedArtists;
+          
+          // Cargar el contador de seguidores para cada artista
+          this.recommendedArtists.forEach(artist => {
+            this.loadFollowersCount(artist);
+          });
+          
+          console.log('Recommended artists loaded:', this.recommendedArtists.length);
+        } else {
+          // Si no sigue a nadie, la lista queda vacía
+          console.log('User is not following any artists yet');
+          this.recommendedArtists = [];
+        }
       },
       error: (error) => {
-        console.error('Error loading recommended artists:', error);
+        console.error('Error loading followed artists:', error);
+        console.error('Error details:', error.message);
         this.recommendedArtists = [];
       }
     });
@@ -156,5 +184,12 @@ export class DashboardPage implements OnInit {
 
   isFollower(): boolean {
     return this.currentUserRole === 'follower';
+  }
+
+  getArtistPhotoUrl(artist: Artist): string {
+    if (artist.fotoUrl && artist.fotoUrl.trim() !== '') {
+      return `${this.API_URL}${artist.fotoUrl}`;
+    }
+    return '/media/icons/perfil.png';
   }
 }

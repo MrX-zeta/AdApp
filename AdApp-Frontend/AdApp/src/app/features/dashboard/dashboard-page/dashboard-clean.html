@@ -19,7 +19,7 @@
     <div class="container_129-11" *ngFor="let artist of featuredArtists" (click)="viewArtistProfile(artist)" style="cursor: pointer;">
       <div class="container_129-12">
         <div class="imagewithfallback_129-13">
-          <img [src]="artist.fotoUrl || '/media/icons/perfil.png'" [alt]="artist.nombre" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+          <img [src]="getArtistPhotoUrl(artist)" [alt]="artist.nombre" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
         </div>
         <div class="container_129-14">
           <div class="paragraph_129-15">
@@ -41,33 +41,39 @@
     </div>
   </div>
 
-  <!-- Título: ARTISTAS QUE SIGUES (solo para followers) -->
-  <div class="paragraph_129-8" *ngIf="isFollower() && !isLoading && recommendedArtists.length > 0">
+  <!-- Título: ARTISTAS QUE SIGUES (solo para followers - siempre visible) -->
+  <div class="paragraph_129-8" *ngIf="isFollower() && !isLoading">
     <span class="text-artistas-que-sigues_129-9">ARTISTAS QUE SIGUES</span>
   </div>
 
   <!-- Grid de Artistas Que Sigues (solo para followers) -->
-  <div class="frame-73_129-274" *ngIf="isFollower() && !isLoading && recommendedArtists.length > 0">
-    <div class="container_129-200">
-      <div class="container_129-201" *ngFor="let artist of recommendedArtists" (click)="viewArtistProfile(artist)" style="cursor: pointer;">
-        <div class="container_129-202">
-          <div class="imagewithfallback_129-203">
-            <img [src]="artist.fotoUrl || '/media/icons/perfil.png'" [alt]="artist.nombre" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+  <div *ngIf="isFollower() && !isLoading">
+    <!-- Empty State cuando no sigue a nadie -->
+    <div *ngIf="recommendedArtists.length === 0" style="color: #a9a9a9; text-align: center; padding: 40px;">
+      <p>Aún no sigues a ningún artista. ¡Explora y sigue a tus favoritos!</p>
+    </div>
+    
+    <!-- Grid de artistas seguidos - Usa las MISMAS clases que Artistas Destacados -->
+    <div class="container_129-10" *ngIf="recommendedArtists.length > 0">
+      <div class="container_129-11" *ngFor="let artist of recommendedArtists" (click)="viewArtistProfile(artist)" style="cursor: pointer;">
+        <div class="container_129-12">
+          <div class="imagewithfallback_129-13">
+            <img [src]="getArtistPhotoUrl(artist)" [alt]="artist.nombre" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
           </div>
-          <div class="container_129-204">
-            <div class="paragraph_129-205">
-              <span class="text-mac-miller_129-206">{{ artist.nombre }}</span>
+          <div class="container_129-14">
+            <div class="paragraph_129-15">
+              <span class="text-mac-miller_129-16">{{ artist.nombre }}</span>
             </div>
-            <div class="paragraph_129-207">
-              <span class="text-malcolm-james-mccormick_129-208">{{ artist.correo }}</span>
+            <div class="paragraph_129-17">
+              <span class="text-malcolm-james-mccormick_129-18">{{ artist.correo }}</span>
             </div>
-            <div class="paragraph_129-209">
-              <span class="text-1-000-seguidores_129-210">{{ getFollowersCountText(artist) }}</span>
+            <div class="paragraph_129-19">
+              <span class="text-1-000-seguidores_129-20">{{ getFollowersCountText(artist) }}</span>
             </div>
           </div>
         </div>
-        <div class="paragraph_129-211">
-          <span class="text-m-sico-y-cantante-en-solitario--hip-hop-y-r-b--exp_129-212">
+        <div class="paragraph_129-21">
+          <span class="text-m-sico-y-cantante-en-solitario--hip-hop-y-r-b--exp_129-22">
             {{ getArtistDescription(artist) }}
           </span>
         </div>

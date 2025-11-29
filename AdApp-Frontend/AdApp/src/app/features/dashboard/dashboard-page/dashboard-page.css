@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
+  align-items: flex-start;
 }
 .frame-44_129-101 {
   display: none !important;
@@ -50,11 +51,23 @@
   gap: 24px;
   width: 100%;
   margin-bottom: 40px;
-  order: 2;
+}
+
+/* Asegurar tamaño correcto de imágenes en artistas destacados */
+.container_129-10 img {
+  max-width: 80px;
+  max-height: 80px;
+}
+
+/* Asegurar que todas las tarjetas tengan el mismo tamaño */
+.container_129-10 > .container_129-11 {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .container_129-11 {
-  padding: 24px 24px 0px 24px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -63,6 +76,7 @@
   border-radius: 10px;
   background: var(--surface-700);
   min-height: 192px;
+  box-sizing: border-box;
 }
 .container_129-12 {
   display: flex;
@@ -79,10 +93,19 @@
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
-  border-radius: 33554400px;
+  border-radius: 50%;
   background: #f3f4f6;
   width: 80px;
   height: 80px;
+  flex-shrink: 0;
+}
+
+.imagewithfallback_129-13 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
 }
 
 .container_129-14 {
@@ -220,6 +243,19 @@
   box-sizing: border-box;
   overflow: hidden;
   display: flex;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  background: #f3f4f6;
+}
+
+.imagewithfallback_129-25 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
 }
 
 .container_129-26 {
@@ -343,20 +379,33 @@
 }
 .container_129-36 {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 16px;
-  box-sizing: content-box;
-  height: 80px;
-  width: -webkit-fill-available;
-}
 .imagewithfallback_129-37 {
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
   display: flex;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  background: #f3f4f6;
+}
+
+.imagewithfallback_129-37 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}imagewithfallback_129-37 {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
 }
 
 .container_129-38 {
@@ -472,7 +521,38 @@
   flex-direction: column;
   gap: 24px;
   width: 100%;
-  order: 4;
+}
+
+/* Asegurar que ninguna imagen sea demasiado grande */
+.frame-73_129-274 img {
+  max-width: 80px !important;
+  max-height: 80px !important;
+  width: 80px !important;
+  height: 80px !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+}
+
+.container_129-200 img {
+  max-width: 80px !important;
+  max-height: 80px !important;
+  width: 80px !important;
+  height: 80px !important;
+  object-fit: cover !important;
+  border-radius: 50% !important;
+}
+
+/* Asegurar que todos los contenedores de imagen tengan el tamaño correcto */
+.frame-73_129-274 [class*="imagewithfallback"] {
+  width: 80px !important;
+  height: 80px !important;
+  min-width: 80px !important;
+  min-height: 80px !important;
+  max-width: 80px !important;
+  max-height: 80px !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
 }
 .container_129-200 {
   display: grid;
@@ -507,10 +587,19 @@
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
-  border-radius: 33554400px;
+  border-radius: 50%;
   background: #f3f4f6;
   width: 80px;
   height: 80px;
+  flex-shrink: 0;
+}
+
+.imagewithfallback_129-203 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
 }
 
 .container_129-204 {
@@ -630,21 +719,34 @@
   gap: 16px;
   border-radius: 10px;
   background: var(--surface-700);
-  min-height: 192px;
-}
-.container_129-214 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 16px;
-  box-sizing: content-box;
-  height: 80px;
-  width: -webkit-fill-available;
-}
 .imagewithfallback_129-215 {
   position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  background: #f3f4f6;
+}
+
+.imagewithfallback_129-215 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}imagewithfallback_129-215 {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+} position: relative;
   box-sizing: border-box;
   overflow: hidden;
   display: flex;
@@ -767,21 +869,34 @@
   gap: 16px;
   border-radius: 10px;
   background: var(--surface-700);
-  min-height: 192px;
-}
-.container_129-226 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 16px;
-  box-sizing: content-box;
-  height: 80px;
-  width: -webkit-fill-available;
-}
 .imagewithfallback_129-227 {
   position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  background: #f3f4f6;
+}
+
+.imagewithfallback_129-227 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}imagewithfallback_129-227 {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+} position: relative;
   box-sizing: border-box;
   overflow: hidden;
   display: flex;
@@ -928,10 +1043,19 @@
   position: relative;
   box-sizing: border-box;
   overflow: hidden;
-  border-radius: 33554400px;
+  border-radius: 50%;
   background: #f3f4f6;
   width: 80px;
   height: 80px;
+  flex-shrink: 0;
+}
+
+.imagewithfallback_129-240 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
 }
 
 .container_129-241 {
@@ -1051,21 +1175,34 @@
   gap: 16px;
   border-radius: 10px;
   background: var(--surface-700);
-  min-height: 192px;
-}
-.container_129-251 {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 16px;
-  box-sizing: content-box;
-  height: 80px;
-  width: -webkit-fill-available;
-}
 .imagewithfallback_129-252 {
   position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  background: #f3f4f6;
+}
+
+.imagewithfallback_129-252 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}imagewithfallback_129-252 {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+} position: relative;
   box-sizing: border-box;
   overflow: hidden;
   display: flex;
@@ -1179,16 +1316,25 @@
   height: 48px;
 }
 
-.container_129-262 {
-  padding: 24px 24px 0px 24px;
+.imagewithfallback_129-264 {
+  position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  gap: 16px;
-  border-radius: 10px;
-  background: var(--surface-700);
-  min-height: 192px;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  background: #f3f4f6;
+}
+
+.imagewithfallback_129-264 img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+} min-height: 192px;
 }
 .container_129-263 {
   display: flex;
@@ -1197,12 +1343,16 @@
   flex-wrap: nowrap;
   align-items: center;
   gap: 16px;
-  box-sizing: content-box;
-  height: 80px;
-  width: -webkit-fill-available;
-}
 .imagewithfallback_129-264 {
   position: relative;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+} position: relative;
   box-sizing: border-box;
   overflow: hidden;
   display: flex;
@@ -1319,7 +1469,6 @@
 .paragraph_129-8 {
   display: block;
   margin-bottom: 24px;
-  order: 3;
 }
 
 .text-artistas-que-sigues_129-9 {
@@ -1337,7 +1486,6 @@
 .paragraph_129-275 {
   display: block;
   margin-bottom: 24px;
-  order: 1;
 }
 
 .text-artistas-destacados_129-276 {

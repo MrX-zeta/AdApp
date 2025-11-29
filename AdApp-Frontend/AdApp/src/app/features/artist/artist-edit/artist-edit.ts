@@ -43,6 +43,9 @@ export class ArtistEdit implements OnInit {
   editingSongId?: number;
   editingEventId?: number;
   followers: number = 0;
+  profileImageUrl: string = '/media/icons/perfil.png';
+  isUploadingImage: boolean = false;
+  currentPassword: string = '';
 
   phoneValidator(control: AbstractControl): ValidationErrors | null {
     if (!control.value) {
@@ -156,6 +159,14 @@ export class ArtistEdit implements OnInit {
               email: artist.correo || '',
             });
             
+            // Cargar foto de perfil si existe
+            if (artist.fotoUrl) {
+              this.profileImageUrl = `http://localhost:8081${artist.fotoUrl}`;
+            }
+            
+            // Guardar la contraseña actual para futuras actualizaciones
+            this.currentPassword = artist.contrasena;
+            
             console.log('Form after patchValue:', this.form.value);
             this.loadSongs(id);
             this.loadEvents(id);
@@ -265,13 +276,18 @@ export class ArtistEdit implements OnInit {
     const formValue = this.form.getRawValue();
     console.log('Form value:', formValue);
     
+    // Extraer solo el path relativo de la foto (sin http://localhost:8081)
+    const photoPath = this.profileImageUrl.includes('http://localhost:8081') 
+      ? this.profileImageUrl.replace('http://localhost:8081', '')
+      : (this.profileImageUrl === '/media/icons/perfil.png' ? '' : this.profileImageUrl);
+    
     const payload = {
       id: this.artistId,
       nombre: formValue.name,
       correo: formValue.email,
-      contrasena: '', // Keep existing password
+      contrasena: this.currentPassword, // Keep existing password
       rol: 'artist',
-      fotoUrl: '',
+      fotoUrl: photoPath,
       contactNum: formValue.phone || '',
       instagram: formValue.instagram || '',
       facebook: formValue.facebook || '',
@@ -498,5 +514,85 @@ export class ArtistEdit implements OnInit {
         }
       });
     }
+  }
+
+  triggerFileInput() {
+    const fileInput = document.getElementById('profileImageInput') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.click();
+    }
+  }
+
+  onProfileImageSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      
+      // Validar que sea una imagen
+      if (!file.type.startsWith('image/')) {
+        alert('Por favor selecciona un archivo de imagen válido');
+        return;
+      }
+      
+      // Validar tamaño (máximo 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('La imagen no debe superar los 5MB');
+        return;
+      }
+      
+      this.uploadProfileImage(file);
+    }
+  }
+
+  uploadProfileImage(file: File) {
+    if (!this.artistId) {
+      console.error('No artist ID available');
+      return;
+    }
+
+    this.isUploadingImage = true;
+    const formData = new FormData();
+    formData.append('file', file);
+
+    this.apiService.post<{ imageUrl: string }>('/upload/image', formData).subscribe({
+      next: (response) => {
+        console.log('Image uploaded successfully:', response);
+        this.profileImageUrl = `http://localhost:8081${response.imageUrl}`;
+        
+        // Actualizar la URL de la foto en el perfil del artista
+        this.updateArtistPhotoUrl(response.imageUrl);
+        
+        this.isUploadingImage = false;
+      },
+      error: (error) => {
+        console.error('Error uploading image:', error);
+        alert('Error al subir la imagen. Por favor intenta de nuevo.');
+        this.isUploadingImage = false;
+      }
+    });
+  }
+
+  updateArtistPhotoUrl(photoUrl: string) {
+    if (!this.artistId) return;
+
+    const updatePayload = {
+      id: this.artistId,
+      nombre: this.form.value.name,
+      correo: this.form.value.email,
+      contrasena: this.currentPassword, // Usar la contraseña actual
+      rol: 'artist',
+      fotoUrl: photoUrl,
+      contactNum: this.form.value.phone || '',
+      description: this.form.value.description
+    };
+
+    this.apiService.put(`/artist/${this.artistId}/`, updatePayload).subscribe({
+      next: () => {
+        console.log('Artist photo URL updated successfully');
+      },
+      error: (error) => {
+        console.error('Error updating artist photo URL:', error);
+      }
+    });
   }
 }

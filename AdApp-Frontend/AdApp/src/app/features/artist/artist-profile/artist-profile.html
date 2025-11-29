@@ -1,7 +1,7 @@
 ﻿<div class="page">
 	<section class="profile-card">
 		<header class="profile-header">
-			<img class="avatar" src="/media/icons/perfil.png" alt="avatar" />
+			<img class="avatar" [src]="artist.profileImage" [alt]="artist.name" />
 			<div class="header-info">
 				<h2 class="artist-name">{{ artist.name | uppercase }}</h2>
 				<p class="followers"><strong>{{ artist.followers | number }}</strong> SEGUIDORES</p>
