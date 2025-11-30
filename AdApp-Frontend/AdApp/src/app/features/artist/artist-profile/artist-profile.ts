@@ -22,7 +22,7 @@ interface ArtistResponse {
   styleUrl: './artist-profile.css',
 })
 export class ArtistProfile implements OnInit {
-  // Artist profile data
+
   artist = {
     name: '',
     description: '',
@@ -35,7 +35,6 @@ export class ArtistProfile implements OnInit {
     followers: 0
   };
 
-  // Lists for songs and events
   songs: any[] = [];
   events: any[] = [];
   isLoading = false;

@@ -184,4 +184,33 @@
 			<p>Tu información ha sido actualizada exitosamente.</p>
 		</div>
 	</div>
+
+	<div class="modal-backdrop" *ngIf="showAlertModal" (click)="alertType !== 'confirm' ? closeAlert() : null"></div>
+	<div class="modal alert-modal" [ngClass]="alertType" *ngIf="showAlertModal" role="dialog" aria-modal="true">
+		<header class="modal-header">
+			<h4 *ngIf="alertTitle">{{ alertTitle }}</h4>
+			<h4 *ngIf="!alertTitle && alertType === 'success'">¡Éxito!</h4>
+			<h4 *ngIf="!alertTitle && alertType === 'error'">Error</h4>
+			<h4 *ngIf="!alertTitle && alertType === 'warning'">Atención</h4>
+			<h4 *ngIf="!alertTitle && alertType === 'confirm'">Confirmar</h4>
+
+		</header>
+		<div class="modal-body alert-body">
+			<div class="alert-icon">
+				<span *ngIf="alertType === 'success'">✓</span>
+				<span *ngIf="alertType === 'error'">✕</span>
+				<span *ngIf="alertType === 'warning' || alertType === 'confirm'">!</span>
+			</div>
+			<p>{{ alertMessage }}</p>
+		</div>
+		<footer class="modal-actions alert-actions">
+			<ng-container *ngIf="alertType === 'confirm'; else singleButton">
+				<button class="btn danger" type="button" (click)="confirmAction()">Eliminar</button>
+				<button class="btn ghost" type="button" (click)="closeAlert()">Cancelar</button>
+			</ng-container>
+			<ng-template #singleButton>
+				<button class="btn" [ngClass]="{'success': alertType === 'success', 'danger': alertType === 'error', 'warning': alertType === 'warning'}" type="button" (click)="closeAlert()">Aceptar</button>
+			</ng-template>
+		</footer>
+	</div>
 </div>

@@ -6,9 +6,18 @@
   --blue-500: #002266;
   --blue-400: #4A9EFF;
   --blue-300: #2B78D4;
-  --red-100: #ff9c9c
-  ;
+  --red-100: #ff9c9c;
+
+  --warning-500: #f59e0b;
+  --warning-600: #d97706;
+  --gradient-warning: linear-gradient(90deg, var(--warning-600), var(--warning-500));
+
+  --error-500: #ef4444;
+  --error-600: #dc2626;
+  --gradient-red: linear-gradient(90deg, var(--error-600), var(--error-500));
+
   --gradient-blue: linear-gradient(90deg, var(--blue-500), var(--blue-300));
+
   --success-500: #2ecc71; 
   --success-600: #179b4a;
   --gradient-success: linear-gradient(90deg, var(--success-600), var(--success-500));
