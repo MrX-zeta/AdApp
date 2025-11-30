@@ -393,8 +393,11 @@ export class ArtistEdit implements OnInit {
 
   submitSong() {
     if (this.editingSongId) {
-      // Editar canción existente (solo título)
-      if (this.songForm.invalid) { this.songForm.markAllAsTouched(); return; }
+      // Editar canción existente (título y/o archivo)
+      if (this.songForm.get('title')!.invalid) { 
+        this.songForm.get('title')!.markAsTouched(); 
+        return; 
+      }
       
       const song = this.songs.find(s => s.id === this.editingSongId);
       if (!song) {
@@ -402,28 +405,31 @@ export class ArtistEdit implements OnInit {
         return;
       }
 
-      const payload = { 
-        id: this.editingSongId,
-        artistId: this.artistId!,
-        title: this.songForm.get('title')!.value,
-        url: song.url // Mantener la URL existente
-      };
-      
       this.isLoading = true;
-      this.apiService.put(`/songs/${this.editingSongId}/`, payload).subscribe({
-        next: () => {
-          console.log('Canción actualizada');
-          if (song) song.title = payload.title;
-          this.isLoading = false;
-          this.closeSong();
-          this.loadSongs(this.artistId!);
-        },
-        error: (error) => {
-          console.error('Error al actualizar canción:', error);
-          this.showAlert('Error al actualizar la canción', 'error');
-          this.isLoading = false;
-        }
-      });
+
+      // Si hay un nuevo archivo de audio, subirlo primero
+      if (this.songFile) {
+        console.log('Subiendo nuevo archivo de audio para reemplazar...');
+        const audioFormData = new FormData();
+        audioFormData.append('file', this.songFile);
+
+        this.apiService.post<{ audioUrl: string }>('/upload/audio', audioFormData).subscribe({
+          next: (uploadResponse) => {
+            console.log('Nuevo audio subido:', uploadResponse);
+            
+            // Actualizar canción con nueva URL
+            this.updateSongData(this.editingSongId!, song, uploadResponse.audioUrl);
+          },
+          error: (error) => {
+            console.error('Error al subir nuevo audio:', error);
+            this.isLoading = false;
+            this.showAlert('Error al subir el nuevo archivo de audio: ' + (error.error?.message || error.message), 'error');
+          }
+        });
+      } else {
+        // Solo actualizar el título, mantener URL existente
+        this.updateSongData(this.editingSongId, song, song.url);
+      }
     } else {
       // Crear nueva canción con subida de archivo
       if (this.songForm.invalid || !this.songFile) { 
@@ -558,7 +564,11 @@ export class ArtistEdit implements OnInit {
     const song = this.songs.find(s => s.id === songId);
     if (song) {
       this.editingSongId = songId;
-      this.songForm.patchValue({ title: song.title });
+      this.songForm.patchValue({ 
+        title: song.title,
+        audio: null // Permitir cambiar el archivo
+      });
+      this.songFile = undefined; // Limpiar archivo anterior
       this.showSongModal = true;
     }
   }
@@ -694,29 +704,45 @@ export class ArtistEdit implements OnInit {
   }
 
   togglePlaySong(song: any) {
+    console.log('togglePlaySong called with song:', song);
     const audioUrl = `http://localhost:8081${song.url}`;
+    console.log('Audio URL:', audioUrl);
     
     // Si no hay reproductor o es una canción diferente
     if (!this.audioPlayer || this.currentPlayingSong?.id !== song.id) {
       // Pausar canción anterior si existe
       if (this.audioPlayer) {
         this.audioPlayer.pause();
+        this.audioPlayer.currentTime = 0;
+        this.audioPlayer = null;
       }
       
-      // Crear nuevo reproductor
-      this.audioPlayer = new Audio(audioUrl);
-      this.currentPlayingSong = song;
-      
-      // Reproducir
-      this.audioPlayer.play().catch(error => {
-        console.error('Error al reproducir audio:', error);
-        this.showAlert('Error al reproducir la canción', 'error');
-      });
-      
-      // Limpiar cuando termine
-      this.audioPlayer.onended = () => {
-        this.currentPlayingSong = null;
-      };
+      // Esperar un momento antes de crear el nuevo reproductor
+      setTimeout(() => {
+        // Crear nuevo reproductor con la URL actualizada
+        this.audioPlayer = new Audio(audioUrl);
+        this.currentPlayingSong = { ...song }; // Crear una copia para evitar referencias
+        
+        // Configurar manejadores de error
+        this.audioPlayer.onerror = (error) => {
+          console.error('Error en el reproductor de audio:', error);
+          this.showAlert('Error al cargar el archivo de audio', 'error');
+          this.audioPlayer = null;
+          this.currentPlayingSong = null;
+        };
+        
+        // Reproducir
+        this.audioPlayer.play().catch(error => {
+          console.error('Error al reproducir audio:', error);
+          this.showAlert('Error al reproducir la canción', 'error');
+        });
+        
+        // Limpiar cuando termine
+        this.audioPlayer.onended = () => {
+          this.currentPlayingSong = null;
+          this.audioPlayer = null;
+        };
+      }, 100);
     } else {
       // Misma canción: pausar o reanudar
       if (this.audioPlayer.paused) {
@@ -727,6 +753,42 @@ export class ArtistEdit implements OnInit {
         this.audioPlayer.pause();
       }
     }
+  }
+
+  private updateSongData(songId: number, song: any, audioUrl: string) {
+    const payload = { 
+      id: songId,
+      artistId: this.artistId!,
+      title: this.songForm.get('title')!.value,
+      url: audioUrl,
+      dateUploaded: song.dateUploaded || song.date // Mantener la fecha original
+    };
+    
+    this.apiService.put(`/songs/${songId}/`, payload).subscribe({
+      next: () => {
+        console.log('Canción actualizada exitosamente');
+        
+        // Si la canción actualizada es la que se está reproduciendo, detenerla
+        if (this.currentPlayingSong?.id === songId) {
+          if (this.audioPlayer) {
+            this.audioPlayer.pause();
+            this.audioPlayer.currentTime = 0;
+            this.audioPlayer = null;
+          }
+          this.currentPlayingSong = null;
+        }
+        
+        this.isLoading = false;
+        this.closeSong();
+        this.loadSongs(this.artistId!);
+        this.showAlert('Canción actualizada exitosamente', 'success');
+      },
+      error: (error) => {
+        console.error('Error al actualizar canción:', error);
+        this.isLoading = false;
+        this.showAlert('Error al actualizar la canción: ' + (error.error?.message || error.message), 'error');
+      }
+    });
   }
 
   deleteAccount() {

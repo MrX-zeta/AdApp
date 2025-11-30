@@ -25,18 +25,12 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
-    // Configurar Koin (inyección de dependencias)
     configureFrameworks()
-
-    // Configurar base de datos PostgreSQL
     configureDatabases()
-
-    // Configurar plugins
     configureSerialization()
     configureStaticFiles()
 
-    // Configurar rutas (los repositorios se inyectan automáticamente con Koin)
-    configureHealthRouting() // Health check endpoints
+    configureHealthRouting() // test connection to postgres
     configureUserRouting()
     configureArtistRouting()
     configureFollowerRouting()

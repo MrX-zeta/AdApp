@@ -10,9 +10,10 @@ jwt:
   domain: "https://jwt-provider-domain/"
   audience: "jwt-audience"
   realm: "ktor sample app"
+  secret: "${JWT_SECRET}"
 postgres:
-  url: "jdbc:postgresql://3.214.47.23:5432/adapp"
+  url: "${DB_URL}"
   driver: "org.postgresql.Driver"
-  user: "admin_adapp"
-  password: "Xy9#mP2!oLq"
+  user: "${DB_USER}"
+  password: "${DB_PASSWORD}"
   maxPoolSize: 10

@@ -16,13 +16,15 @@ class PostgresSongsRepository : SongRepository {
                 it[artistId] = song.artistId.value
                 it[title] = song.title.value
                 it[url] = song.url.value
+                it[dateUploaded] = song.dateUploaded
             } get SongsTable.id
 
             Song(
                 SongId = SongId(insertedId),
                 artistId = song.artistId,
                 title = song.title,
-                url = song.url
+                url = song.url,
+                dateUploaded = song.dateUploaded
             )
         }
     }
@@ -33,6 +35,7 @@ class PostgresSongsRepository : SongRepository {
                 it[artistId] = song.artistId.value
                 it[title] = song.title.value
                 it[url] = song.url.value
+                it[dateUploaded] = song.dateUploaded
             }
         }
     }
@@ -66,7 +69,8 @@ class PostgresSongsRepository : SongRepository {
             SongId = SongId(row[SongsTable.id]),
             artistId = UserId(row[SongsTable.artistId]),
             title = SongTitle(row[SongsTable.title] ?: ""),
-            url = SongUrl(row[SongsTable.url] ?: "")
+            url = SongUrl(row[SongsTable.url] ?: ""),
+            dateUploaded = row[SongsTable.dateUploaded]
         )
     }
 }

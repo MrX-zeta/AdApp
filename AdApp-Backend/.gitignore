@@ -34,3 +34,9 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Environment Variables & Local Config ###
+.env
+*.env
+*.env.local
+**/application-local.yaml

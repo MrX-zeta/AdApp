@@ -93,7 +93,7 @@ fun Application.configureSongRouting() {
             }
             val payload = call.receive<EditSongRequest>()
             try {
-                controller.edit(payload.id, payload.artistId, payload.title, payload.url)
+                controller.edit(payload.id, payload.artistId, payload.title, payload.url, payload.dateUploaded)
                 call.respond(HttpStatusCode.OK, mapOf("message" to "Song editada"))
             } catch (e: SongNotFoundError) {
                 call.respond(HttpStatusCode.NotFound, mapOf("message" to e.message))
@@ -110,7 +110,7 @@ fun Application.configureSongRouting() {
             }
             val payload = call.receive<EditSongRequest>()
             try {
-                controller.edit(payload.id, payload.artistId, payload.title, payload.url)
+                controller.edit(payload.id, payload.artistId, payload.title, payload.url, payload.dateUploaded)
                 call.respond(HttpStatusCode.OK, mapOf("message" to "Song editada"))
             } catch (e: SongNotFoundError) {
                 call.respond(HttpStatusCode.NotFound, mapOf("message" to e.message))
