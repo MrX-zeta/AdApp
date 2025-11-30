@@ -200,9 +200,23 @@ word-break: break-word;
 
 .post header {
 	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 12px;
+	margin-bottom: 8px;
+}
+
+.post.song header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.song-info {
+	display: flex;
 	flex-direction: column;
 	gap: 4px;
-	margin-bottom: 8px;
+	flex: 1;
 }
 
 .post .title {
@@ -228,6 +242,34 @@ word-break: break-word;
 	margin: 0;
 	line-height: 1.5;
 	text-align: justify;
+}
+
+.play-button {
+	background: linear-gradient(135deg, #4a9eff 0%, #357abd 100%);
+	border: 0;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	color: #fff;
+	font-size: 14px;
+	transition: all 0.3s ease;
+	flex-shrink: 0;
+}
+
+.play-button:hover {
+	transform: scale(1.1);
+	box-shadow: 0 4px 12px rgba(74, 158, 255, 0.4);
+}
+
+.play-button span {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 2px;
 }
 
 .empty-state {

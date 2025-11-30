@@ -1,8 +1,8 @@
 package com.adapp.backend.Event.Infrastructure.Routes
 
 import com.adapp.backend.Event.Domain.Exceptions.EventNotFoundError
+import com.adapp.backend.Event.Domain.Repositories.EventRepository
 import com.adapp.backend.Event.Infrastructure.Controllers.KtorEventController
-import com.adapp.backend.Event.Infrastructure.Repositories.InMemoryEventRepository
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.request.receive
@@ -13,10 +13,11 @@ import io.ktor.server.routing.post
 import io.ktor.server.routing.put
 import io.ktor.server.routing.routing
 import kotlinx.serialization.Serializable
+import org.koin.ktor.ext.inject
 import java.util.Date
 
 fun Application.configureEventRouting() {
-    val repo = InMemoryEventRepository()
+    val repo by inject<EventRepository>()
     val controller = KtorEventController(repo)
 
     routing {

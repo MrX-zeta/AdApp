@@ -95,6 +95,15 @@
 .btn.primary { background: var(--gradient-blue); color: #fff; }
 .btn.success { background: var(--gradient-success); color: #fff; }
 .btn.ghost { background: transparent; color: var(--gray-200); border: 1px solid #3a3a3a; }
+.btn.danger { 
+	background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+	color: #fff;
+	transition: all 0.3s ease;
+}
+.btn.danger:hover {
+	background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+	box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
 
 .form { display: grid; gap: 24px; }
 .row { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
@@ -158,10 +167,37 @@
 .feed h3 { color: #ffffff; font-weight: 600; margin: 10px 0 16px; }
 .post { background: #222222; border: 1px solid #333333; border-radius: 10px; padding: 16px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px; transition: all 0.3s ease; }
 .post:hover { border-color: #4a9eff; box-shadow: 0 0 12px rgba(74, 158, 255, 0.1); }
-.post header { display: flex; flex-direction: column; gap: 4px; margin-bottom: 0; }
+.post header { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 0; }
+.post.song header { display: flex; justify-content: space-between; align-items: center; }
+.song-info { display: flex; flex-direction: column; gap: 4px; flex: 1; }
 .post .title { color: var(--blue-300); text-decoration: none; font-weight: 600; font-size: 15px; }
 .post time { color: #7f90b8; font-size: 12px; }
 .post p { color: #ffffff; font-size: 14px; margin: 0; line-height: 1.5; }
+.play-button {
+	background: var(--gradient-blue);
+	border: 0;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	color: #fff;
+	font-size: 14px;
+	transition: all 0.3s ease;
+	flex-shrink: 0;
+}
+.play-button:hover {
+	transform: scale(1.1);
+	box-shadow: 0 4px 12px rgba(74, 158, 255, 0.4);
+}
+.play-button span {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 2px;
+}
 .post-actions { display: flex; gap: 10px; margin-top: 12px; }
 .post-actions .icon { background: transparent; border: 0; padding: 6px; cursor: pointer; }
 .post-actions img { width: 18px; height: 18px; opacity: .85; }

@@ -1,7 +1,7 @@
 package com.adapp.backend.FollowerArtist.Infraestructure.Routes
 
 import com.adapp.backend.FollowerArtist.Infraestructure.Controllers.KtorFollowerArtistController
-import com.adapp.backend.Artist.Infrastructure.Repositories.InMemoryArtistRepository
+import com.adapp.backend.Artist.Domain.Repositories.ArtistRepository
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
@@ -9,9 +9,9 @@ import io.ktor.server.routing.*
 import org.koin.ktor.ext.inject
 
 fun Application.configureFollowerArtistRouting() {
-    // Inyectar controller usando Koin
+    // Inyectar controller usando Koin (ahora usa PostgreSQL)
     val controller: KtorFollowerArtistController by inject()
-    val artistRepo: InMemoryArtistRepository by inject()
+    val artistRepo: ArtistRepository by inject()
 
     routing {
         // POST /follower/{followerId}/follow/{artistId} - Seguir a un artista

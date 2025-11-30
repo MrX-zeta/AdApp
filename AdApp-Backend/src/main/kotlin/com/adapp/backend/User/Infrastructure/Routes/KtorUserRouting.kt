@@ -1,11 +1,11 @@
 package com.adapp.backend.User.Infrastructure.Routes
 
-import com.adapp.backend.User.Infrastructure.Repositories.InMemoryUserRepository
+import com.adapp.backend.User.Domain.Repositories.UserRepository
 import com.adapp.backend.User.Infrastructure.Controllers.KtorUserController
 import com.adapp.backend.User.Domain.Exceptions.UserNotFoundError
-import com.adapp.backend.Artist.Infrastructure.Repositories.InMemoryArtistRepository
+import com.adapp.backend.Artist.Domain.Repositories.ArtistRepository
 import com.adapp.backend.Artist.Infrastructure.Controllers.KtorArtistController
-import com.adapp.backend.Follower.Infrastructure.Repositories.InMemoryFollowerRepository
+import com.adapp.backend.Follower.Domain.Repsitories.FollowerRepository
 import com.adapp.backend.Follower.Infrastructure.Controllers.KtorFollowerController
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -16,10 +16,10 @@ import kotlinx.serialization.Serializable
 import org.koin.ktor.ext.inject
 
 fun Application.configureRouting(){
-    // Inyectar repositorios usando Koin
-    val userRepo: InMemoryUserRepository by inject()
-    val artistRepo: InMemoryArtistRepository by inject()
-    val followerRepo: InMemoryFollowerRepository by inject()
+    // Inyectar repositorios usando Koin (ahora usa PostgreSQL)
+    val userRepo: UserRepository by inject()
+    val artistRepo: ArtistRepository by inject()
+    val followerRepo: FollowerRepository by inject()
 
     val controller = KtorUserController(userRepo)
     val artistController = KtorArtistController(artistRepo)
@@ -30,21 +30,25 @@ fun Application.configureRouting(){
     routing {
         // Register endpoint
         post("/auth/register"){
-            val registerData = call.receive<RegisterRequest>()
-            
-            // Verificar si el email ya existe
-            val allUsers = controller.getAll()
-            val existingUser = allUsers.find { it.correo == registerData.email }
-            
-            if(existingUser != null){
-                call.respond(HttpStatusCode.Conflict, mapOf("message" to "El correo ya está registrado"))
-                return@post
-            }
-            
+            try {
+                val registerData = call.receive<RegisterRequest>()
+
+                // Verificar si el email ya existe
+                val allUsers = controller.getAll()
+                val existingUser = allUsers.find { it.correo == registerData.email }
+
+                if(existingUser != null){
+                    call.respond(HttpStatusCode.Conflict, mapOf(
+                        "error" to "El correo ${registerData.email} ya está registrado",
+                        "message" to "Por favor, utiliza otro correo electrónico"
+                    ))
+                    return@post
+                }
+
             // Generar ID automáticamente
             val newId = if(allUsers.isEmpty()) 1 else allUsers.maxOf { it.id } + 1
             
-            // Crear usuario
+            // Crear usuario en tabla users
             controller.create(
                 id = newId,
                 name = registerData.username,
@@ -53,44 +57,56 @@ fun Application.configureRouting(){
                 rol = registerData.userType
             )
 
-            // Si es artista, también crear registro en artists
+            // Si es artista, también crear registro en artists (solo tabla artists, no users otra vez)
             if (registerData.userType.equals("artist", ignoreCase = true)) {
-                // pasar fotoUrl y contactNum vacíos por ahora
-                artistController.create(
-                    newId,
-                    registerData.username,
-                    registerData.email,
-                    registerData.password,
-                    registerData.userType,
-                    "",
-                    ""
+                // Crear registro SOLO en la tabla artists
+                artistController.createArtistProfile(
+                    id = newId,
+                    fotoUrl = "",
+                    contactNum = "",
+                    description = ""
                 )
             }
             // Si es follower, también crear registro en followers
             else if (registerData.userType.equals("follower", ignoreCase = true)) {
-                followerController.create(
-                    newId,
-                    registerData.username,
-                    registerData.email,
-                    registerData.password,
-                    registerData.userType
-                )
+                // Crear registro SOLO en la tabla followers
+                followerController.createFollowerProfile(newId)
             }
 
-            // Generar token JWT (mock)
-            val token = "mock-jwt-token-$newId"
-            
-            val response = LoginResponse(
-                token = token,
-                user = UserData(
-                    id = newId,
-                    nombre = registerData.username,
-                    correo = registerData.email,
-                    rol = registerData.userType
+                // Generar token JWT (mock)
+                val token = "mock-jwt-token-$newId"
+
+                val response = LoginResponse(
+                    token = token,
+                    user = UserData(
+                        id = newId,
+                        nombre = registerData.username,
+                        correo = registerData.email,
+                        rol = registerData.userType
+                    )
                 )
-            )
-            
-            call.respond(HttpStatusCode.Created, response)
+
+                call.respond(HttpStatusCode.Created, response)
+
+            } catch (e: org.jetbrains.exposed.exceptions.ExposedSQLException) {
+                // Manejar error de llave duplicada de PostgreSQL
+                if (e.message?.contains("users_correo_key") == true) {
+                    call.respond(HttpStatusCode.Conflict, mapOf(
+                        "error" to "El correo ya está registrado en el sistema",
+                        "message" to "Este correo electrónico ya está en uso. Por favor, inicia sesión o usa otro correo."
+                    ))
+                } else {
+                    call.respond(HttpStatusCode.InternalServerError, mapOf(
+                        "error" to "Error al registrar usuario",
+                        "message" to "Ha ocurrido un error en el servidor. Inténtalo más tarde."
+                    ))
+                }
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.InternalServerError, mapOf(
+                    "error" to "Error inesperado",
+                    "message" to (e.message ?: "Error desconocido")
+                ))
+            }
         }
 
         // Login endpoint

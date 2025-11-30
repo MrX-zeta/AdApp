@@ -46,6 +46,20 @@ class KtorFollowerController(private val followerRepo: FollowerRepository) {
         followerRepo.create(follower)
     }
 
+    /**
+     * Crea SOLO el perfil de follower (tabla followers), asumiendo que el usuario ya existe en users
+     */
+    fun createFollowerProfile(id: Int) {
+        val follower = Follower(
+            UserId(id),
+            UserName(""),  // No se usa en la inserción de followers
+            UserEmail(""), // No se usa en la inserción de followers
+            UserPsswd(""), // No se usa en la inserción de followers
+            UserRol("follower") // No se usa en la inserción de followers
+        )
+        followerRepo.create(follower)
+    }
+
     fun edit(oldId: Int, newId: Int, name: String, email: String, passwd: String, rol: String) {
         followerRepo.getOneById(UserId(oldId)) ?: throw UserNotFoundError("follower not found")
 

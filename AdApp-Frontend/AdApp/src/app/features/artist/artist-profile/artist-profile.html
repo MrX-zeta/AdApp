@@ -67,12 +67,21 @@
 
 		<!-- Canciones -->
 		<div *ngIf="songs.length > 0">
-			<article class="post" *ngFor="let song of songs">
+			<article class="post song" *ngFor="let song of songs">
 				<header>
-					<span class="title">{{ song.title || 'Sin título' }}</span>
-					<time>Publicado el {{ song.date | date: 'dd/MM/yyyy' }}</time>
+					<div class="song-info">
+						<span class="title">{{ song.title || 'Sin título' }}</span>
+						<time>Publicado el {{ song.dateUploaded | date: 'dd/MM/yyyy' }}</time>
+					</div>
+					<button 
+						class="play-button" 
+						type="button" 
+						(click)="togglePlaySong(song)"
+						title="{{ currentPlayingSong?.id === song.id && !audioPlayer?.paused ? 'Pausar' : 'Reproducir' }}">
+						<span *ngIf="currentPlayingSong?.id !== song.id || audioPlayer?.paused">▶</span>
+						<span *ngIf="currentPlayingSong?.id === song.id && !audioPlayer?.paused">⏸</span>
+					</button>
 				</header>
-				<p>{{ song.description }}</p>
 			</article>
 		</div>
 

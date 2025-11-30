@@ -46,6 +46,8 @@ export class ArtistEdit implements OnInit {
   profileImageUrl: string = '/media/icons/perfil.png';
   isUploadingImage: boolean = false;
   currentPassword: string = '';
+  audioPlayer: HTMLAudioElement | null = null;
+  currentPlayingSong: any = null;
 
   phoneValidator(control: AbstractControl): ValidationErrors | null {
     if (!control.value) {
@@ -78,8 +80,6 @@ export class ArtistEdit implements OnInit {
     this.eventForm = this.fb.nonNullable.group({
       title: ['', [Validators.required, Validators.maxLength(80)]],
       description: ['', [Validators.required, Validators.maxLength(240)]],
-      eventDate: ['', Validators.required],
-      eventTime: ['', Validators.required],
     });
   }
 
@@ -202,7 +202,12 @@ export class ArtistEdit implements OnInit {
   loadSongs(artistId: number): void {
     this.apiService.get<any[]>('/songs').subscribe({
       next: (songs) => {
-        this.songs = songs.filter(s => s.artistId === artistId);
+        this.songs = songs
+          .filter(s => s.artistId === artistId)
+          .map(s => ({
+            ...s,
+            date: s.dateUploaded || Date.now()
+          }));
         console.log('Songs loaded:', this.songs);
       },
       error: (error) => {
@@ -220,7 +225,12 @@ export class ArtistEdit implements OnInit {
 
     this.apiService.get<any[]>('/event').subscribe({
       next: (events) => {
-        this.events = events.filter(e => e.artistId === targetArtistId);
+        this.events = events
+          .filter(e => e.artistId === targetArtistId)
+          .map(e => ({
+            ...e,
+            date: e.dateEvent || e.eventDate || Date.now()
+          }));
         console.log('Events loaded:', this.events);
       },
       error: (error) => {
@@ -239,20 +249,10 @@ export class ArtistEdit implements OnInit {
 
   publishEvent() {
     this.editingEventId = undefined;
-    
-    // Establecer valores predeterminados: mañana a las 6:00 PM
-    const tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const dateString = tomorrow.toISOString().slice(0, 10); // YYYY-MM-DD
-    const defaultTime = '18:00'; // 6:00 PM
-    
     this.eventForm.reset({
       title: '',
-      description: '',
-      eventDate: dateString,
-      eventTime: defaultTime
+      description: ''
     });
-    
     this.showEventModal = true;
   }
 
@@ -338,20 +338,30 @@ export class ArtistEdit implements OnInit {
 
   submitSong() {
     if (this.editingSongId) {
-      // Editar canción existente
+      // Editar canción existente (solo título)
       if (this.songForm.invalid) { this.songForm.markAllAsTouched(); return; }
+      
+      const song = this.songs.find(s => s.id === this.editingSongId);
+      if (!song) {
+        alert('Error: No se encontró la canción');
+        return;
+      }
+
       const payload = { 
+        id: this.editingSongId,
         title: this.songForm.get('title')!.value,
-        artistId: this.artistId
+        artistId: this.artistId!,
+        url: song.url // Mantener la URL existente
       };
+      
       this.isLoading = true;
       this.apiService.put(`/songs/${this.editingSongId}/`, payload).subscribe({
         next: () => {
           console.log('Canción actualizada');
-          const song = this.songs.find(s => s.id === this.editingSongId);
           if (song) song.title = payload.title;
           this.isLoading = false;
           this.closeSong();
+          this.loadSongs(this.artistId!);
         },
         error: (error) => {
           console.error('Error al actualizar canción:', error);
@@ -360,15 +370,62 @@ export class ArtistEdit implements OnInit {
         }
       });
     } else {
-      // Crear nueva canción
-      if (this.songForm.invalid || !this.songFile) { this.songForm.markAllAsTouched(); return; }
-      const payload = { 
-        title: this.songForm.get('title')!.value, 
-        file: this.songFile,
-        artistId: this.artistId
-      };
-      console.log('Subir canción', payload);
-      this.closeSong();
+      // Crear nueva canción con subida de archivo
+      if (this.songForm.invalid || !this.songFile) { 
+        this.songForm.markAllAsTouched(); 
+        if (!this.songFile) {
+          alert('Por favor selecciona un archivo de audio');
+        }
+        return; 
+      }
+
+      if (!this.artistId) {
+        alert('Error: No se pudo identificar el artista');
+        return;
+      }
+
+      this.isLoading = true;
+      console.log('Subiendo archivo de audio...');
+
+      // Paso 1: Subir el archivo de audio
+      const audioFormData = new FormData();
+      audioFormData.append('file', this.songFile);
+
+      this.apiService.post<{ audioUrl: string }>('/upload/audio', audioFormData).subscribe({
+        next: (uploadResponse) => {
+          console.log('Audio subido:', uploadResponse);
+          
+          // Paso 2: Crear el registro de la canción en la BD
+          const newId = this.songs.length > 0 ? Math.max(...this.songs.map(s => s.id)) + 1 : 1;
+          const songPayload = {
+            id: newId,
+            artistId: this.artistId!,
+            title: this.songForm.get('title')!.value,
+            url: uploadResponse.audioUrl,
+            dateUploaded: Date.now()
+          };
+
+          this.apiService.post('/songs', songPayload).subscribe({
+            next: (response) => {
+              console.log('Canción creada exitosamente:', response);
+              this.isLoading = false;
+              this.closeSong();
+              this.loadSongs(this.artistId!);
+              alert('Canción subida exitosamente');
+            },
+            error: (error) => {
+              console.error('Error al crear canción:', error);
+              this.isLoading = false;
+              alert('Error al registrar la canción: ' + (error.error?.message || error.message));
+            }
+          });
+        },
+        error: (error) => {
+          console.error('Error al subir audio:', error);
+          this.isLoading = false;
+          alert('Error al subir el archivo de audio: ' + (error.error?.message || error.message));
+        }
+      });
     }
   }
 
@@ -385,15 +442,11 @@ export class ArtistEdit implements OnInit {
     
     if (this.editingEventId) {
       // Editar evento existente
-      const dateStr = this.eventForm.get('eventDate')!.value;
-      const timeStr = this.eventForm.get('eventTime')!.value;
-      const dateTime = new Date(`${dateStr}T${timeStr}`);
-      
       const payload = {
         artistId: this.artistId,
         title: this.eventForm.get('title')!.value,
         description: this.eventForm.get('description')!.value,
-        dateEvent: dateTime.getTime(),
+        dateEvent: Date.now(),
         status: 'active'
       };
       this.isLoading = true;
@@ -418,16 +471,13 @@ export class ArtistEdit implements OnInit {
     } else {
       // Crear nuevo evento
       const newId = this.events.length > 0 ? Math.max(...this.events.map(e => e.id)) + 1 : 1;
-      const dateStr = this.eventForm.get('eventDate')!.value;
-      const timeStr = this.eventForm.get('eventTime')!.value;
-      const dateTime = new Date(`${dateStr}T${timeStr}`);
       
       const payload = {
         id: newId,
         artistId: this.artistId,
         title: this.eventForm.get('title')!.value,
         description: this.eventForm.get('description')!.value,
-        dateEvent: dateTime.getTime(),
+        dateEvent: Date.now(),
         status: 'active'
       };
       
@@ -464,16 +514,9 @@ export class ArtistEdit implements OnInit {
     const event = this.events.find(e => e.id === eventId);
     if (event) {
       this.editingEventId = eventId;
-      // Convertir timestamp a fecha y hora separadas
-      const eventDate = new Date(event.eventDate);
-      const dateString = eventDate.toISOString().slice(0, 10); // YYYY-MM-DD
-      const timeString = eventDate.toTimeString().slice(0, 5); // HH:MM
-      
       this.eventForm.patchValue({ 
         title: event.title,
-        description: event.description,
-        eventDate: dateString,
-        eventTime: timeString
+        description: event.description
       });
       this.showEventModal = true;
     }
@@ -592,6 +635,95 @@ export class ArtistEdit implements OnInit {
       },
       error: (error) => {
         console.error('Error updating artist photo URL:', error);
+      }
+    });
+  }
+
+  togglePlaySong(song: any) {
+    const audioUrl = `http://localhost:8081${song.url}`;
+    
+    // Si no hay reproductor o es una canción diferente
+    if (!this.audioPlayer || this.currentPlayingSong?.id !== song.id) {
+      // Pausar canción anterior si existe
+      if (this.audioPlayer) {
+        this.audioPlayer.pause();
+      }
+      
+      // Crear nuevo reproductor
+      this.audioPlayer = new Audio(audioUrl);
+      this.currentPlayingSong = song;
+      
+      // Reproducir
+      this.audioPlayer.play().catch(error => {
+        console.error('Error al reproducir audio:', error);
+        alert('Error al reproducir la canción');
+      });
+      
+      // Limpiar cuando termine
+      this.audioPlayer.onended = () => {
+        this.currentPlayingSong = null;
+      };
+    } else {
+      // Misma canción: pausar o reanudar
+      if (this.audioPlayer.paused) {
+        this.audioPlayer.play().catch(error => {
+          console.error('Error al reproducir audio:', error);
+        });
+      } else {
+        this.audioPlayer.pause();
+      }
+    }
+  }
+
+  deleteAccount() {
+    if (!this.artistId) {
+      alert('Error: No se pudo identificar el artista');
+      return;
+    }
+
+    const confirmation = confirm(
+      '¿Estás seguro de que quieres eliminar tu cuenta?\n\n' +
+      'Esta acción NO se puede deshacer y eliminará:\n' +
+      '• Tu perfil de artista\n' +
+      '• Todas tus canciones\n' +
+      '• Todos tus eventos\n' +
+      '• Todas tus redes sociales\n' +
+      '• Todos tus seguidores\n\n' +
+      'Escribe "ELIMINAR" en mayúsculas para confirmar:'
+    );
+
+    if (!confirmation) {
+      return;
+    }
+
+    const finalConfirmation = prompt(
+      'Esta es tu última oportunidad.\n\n' +
+      'Escribe "ELIMINAR" (en mayúsculas) para confirmar la eliminación definitiva de tu cuenta:'
+    );
+
+    if (finalConfirmation !== 'ELIMINAR') {
+      alert('Eliminación cancelada. Tu cuenta está segura.');
+      return;
+    }
+
+    this.isLoading = true;
+    console.log('Eliminando cuenta del artista ID:', this.artistId);
+
+    this.apiService.delete(`/artist/${this.artistId}`).subscribe({
+      next: () => {
+        console.log('Cuenta eliminada exitosamente');
+        this.isLoading = false;
+        alert('Tu cuenta ha sido eliminada exitosamente.');
+        
+        // Limpiar localStorage y redirigir al inicio
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('authToken');
+        this.router.navigate(['/']);
+      },
+      error: (error) => {
+        console.error('Error al eliminar la cuenta:', error);
+        this.isLoading = false;
+        alert('Error al eliminar la cuenta: ' + (error.error?.message || error.message));
       }
     });
   }

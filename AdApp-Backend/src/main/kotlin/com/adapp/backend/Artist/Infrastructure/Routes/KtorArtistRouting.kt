@@ -1,8 +1,8 @@
 package com.adapp.backend.Artist.Infrastructure.Routes
 
-import com.adapp.backend.Artist.Infrastructure.Repositories.InMemoryArtistRepository
+import com.adapp.backend.Artist.Domain.Repositories.ArtistRepository
 import com.adapp.backend.Artist.Infrastructure.Controllers.KtorArtistController
-import com.adapp.backend.SocialMedia.Infrastructure.Repositories.InMemorySocialMediaRepository
+import com.adapp.backend.SocialMedia.Domain.Repositories.SocialMediaRepository
 import com.adapp.backend.SocialMedia.Domain.Models.SocialMedia
 import com.adapp.backend.SocialMedia.Domain.Models.SocialMediaId
 import com.adapp.backend.SocialMedia.Domain.Models.SocialMediaUrl
@@ -17,9 +17,9 @@ import kotlinx.serialization.Serializable
 import org.koin.ktor.ext.inject
 
 fun Application.configureArtistRouting(){
-    // Inyectar repositorios usando Koin
-    val repo: InMemoryArtistRepository by inject()
-    val socialMediaRepo: InMemorySocialMediaRepository by inject()
+    // Inyectar repositorios usando Koin (ahora usa PostgreSQL)
+    val repo: ArtistRepository by inject()
+    val socialMediaRepo: SocialMediaRepository by inject()
 
     val controller = KtorArtistController(repo)
 

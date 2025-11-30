@@ -2,7 +2,7 @@ package com.adapp.backend.SocialMedia.Infrastructure.Routes
 
 import com.adapp.backend.SocialMedia.Domain.Exceptions.SocialMediaNotFoundError
 import com.adapp.backend.SocialMedia.Infrastructure.Controllers.KtorSocialMediaController
-import com.adapp.backend.SocialMedia.Infrastructure.Repositories.InMemorySocialMediaRepository
+import com.adapp.backend.SocialMedia.Domain.Repositories.SocialMediaRepository
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.Application
 import io.ktor.server.request.receive
@@ -16,8 +16,8 @@ import kotlinx.serialization.Serializable
 import org.koin.ktor.ext.inject
 
 fun Application.configureRouting(){
-    // Inyectar repositorio usando Koin
-    val SMRepo: InMemorySocialMediaRepository by inject()
+    // Inyectar repositorio usando Koin (ahora usa PostgreSQL)
+    val SMRepo: SocialMediaRepository by inject()
 
     val controller = KtorSocialMediaController(SMRepo)
 

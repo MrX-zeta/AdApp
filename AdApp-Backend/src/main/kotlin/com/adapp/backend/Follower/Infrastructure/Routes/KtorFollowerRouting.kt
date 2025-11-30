@@ -1,6 +1,6 @@
 package com.adapp.backend.Follower.Infrastructure.Routes
 
-import com.adapp.backend.Follower.Infrastructure.Repositories.InMemoryFollowerRepository
+import com.adapp.backend.Follower.Domain.Repsitories.FollowerRepository
 import com.adapp.backend.Follower.Infrastructure.Controllers.KtorFollowerController
 import com.adapp.backend.User.Domain.Exceptions.UserNotFoundError
 import io.ktor.http.*
@@ -12,8 +12,8 @@ import kotlinx.serialization.Serializable
 import org.koin.ktor.ext.inject
 
 fun Application.configureFollowerRouting(){
-    // Inyectar repositorios usando Koin
-    val repo: InMemoryFollowerRepository by inject()
+    // Inyectar repositorios usando Koin (ahora usa PostgreSQL)
+    val repo: FollowerRepository by inject()
     val controller = KtorFollowerController(repo)
 
     routing {

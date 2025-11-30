@@ -69,9 +69,10 @@
 				</div>
 			</div>
 
-				<footer class="form-actions">
-							<button class="btn success" type="submit">Guardar</button>
-					<button class="btn ghost" type="button" (click)="cancel()">Cancelar</button>
+			<footer class="form-actions">
+						<button class="btn success" type="submit">Guardar</button>
+				<button class="btn ghost" type="button" (click)="cancel()">Cancelar</button>
+				<button class="btn danger" type="button" (click)="deleteAccount()" style="margin-left: auto;">Eliminar cuenta</button>
 				</footer>
 		</form>
 	</section>
@@ -95,12 +96,21 @@
 			</div>
 		</article>
 
-		<article class="post" *ngFor="let song of songs">
+		<article class="post song" *ngFor="let song of songs">
 			<header>
-				<span class="title">{{ song.title || 'Sin título' }}</span>
-				<time>Publicado el {{ song.date | date: 'dd/MM/yyyy' }}</time>
+				<div class="song-info">
+					<span class="title">{{ song.title || 'Sin título' }}</span>
+					<time>Publicado el {{ song.dateUploaded | date: 'dd/MM/yyyy' }}</time>
+				</div>
+				<button 
+					class="play-button" 
+					type="button" 
+					(click)="togglePlaySong(song)"
+					title="{{ currentPlayingSong?.id === song.id && !audioPlayer?.paused ? 'Pausar' : 'Reproducir' }}">
+					<span *ngIf="currentPlayingSong?.id !== song.id || audioPlayer?.paused">▶</span>
+					<span *ngIf="currentPlayingSong?.id === song.id && !audioPlayer?.paused">⏸</span>
+				</button>
 			</header>
-			<p>{{ song.description || 'Canción subida' }}</p>
 			<div class="post-actions">
 				<button class="icon" type="button" title="Editar" (click)="editSong(song.id)">
 					<img src="/media/icons/boton-editar.png" alt="edit" />
@@ -154,31 +164,8 @@
 						<input formControlName="title" placeholder="Nombre del evento" />
 					</label>
 					<label class="field">
-						<span>Fecha del evento</span>
-						<input 
-							type="date" 
-							formControlName="eventDate"
-							style="cursor: pointer; padding: 10px; font-size: 16px;"
-						/>
-						<small style="color: #888; display: block; margin-top: 4px;">
-							Haz clic en el calendario para seleccionar la fecha
-						</small>
-					</label>
-					<label class="field">
-						<span>Hora del evento</span>
-						<input 
-							type="time" 
-							formControlName="eventTime"
-							step="900"
-							style="cursor: pointer; padding: 10px; font-size: 16px;"
-						/>
-						<small style="color: #888; display: block; margin-top: 4px;">
-							Usa las flechas ↑↓ o haz clic para ajustar la hora (formato 24h: 14:00 = 2:00 PM, 18:00 = 6:00 PM)
-						</small>
-					</label>
-					<label class="field">
 						<span>Descripción</span>
-						<textarea rows="4" formControlName="description" placeholder="Escribe los detalles del evento"></textarea>
+						<textarea rows="6" formControlName="description" placeholder="Escribe los detalles del evento (incluye fecha, hora, lugar, etc.)"></textarea>
 					</label>
 			<footer class="modal-actions">
 				<button class="btn success" type="submit">Publicar</button>

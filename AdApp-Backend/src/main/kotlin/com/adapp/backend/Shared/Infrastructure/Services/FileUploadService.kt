@@ -88,9 +88,28 @@ class FileUploadService {
 
     /**
      * Valida que el archivo sea audio
+     * Soporta: MP3, WAV, OGG, M4A, FLAC, AAC, WMA
      */
     fun isValidAudio(contentType: String?): Boolean {
-        return contentType?.startsWith("audio/") == true
+        val validAudioTypes = listOf(
+            "audio/mpeg",      // MP3
+            "audio/mp3",       // MP3 (alternativo)
+            "audio/wav",       // WAV
+            "audio/x-wav",     // WAV (alternativo)
+            "audio/wave",      // WAV (alternativo)
+            "audio/ogg",       // OGG
+            "audio/mp4",       // M4A
+            "audio/x-m4a",     // M4A (alternativo)
+            "audio/flac",      // FLAC
+            "audio/aac",       // AAC
+            "audio/x-ms-wma"   // WMA
+        )
+        return contentType?.lowercase() in validAudioTypes || contentType?.startsWith("audio/") == true
     }
+
+    /**
+     * Obtiene el tamaño máximo permitido para archivos de audio (50MB)
+     */
+    fun getMaxAudioSize(): Long = 50 * 1024 * 1024
 }
 

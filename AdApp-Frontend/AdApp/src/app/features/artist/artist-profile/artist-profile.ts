@@ -44,6 +44,8 @@ export class ArtistProfile implements OnInit {
   isFollowing = false;
   currentUserId?: number;
   currentUserRole?: string;
+  audioPlayer: HTMLAudioElement | null = null;
+  currentPlayingSong: any = null;
 
   constructor(
     private apiService: ApiService,
@@ -158,8 +160,9 @@ export class ArtistProfile implements OnInit {
           id: song.id,
           type: 'song',
           title: song.title,
-          description: song.description || 'Sin descripción',
-          date: new Date(song.date), // Convertir ISO string a Date
+          url: song.url,
+          dateUploaded: song.dateUploaded || Date.now(),
+          date: new Date(song.dateUploaded || Date.now()), // Para compatibilidad
           status: song.status
         }));
         
@@ -433,5 +436,41 @@ export class ArtistProfile implements OnInit {
 
   canFollow(): boolean {
     return this.currentUserRole === 'follower' && this.currentUserId !== this.artistId;
+  }
+
+  togglePlaySong(song: any) {
+    const audioUrl = `http://localhost:8081${song.url}`;
+    
+    // Si no hay reproductor o es una canción diferente
+    if (!this.audioPlayer || this.currentPlayingSong?.id !== song.id) {
+      // Pausar canción anterior si existe
+      if (this.audioPlayer) {
+        this.audioPlayer.pause();
+      }
+      
+      // Crear nuevo reproductor
+      this.audioPlayer = new Audio(audioUrl);
+      this.currentPlayingSong = song;
+      
+      // Reproducir
+      this.audioPlayer.play().catch(error => {
+        console.error('Error al reproducir audio:', error);
+        alert('Error al reproducir la canción');
+      });
+      
+      // Limpiar cuando termine
+      this.audioPlayer.onended = () => {
+        this.currentPlayingSong = null;
+      };
+    } else {
+      // Misma canción: pausar o reanudar
+      if (this.audioPlayer.paused) {
+        this.audioPlayer.play().catch(error => {
+          console.error('Error al reproducir audio:', error);
+        });
+      } else {
+        this.audioPlayer.pause();
+      }
+    }
   }
 }

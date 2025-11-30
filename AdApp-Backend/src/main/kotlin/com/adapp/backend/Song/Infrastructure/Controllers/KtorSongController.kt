@@ -17,7 +17,8 @@ class KtorSongController(private val songRepo: SongRepository) {
                 id = song.SongId.value,
                 artistId = song.artistId.value,
                 title = song.title.value,
-                url = song.url.value
+                url = song.url.value,
+                dateUploaded = song.dateUploaded
             )
         }
     }
@@ -28,27 +29,30 @@ class KtorSongController(private val songRepo: SongRepository) {
             id = song.SongId.value,
             artistId = song.artistId.value,
             title = song.title.value,
-            url = song.url.value
+            url = song.url.value,
+            dateUploaded = song.dateUploaded
         )
     }
 
-    fun create(id: Int, artistId: Int, title: String, url: String) {
+    fun create(id: Int, artistId: Int, title: String, url: String, dateUploaded: Long = System.currentTimeMillis()) {
         val song = Song(
             SongId(id),
             UserId(artistId),
             SongTitle(title),
-            SongUrl(url)
+            SongUrl(url),
+            dateUploaded
         )
         songRepo.create(song)
     }
 
-    fun edit(id: Int, artistId: Int, title: String, url: String) {
+    fun edit(id: Int, artistId: Int, title: String, url: String, dateUploaded: Long? = null) {
         val existing = songRepo.getOneById(SongId(id)) ?: throw SongNotFoundError("Song not found")
         val updated = Song(
             SongId(id),
             UserId(artistId),
             SongTitle(title),
-            SongUrl(url)
+            SongUrl(url),
+            dateUploaded ?: existing.dateUploaded // Mantener fecha original si no se proporciona
         )
         songRepo.edit(updated)
     }

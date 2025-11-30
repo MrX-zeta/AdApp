@@ -62,6 +62,23 @@ class KtorArtistController(private val artistRepo: ArtistRepository) {
     }
 
     /**
+     * Crea SOLO el perfil de artista (tabla artists), asumiendo que el usuario ya existe en users
+     */
+    fun createArtistProfile(id: Int, fotoUrl: String, contactNum: String, description: String = "") {
+        val artist = Artist(
+            UserId(id),
+            UserName(""),  // No se usa en la inserción de artists
+            UserEmail(""), // No se usa en la inserción de artists
+            UserPsswd(""), // No se usa en la inserción de artists
+            UserRol("artist"), // No se usa en la inserción de artists
+            ArtistFotoUrl(fotoUrl),
+            ArtistContactNum(contactNum),
+            ArtistDescription(description)
+        )
+        artistRepo.create(artist)
+    }
+
+    /**
      * Edita un artista. Si `newId` != `oldId` crea uno nuevo y borra el antiguo; lanza IllegalArgumentException si newId ya existe.
      */
     fun edit(oldId: Int, newId: Int, name: String, email: String, passwd: String, rol: String, fotoUrl: String, contactNum: String, description: String = "") {

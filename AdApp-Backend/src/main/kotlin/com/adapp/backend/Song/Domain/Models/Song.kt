@@ -6,14 +6,16 @@ class Song(
     val SongId: SongId,
     val artistId: UserId,
     val title: SongTitle,
-    val url: SongUrl
+    val url: SongUrl,
+    val dateUploaded: Long = System.currentTimeMillis()
 ) {
     fun mapToPrimitives(): Map<String, Any> {
         return mapOf(
             "id" to SongId.value,
             "artistId" to artistId.value,
             "title" to title.value,
-            "url" to url.value
+            "url" to url.value,
+            "dateUploaded" to dateUploaded
         )
     }
 }

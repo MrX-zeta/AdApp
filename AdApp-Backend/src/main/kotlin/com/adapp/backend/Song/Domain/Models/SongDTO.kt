@@ -7,5 +7,6 @@ data class SongDTO(
     val id: Int,
     val artistId: Int,
     val title: String,
-    val url: String
+    val url: String,
+    val dateUploaded: Long = System.currentTimeMillis()
 )
