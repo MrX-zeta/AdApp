@@ -34,15 +34,22 @@ class KtorSongController(private val songRepo: SongRepository) {
         )
     }
 
-    fun create(id: Int, artistId: Int, title: String, url: String, dateUploaded: Long = System.currentTimeMillis()) {
+    fun create(artistId: Int, title: String, url: String, dateUploaded: Long = System.currentTimeMillis()): SongDTO {
         val song = Song(
-            SongId(id),
+            SongId(0), // Temporal, será reemplazado por el ID auto-generado
             UserId(artistId),
             SongTitle(title),
             SongUrl(url),
             dateUploaded
         )
-        songRepo.create(song)
+        val createdSong = songRepo.create(song)
+        return SongDTO(
+            id = createdSong.SongId.value,
+            artistId = createdSong.artistId.value,
+            title = createdSong.title.value,
+            url = createdSong.url.value,
+            dateUploaded = createdSong.dateUploaded
+        )
     }
 
     fun edit(id: Int, artistId: Int, title: String, url: String, dateUploaded: Long? = null) {

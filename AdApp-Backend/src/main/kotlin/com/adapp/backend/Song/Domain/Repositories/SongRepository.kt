@@ -4,7 +4,7 @@ import com.adapp.backend.Song.Domain.Models.Song
 import com.adapp.backend.Song.Domain.Models.SongId
 
 interface SongRepository {
-    fun create(song: Song)
+    fun create(song: Song): Song
     fun edit(song: Song)
     fun getAllSongs(): List<Song>
     fun getOneById(id: SongId): Song?

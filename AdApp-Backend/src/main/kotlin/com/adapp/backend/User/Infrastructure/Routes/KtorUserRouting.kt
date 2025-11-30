@@ -45,33 +45,33 @@ fun Application.configureRouting(){
                     return@post
                 }
 
-            // Generar ID automáticamente
-            val newId = if(allUsers.isEmpty()) 1 else allUsers.maxOf { it.id } + 1
-            
-            // Crear usuario en tabla users
-            controller.create(
-                id = newId,
-                name = registerData.username,
-                email = registerData.email,
-                passwd = registerData.password,
-                rol = registerData.userType
-            )
-
-            // Si es artista, también crear registro en artists (solo tabla artists, no users otra vez)
-            if (registerData.userType.equals("artist", ignoreCase = true)) {
-                // Crear registro SOLO en la tabla artists
-                artistController.createArtistProfile(
+                // Generar ID automáticamente
+                val newId = if(allUsers.isEmpty()) 1 else allUsers.maxOf { it.id } + 1
+                
+                // Crear usuario en tabla users
+                controller.create(
                     id = newId,
-                    fotoUrl = "",
-                    contactNum = "",
-                    description = ""
+                    name = registerData.username,
+                    email = registerData.email,
+                    passwd = registerData.password,
+                    rol = registerData.userType
                 )
-            }
-            // Si es follower, también crear registro en followers
-            else if (registerData.userType.equals("follower", ignoreCase = true)) {
-                // Crear registro SOLO en la tabla followers
-                followerController.createFollowerProfile(newId)
-            }
+
+                // Si es artista, también crear registro en artists (solo tabla artists, no users otra vez)
+                if (registerData.userType.equals("artist", ignoreCase = true)) {
+                    // Crear registro SOLO en la tabla artists
+                    artistController.createArtistProfile(
+                        id = newId,
+                        fotoUrl = "",
+                        contactNum = "",
+                        description = ""
+                    )
+                }
+                // Si es follower, también crear registro en followers
+                else if (registerData.userType.equals("follower", ignoreCase = true)) {
+                    // Crear registro SOLO en la tabla followers
+                    followerController.createFollowerProfile(newId)
+                }
 
                 // Generar token JWT (mock)
                 val token = "mock-jwt-token-$newId"

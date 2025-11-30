@@ -56,7 +56,7 @@ object Tables {
         val artistId = integer("artist_id").references(ArtistsTable.id, onDelete = ReferenceOption.CASCADE)
         val title = varchar("title", 200).nullable()
         val url = varchar("url", 500).nullable()
-        val dateUploaded = long("date_uploaded").default(System.currentTimeMillis())
+        val dateUploaded = long("date_upload").default(System.currentTimeMillis())
 
         override val primaryKey = PrimaryKey(id)
     }

@@ -7,8 +7,9 @@ import com.adapp.backend.Song.Domain.Repositories.SongRepository
 class InMemorySongRepository: SongRepository {
     private val songs = mutableListOf<Song>()
 
-    override fun create(song: Song) {
+    override fun create(song: Song): Song {
         songs.add(song)
+        return song
     }
 
     override fun delete(id: SongId) {

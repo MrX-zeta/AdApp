@@ -10,14 +10,22 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 class PostgresSongRepository : SongRepository {
 
-    override fun create(song: Song) {
-        transaction {
-            SongsTable.insert {
+    override fun create(song: Song): Song {
+        return transaction {
+            val insertedId = SongsTable.insert {
                 it[artistId] = song.artistId.value
                 it[title] = song.title.value
                 it[url] = song.url.value
                 it[dateUploaded] = song.dateUploaded
-            }
+            }[SongsTable.id]
+            
+            Song(
+                SongId = SongId(insertedId),
+                artistId = song.artistId,
+                title = song.title,
+                url = song.url,
+                dateUploaded = song.dateUploaded
+            )
         }
     }
 

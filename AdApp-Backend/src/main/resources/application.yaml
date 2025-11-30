@@ -11,8 +11,8 @@ jwt:
   audience: "jwt-audience"
   realm: "ktor sample app"
 postgres:
-  url: "jdbc:postgresql://localhost:5432/Adapp"
+  url: "jdbc:postgresql://3.214.47.23:5432/adapp"
   driver: "org.postgresql.Driver"
-  user: "postgres"
-  password: "12345678"
+  user: "admin_adapp"
+  password: "Xy9#mP2!oLq"
   maxPoolSize: 10

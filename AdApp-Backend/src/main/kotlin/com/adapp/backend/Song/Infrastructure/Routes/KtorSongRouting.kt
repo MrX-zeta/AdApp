@@ -67,8 +67,8 @@ fun Application.configureSongRouting() {
         post("/songs") {
             val payload = call.receive<CreateSongRequest>()
             try {
-                controller.create(payload.id, payload.artistId, payload.title, payload.url, payload.dateUploaded ?: System.currentTimeMillis())
-                call.respond(HttpStatusCode.Created, mapOf("message" to "Song creada"))
+                val createdSong = controller.create(payload.artistId, payload.title, payload.url, payload.dateUploaded ?: System.currentTimeMillis())
+                call.respond(HttpStatusCode.Created, createdSong)
             } catch (e: IllegalArgumentException) {
                 call.respond(HttpStatusCode.Conflict, mapOf("message" to e.message))
             }
@@ -77,8 +77,8 @@ fun Application.configureSongRouting() {
         post("/song") {
             val payload = call.receive<CreateSongRequest>()
             try {
-                controller.create(payload.id, payload.artistId, payload.title, payload.url, payload.dateUploaded ?: System.currentTimeMillis())
-                call.respond(HttpStatusCode.Created, mapOf("message" to "Song creada"))
+                val createdSong = controller.create(payload.artistId, payload.title, payload.url, payload.dateUploaded ?: System.currentTimeMillis())
+                call.respond(HttpStatusCode.Created, createdSong)
             } catch (e: IllegalArgumentException) {
                 call.respond(HttpStatusCode.Conflict, mapOf("message" to e.message))
             }
@@ -152,7 +152,6 @@ fun Application.configureSongRouting() {
 
 @Serializable
 data class CreateSongRequest(
-    val id: Int,
     val artistId: Int,
     val title: String,
     val url: String,

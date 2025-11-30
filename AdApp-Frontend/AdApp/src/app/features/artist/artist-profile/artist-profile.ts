@@ -442,30 +442,47 @@ export class ArtistProfile implements OnInit {
     
     // Si no hay reproductor o es una canción diferente
     if (!this.audioPlayer || this.currentPlayingSong?.id !== song.id) {
-      // Pausar canción anterior si existe
+      // Pausar y limpiar canción anterior si existe
       if (this.audioPlayer) {
         this.audioPlayer.pause();
+        this.audioPlayer.currentTime = 0;
+        this.audioPlayer = null;
       }
       
-      // Crear nuevo reproductor
-      this.audioPlayer = new Audio(audioUrl);
-      this.currentPlayingSong = song;
-      
-      // Reproducir
-      this.audioPlayer.play().catch(error => {
-        console.error('Error al reproducir audio:', error);
-        alert('Error al reproducir la canción');
-      });
-      
-      // Limpiar cuando termine
-      this.audioPlayer.onended = () => {
-        this.currentPlayingSong = null;
-      };
+      // Esperar un momento antes de crear el nuevo reproductor
+      setTimeout(() => {
+        // Crear nuevo reproductor
+        this.audioPlayer = new Audio(audioUrl);
+        this.currentPlayingSong = song;
+        
+        // Configurar evento de fin antes de reproducir
+        this.audioPlayer.onended = () => {
+          this.currentPlayingSong = null;
+          this.audioPlayer = null;
+        };
+        
+        // Configurar evento de error
+        this.audioPlayer.onerror = (error) => {
+          console.error('Error al cargar audio:', error);
+          alert('No se pudo cargar la canción');
+          this.currentPlayingSong = null;
+          this.audioPlayer = null;
+        };
+        
+        // Reproducir cuando esté listo
+        this.audioPlayer.play().catch(error => {
+          console.error('Error al reproducir audio:', error);
+          alert('Error al reproducir la canción. Verifica que el archivo existe.');
+          this.currentPlayingSong = null;
+          this.audioPlayer = null;
+        });
+      }, 100);
     } else {
       // Misma canción: pausar o reanudar
       if (this.audioPlayer.paused) {
         this.audioPlayer.play().catch(error => {
           console.error('Error al reproducir audio:', error);
+          alert('Error al reanudar la reproducción');
         });
       } else {
         this.audioPlayer.pause();

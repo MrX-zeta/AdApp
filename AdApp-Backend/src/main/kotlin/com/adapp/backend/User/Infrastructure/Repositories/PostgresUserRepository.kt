@@ -12,6 +12,7 @@ class PostgresUserRepository : UserRepository {
     override fun create(user: User) {
         transaction {
             UsersTable.insert {
+                it[id] = user.Usuarioid.value
                 it[nombre] = user.nombre.value
                 it[correo] = user.correo.value
                 it[contrasena] = user.contrasena.value

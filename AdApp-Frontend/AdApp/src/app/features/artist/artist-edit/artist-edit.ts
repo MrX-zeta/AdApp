@@ -404,8 +404,8 @@ export class ArtistEdit implements OnInit {
 
       const payload = { 
         id: this.editingSongId,
-        title: this.songForm.get('title')!.value,
         artistId: this.artistId!,
+        title: this.songForm.get('title')!.value,
         url: song.url // Mantener la URL existente
       };
       
@@ -451,9 +451,7 @@ export class ArtistEdit implements OnInit {
           console.log('Audio subido:', uploadResponse);
           
           // Paso 2: Crear el registro de la canción en la BD
-          const newId = this.songs.length > 0 ? Math.max(...this.songs.map(s => s.id)) + 1 : 1;
           const songPayload = {
-            id: newId,
             artistId: this.artistId!,
             title: this.songForm.get('title')!.value,
             url: uploadResponse.audioUrl,
