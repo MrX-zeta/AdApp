@@ -28,7 +28,7 @@ interface Follower {
   standalone: false,
 })
 export class FollowerProfileComponent implements OnInit {
-  private readonly API_URL = 'http://localhost:8081';
+  private readonly API_URL = 'http://34.230.214.149:8081';
   
   follower: Follower | null = null;
   followingCount: number = 0;

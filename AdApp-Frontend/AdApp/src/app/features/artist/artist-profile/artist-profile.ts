@@ -102,7 +102,7 @@ export class ArtistProfile implements OnInit {
         
         // Construir URL completa de la foto si existe
         const photoUrl = data.fotoUrl 
-          ? `http://localhost:8081${data.fotoUrl}` 
+          ? `http://34.230.214.149:8081${data.fotoUrl}` 
           : '/media/icons/perfil.png';
         
         this.artist = {
@@ -438,7 +438,7 @@ export class ArtistProfile implements OnInit {
   }
 
   togglePlaySong(song: any) {
-    const audioUrl = `http://localhost:8081${song.url}`;
+    const audioUrl = `http://34.230.214.149:8081${song.url}`;
     
     // Si no hay reproductor o es una canción diferente
     if (!this.audioPlayer || this.currentPlayingSong?.id !== song.id) {

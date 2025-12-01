@@ -22,7 +22,7 @@ interface Artist {
   styleUrl: './dashboard-page.css',
 })
 export class DashboardPage implements OnInit {
-  private readonly API_URL = 'http://localhost:8081';
+  private readonly API_URL = 'http://34.230.214.149:8081';
   
   // Featured artists for main section
   featuredArtists: Artist[] = [];

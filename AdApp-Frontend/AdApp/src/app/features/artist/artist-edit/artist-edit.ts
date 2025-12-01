@@ -167,7 +167,7 @@ export class ArtistEdit implements OnInit {
             
             // Cargar foto de perfil si existe
             if (artist.fotoUrl) {
-              this.profileImageUrl = `http://localhost:8081${artist.fotoUrl}`;
+              this.profileImageUrl = `http://34.230.214.149:8081${artist.fotoUrl}`;
             }
             
             // Guardar la contraseña actual para futuras actualizaciones
@@ -302,9 +302,9 @@ export class ArtistEdit implements OnInit {
     const formValue = this.form.getRawValue();
     console.log('Form value:', formValue);
     
-    // Extraer solo el path relativo de la foto (sin http://localhost:8081)
-    const photoPath = this.profileImageUrl.includes('http://localhost:8081') 
-      ? this.profileImageUrl.replace('http://localhost:8081', '')
+    // Extraer solo el path relativo de la foto (sin http://34.230.214.149:8081)
+    const photoPath = this.profileImageUrl.includes('http://34.230.214.149:8081') 
+      ? this.profileImageUrl.replace('http://34.230.214.149:8081', '')
       : (this.profileImageUrl === '/media/icons/perfil.png' ? '' : this.profileImageUrl);
     
     const payload = {
@@ -664,7 +664,7 @@ export class ArtistEdit implements OnInit {
     this.apiService.post<{ imageUrl: string }>('/upload/image', formData).subscribe({
       next: (response) => {
         console.log('Image uploaded successfully:', response);
-        this.profileImageUrl = `http://localhost:8081${response.imageUrl}`;
+        this.profileImageUrl = `http://34.230.214.149:8081${response.imageUrl}`;
         
         // Actualizar la URL de la foto en el perfil del artista
         this.updateArtistPhotoUrl(response.imageUrl);
@@ -705,7 +705,7 @@ export class ArtistEdit implements OnInit {
 
   togglePlaySong(song: any) {
     console.log('togglePlaySong called with song:', song);
-    const audioUrl = `http://localhost:8081${song.url}`;
+    const audioUrl = `http://34.230.214.149:8081${song.url}`;
     console.log('Audio URL:', audioUrl);
     
     // Si no hay reproductor o es una canción diferente
