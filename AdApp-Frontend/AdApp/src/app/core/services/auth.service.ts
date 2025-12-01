@@ -29,7 +29,7 @@ export interface LoginResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly API_URL = 'http://localhost:8081';
+  private readonly API_URL = 'http://34.230.214.149:8081';
   private currentUserSubject = new BehaviorSubject<any>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
