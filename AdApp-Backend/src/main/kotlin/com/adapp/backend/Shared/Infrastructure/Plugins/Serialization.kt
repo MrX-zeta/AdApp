@@ -20,11 +20,17 @@ fun Application.configureSerialization() {
     }
 
     install(CORS) {
+        // Entorno de desarrollo local (Angular/React/etc)
         allowHost("localhost:4200", schemes = listOf("http", "https"))
         allowHost("127.0.0.1:4200", schemes = listOf("http", "https"))
+        
+        // --- NUEVO: PRODUCCIÓN (S3) ---
+        // Agregamos el dominio de tu bucket SIN el "http://"
+        allowHost("amzn-s3-adapp-frontend.s3-website-us-east-1.amazonaws.com", schemes = listOf("http"))
+        
         allowHeader(HttpHeaders.ContentType)
         allowHeader(HttpHeaders.Authorization)
-        allowMethod(HttpMethod.Options)
+        allowMethod(HttpMethod.Options) // Vital para el "pre-flight" check
         allowMethod(HttpMethod.Get)
         allowMethod(HttpMethod.Post)
         allowMethod(HttpMethod.Put)
