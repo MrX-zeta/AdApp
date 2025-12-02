@@ -1,0 +1,33 @@
+<div class="follower-container">
+	<!-- HEADER CON INFO DEL SEGUIDOR -->
+	<header class="follower-header" *ngIf="follower">
+		<div class="follower-card">
+			<img class="follower-avatar" src="/media/icons/perfil.png" [alt]="'Avatar de ' + follower.nombre" />
+			<div class="follower-info">
+				<h1 class="follower-name">{{ follower.nombre }}</h1>
+				<p class="follower-label">Seguidor</p>
+				<div class="follower-stats">
+					<div class="stat">
+						<span class="stat-number">{{ followingCount }} Seguidos</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<section class="artists-section">
+		<h2 class="section-title">MIS ARTISTAS</h2>
+		
+		<div *ngIf="artists.length === 0" class="empty-state">
+			<p>Aún no sigues a ningún artista. ¡Comienza a explorar y sigue tus favoritos!</p>
+		</div>
+
+		<div class="artists-grid" *ngIf="artists.length > 0">
+			<article class="artist-card" *ngFor="let artist of artists" (click)="viewArtistProfile(artist)">
+				<img class="artist-avatar" [src]="getArtistPhotoUrl(artist)" [alt]="artist.nombre" />
+				<h3 class="artist-name">{{ artist.nombre }}</h3>
+			</article>
+		</div>
+	</section>
+
+</div>

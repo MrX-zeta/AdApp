@@ -1,1 +1,94 @@
-<p>artist-profile works!</p>
+﻿<div class="page">
+	<section class="profile-card">
+		<header class="profile-header">
+			<img class="avatar" [src]="artist.profileImage" [alt]="artist.name" />
+			<div class="header-info">
+				<h2 class="artist-name">{{ artist.name | uppercase }}</h2>
+				<p class="followers"><strong>{{ artist.followers | number }}</strong> SEGUIDORES</p>
+				
+				<button 
+					*ngIf="canFollow()" 
+					class="follow-button"
+					[class.following]="isFollowing"
+					(click)="toggleFollow()">
+					{{ isFollowing ? 'Dejar de seguir' : 'Seguir' }}
+				</button>
+			</div>
+		</header>
+
+		<div class="profile-content">
+			<div class="section-group">
+				<h3 class="section-title">DESCRIPCIÓN</h3>
+				<p class="description-text">{{ artist.description || 'Sin descripción disponible' }}</p>
+			</div>
+
+			<div class="section-group">
+				<h3 class="section-title">REDES Y CONTACTO</h3>
+				<div class="contact-list">
+					<div class="contact-item" *ngIf="artist.instagram">
+						<img src="/media/icons/instagram.png" alt="Instagram" class="contact-icon" />
+						<p class="contact-value">{{ artist.instagram }}</p>
+					</div>
+					<div class="contact-item" *ngIf="artist.facebook">
+						<img src="/media/icons/facebook.png" alt="Facebook" class="contact-icon" />
+						<p class="contact-value">{{ artist.facebook }}</p>
+					</div>
+					<div class="contact-item" *ngIf="artist.phone">
+						<img src="/media/icons/llamada.png" alt="Teléfono" class="contact-icon" />
+						<p class="contact-value">{{ artist.phone }}</p>
+					</div>
+					<div class="contact-item" *ngIf="artist.email">
+						<img src="/media/icons/gmail.png" alt="Email" class="contact-icon" />
+						<p class="contact-value">{{ artist.email }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<aside class="feed">
+		<h3>Eventos y canciones</h3>
+
+		<div *ngIf="events.length > 0">
+			<article class="post" *ngFor="let event of events">
+				<header>
+					<span class="title">{{ event.title || 'Sin título' }}</span>
+					<time>Publicado el {{ event.date | date: 'dd/MM/yyyy' }}</time>
+				</header>
+				<p>{{ event.description }}</p>
+			</article>
+		</div>
+
+		<!-- Mensaje cuando no hay eventos -->
+		<div class="empty-state" *ngIf="events.length === 0" style="background-color: #2a2a2a; padding: 20px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
+			<p style="color: #888; margin-bottom: 10px;">No hay eventos publicados</p>
+			<p style="color: #666; font-size: 14px;">Agrega un evento desde la página de edición para que tus seguidores puedan verlo aquí</p>
+		</div>
+
+		<!-- Canciones -->
+		<div *ngIf="songs.length > 0">
+			<article class="post song" *ngFor="let song of songs">
+				<header>
+					<div class="song-info">
+						<span class="title">{{ song.title || 'Sin título' }}</span>
+						<time>Publicado el {{ song.dateUploaded | date: 'dd/MM/yyyy' }}</time>
+					</div>
+					<button 
+						class="play-button" 
+						type="button" 
+						(click)="togglePlaySong(song)"
+						title="{{ currentPlayingSong?.id === song.id && !audioPlayer?.paused ? 'Pausar' : 'Reproducir' }}">
+						<span *ngIf="currentPlayingSong?.id !== song.id || audioPlayer?.paused">▶</span>
+						<span *ngIf="currentPlayingSong?.id === song.id && !audioPlayer?.paused">⏸</span>
+					</button>
+				</header>
+			</article>
+		</div>
+
+		<!-- Mensaje cuando no hay canciones -->
+		<div class="empty-state" *ngIf="songs.length === 0" style="background-color: #2a2a2a; padding: 20px; border-radius: 8px; text-align: center;">
+			<p style="color: #888; margin-bottom: 10px;">No hay canciones publicadas</p>
+			<p style="color: #666; font-size: 14px;">Agrega una canción desde la página de edición para que tus seguidores puedan escucharla aquí</p>
+		</div>
+	</aside>
+</div>

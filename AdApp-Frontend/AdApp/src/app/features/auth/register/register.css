@@ -1,0 +1,168 @@
+.auth-layout {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    color: #dbe3ff;
+    overflow: hidden;
+}
+
+.auth-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.auth-bg .bg-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.auth-panel {
+    position: relative;
+    z-index: 1;
+    margin-left: auto;
+    width: min(38vw, 640px);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 56px 56px 40px;
+    background: linear-gradient(180deg, rgba(10, 13, 23, 0.77), rgba(10, 13, 23, 0.77));
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: -24px 0 48px -24px rgba(0, 0, 0, 0.45) inset;
+}
+
+.brand {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    margin-bottom: 28px;
+}
+
+.brand-logo {
+    width: 74px;
+    height: 74px;
+}
+
+.brand-title {
+    margin: 4px 0 8px;
+    font-weight: 700;
+    letter-spacing: .2px;
+    font-size: 40px;
+    background: linear-gradient(180deg, var(--blue-300) 10%, var(--blue-500) 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.form {
+    display: grid;
+    gap: 18px;
+    max-width: 560px;
+}
+
+.field { display: grid; gap: 6px; }
+.field input {
+    width: 100%;
+    height: 48px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #2a3350;
+    background: #f6f7fb0f;
+    color: #e6ecff;
+    outline: none;
+    box-shadow: 0 1px 0 0 rgba(0,0,0,.25) inset;
+}
+.field input:focus { border-color: #3b6ee6; box-shadow: 0 0 0 2px #3b6ee61f; }
+
+.field .select-field {
+    width: 100%;
+    height: 48px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #2a3350;
+    background: #f6f7fb0f; 
+    color: #b5b9c49c;
+    outline: none;
+    box-shadow: 0 1px 0 0 rgba(0,0,0,.25) inset;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23e6ecff" d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    cursor: pointer;
+}
+
+.field .select-field option {
+    background: #d5d8de;
+    color: #172a65;
+}
+
+.field .select-field:focus { 
+    border-color: #3b6ee6; 
+    box-shadow: 0 0 0 2px #3b6ee61f; 
+}
+
+
+
+.password { position: relative; }
+.password .toggle {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: 0;
+    padding: 6px;
+    cursor: pointer;
+}
+.password .toggle img { width: 22px; height: 22px; opacity: .85; }
+
+.helper { color: #d9e0ffcc; font-size: 14px; text-align: right; margin: 8px 4px 0; }
+
+.link { color: #8fb3ff; text-decoration: none; font-size: 14px; }
+.link:hover { text-decoration: underline; }
+
+.primary {
+    border: 0;
+    padding: 12px 20px;
+    border-radius: 8px;
+    background: var(--gradient-blue);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+.primary[disabled] {cursor: not-allowed; }
+
+.error { color: #ff9c9c; font-size: 12px; }
+
+.register-hint {
+    color: rgba(255, 255, 255, 0.65);
+    margin-top: 20px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.register-hint .link {
+    color: #ffffff;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.register-hint .link:hover {
+    background-image: var(--gradient-blue);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+@media (max-width: 900px) {
+    .auth-panel { width: 100%; padding: 40px 24px; }
+}

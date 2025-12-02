@@ -1,1 +1,51 @@
-<p>dashboard-page works!</p>
+<div class="dashboard-container">
+	<!-- ARTISTAS DESTACADOS -->
+	<section class="section">
+		<h1 class="section-title">ARTISTAS DESTACADOS</h1>
+
+		<div *ngIf="isLoading" class="loading-state">
+			<p>Cargando artistas...</p>
+		</div>
+
+		<div *ngIf="!isLoading && featuredArtists.length === 0" class="empty-state">
+			<p>No hay artistas disponibles en este momento.</p>
+		</div>
+
+		<div class="artists-grid" *ngIf="!isLoading && featuredArtists.length > 0">
+			<article class="artist-card" *ngFor="let artist of featuredArtists" (click)="viewArtistProfile(artist)">
+				<div class="artist-header">
+					<img class="artist-avatar" [src]="getArtistPhotoUrl(artist)" [alt]="artist.nombre" />
+					<div class="artist-info">
+						<h3 class="artist-name">{{ artist.nombre }}</h3>
+						<p class="artist-email">{{ artist.correo }}</p>
+						<p class="artist-followers">{{ getFollowersCountText(artist) }}</p>
+					</div>
+				</div>
+				<p class="artist-description">{{ getArtistDescription(artist) }}</p>
+			</article>
+		</div>
+	</section>
+
+	<!-- ARTISTAS QUE SIGUES (solo para followers) -->
+	<section class="section" *ngIf="isFollower()">
+		<h1 class="section-title">ARTISTAS QUE SIGUES</h1>
+
+		<div *ngIf="!isLoading && recommendedArtists.length === 0" class="empty-state">
+			<p>Aún no sigues a ningún artista. ¡Explora y sigue a tus favoritos!</p>
+		</div>
+
+		<div class="artists-grid" *ngIf="!isLoading && recommendedArtists.length > 0">
+			<article class="artist-card" *ngFor="let artist of recommendedArtists" (click)="viewArtistProfile(artist)">
+				<div class="artist-header">
+					<img class="artist-avatar" [src]="getArtistPhotoUrl(artist)" [alt]="artist.nombre" />
+					<div class="artist-info">
+						<h3 class="artist-name">{{ artist.nombre }}</h3>
+						<p class="artist-email">{{ artist.correo }}</p>
+						<p class="artist-followers">{{ getFollowersCountText(artist) }}</p>
+					</div>
+				</div>
+				<p class="artist-description">{{ getArtistDescription(artist) }}</p>
+			</article>
+		</div>
+	</section>
+</div>

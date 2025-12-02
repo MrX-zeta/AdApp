@@ -50,6 +50,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/app/media",
+                "output": "/media"
               }
             ],
             "styles": [
@@ -66,8 +71,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "10kB",
+                  "maximumError": "10kB"
                 }
               ],
               "outputHashing": "all"
@@ -116,5 +121,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "35b3a569-ab6c-4639-9a9a-f2c34a9db862"
   }
 }

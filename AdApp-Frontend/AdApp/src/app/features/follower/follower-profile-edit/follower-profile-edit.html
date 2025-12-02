@@ -1,0 +1,31 @@
+<div class="profile-layout">
+    <main class="content">
+        <p class="page-title">Editar Perfil</p> <div class="user-card">
+            <img src="/media/icons/perfil.png" alt="Avatar de usuario" class="user-avatar" />
+            <div class="user-info">
+                <input
+                    type="text"
+                    class="user-name-input"
+                    [(ngModel)]="userName"
+                    placeholder="Tu Nombre"
+                />
+                <div class="user-stats">
+                    <span>Seguidor</span>
+                    <span class="count">{{ followingCount }}</span>
+                    <span>SIGUIENDO</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="save-button" (click)="saveChanges()">Guardar Cambios</button>
+
+        <h4 class="artists-header">MIS ARTISTAS</h4>
+        <div class="artists-grid">
+            <div class="artist-card" *ngFor="let artist of artists">
+                <img src="/media/icons/perfil.png" [alt]="'Avatar de ' + artist.name" class="artist-avatar" />
+                <p class="artist-name">{{ artist.name }}</p>
+            </div>
+            
+        </div>
+    </main>
+</div>

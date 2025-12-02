@@ -1,5 +1,6 @@
 package com.adapp
 
+import com.adapp.backend.module
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.server.testing.*
