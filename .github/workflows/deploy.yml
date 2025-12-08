@@ -10,30 +10,36 @@ jobs:
   deploy-backend:
     runs-on: ubuntu-latest
     steps:
-
+      # 1. Descargar código
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # 2. Configurar Java
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
 
+      # 3. Dar permisos (CORREGIDO: Apuntando a la carpeta correcta)
       - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
+        run: chmod +x AdApp-Backend/gradlew
 
-      # 4. Construir el Fat JAR (Igual que cuando haces doble clic en IntelliJ)
+      # 4. Construir (CORREGIDO: Entrando a la carpeta antes de ejecutar)
       - name: Build with Gradle
-        run: ./gradlew clean shadowJar
+        run: |
+          cd AdApp-Backend
+          ./gradlew clean shadowJar
 
+      # 5. Crear llave SSH temporal
       - name: Create SSH Key File
         run: |
           echo "${{ secrets.EC2_SSH_KEY }}" > private_key.pem
           chmod 600 private_key.pem
 
+      # 6. Desplegar (CORREGIDO: La ruta del archivo .jar ahora incluye la carpeta)
       - name: Deploy to EC2 via SSH
         run: |
-          scp -o StrictHostKeyChecking=no -i private_key.pem build/libs/backend-all.jar ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/backend.jar
+          scp -o StrictHostKeyChecking=no -i private_key.pem AdApp-Backend/build/libs/backend-all.jar ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/backend.jar
           
           ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@${{ secrets.EC2_HOST }} "sudo systemctl restart adapp && sudo systemctl status adapp"
