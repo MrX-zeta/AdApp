@@ -94,7 +94,7 @@ DELETE http://127.0.0.1:8081/upload?path=/uploads/images/1732800000000_a1b2c3d4.
 
 ---
 
-## 💻 Uso desde el frontend (Angular/TypeScript)
+## 💻 Uso desde el frontend (Angular)
 
 ```typescript
 // Subir imagen

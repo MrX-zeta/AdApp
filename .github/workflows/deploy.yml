@@ -1,40 +1,39 @@
-# ARCHIVO DE PRUEBA PARA UN FLUJO DE TRABAJO EN GITHUB
-name: archivo de deploy para bucket s3 con angular
+name: Deploy Backend Ktor to EC2
 
 on:
-    push:
-        branches:
-            - test-deploy
+  push:
+    branches:
+      - main
+      - master
 
 jobs:
-    deploy:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
+  deploy-backend:
+    runs-on: ubuntu-latest
+    steps:
 
-            - name: Setup node
-              uses: actions/setup-node@v6
-              with: 
-                node-version: '22'
-                cache: npm
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-            - name: Install dependencies
-              run: npm ci
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
 
-            - name: Build angular
-              run: npm run build
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
 
-            - name: Debug - Ver estructura de carpetas
-              run: ls -R dist
+      # 4. Construir el Fat JAR (Igual que cuando haces doble clic en IntelliJ)
+      - name: Build with Gradle
+        run: ./gradlew clean shadowJar
 
-            - name: Configure AWS Credentials
-              uses: aws-actions/configure-aws-credentials@v4
-              with:
-                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-                aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
-                aws-region: us-east-1
+      - name: Create SSH Key File
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" > private_key.pem
+          chmod 600 private_key.pem
 
-            - name: Deploy to S3
-              run: aws s3 sync dist/AdApp-Frontend/browser s3://amzn-frontend-dist-musicapp001 --delete --exclude ".*"
+      - name: Deploy to EC2 via SSH
+        run: |
+          scp -o StrictHostKeyChecking=no -i private_key.pem build/libs/backend-all.jar ubuntu@${{ secrets.EC2_HOST }}:/home/ubuntu/backend.jar
+          
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@${{ secrets.EC2_HOST }} "sudo systemctl restart adapp && sudo systemctl status adapp"

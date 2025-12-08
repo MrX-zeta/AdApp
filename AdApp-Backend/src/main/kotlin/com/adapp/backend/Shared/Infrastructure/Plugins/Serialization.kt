@@ -14,8 +14,6 @@ fun Application.configureSerialization() {
             isLenient = true
             ignoreUnknownKeys = true
         })
-        // Aumentar límite de tamaño para soportar archivos de audio (50MB)
-        // Los archivos de audio pueden ser grandes (mp3, wav, etc.)
         val maxContentLength = 50L * 1024 * 1024 // 50 MB
     }
 
