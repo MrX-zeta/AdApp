@@ -1,7 +1,7 @@
 
 # AdApp
 
-[![Kotlin](https://img.shields.io/badge/Kotlin-7f52ff?logo=kotlin&logoColor=white)](https://kotlinlang.org/) [![Ktor](https://img.shields.io/badge/Ktor-000000?logo=ktor&logoColor=white)](https://ktor.io/) [![Angular](https://img.shields.io/badge/Angular-DD0031?logo=angular&logoColor=white)](https://angular.io/) [![Postgres](https://img.shields.io/badge/PostgreSQL-336791?logo=postgresql&logoColor=white)](https://www.postgresql.org/) 
+[![Kotlin](https://img.shields.io/badge/Kotlin-7f52ff?logo=kotlin&logoColor=white)](https://kotlinlang.org/) [![Ktor](https://img.shields.io/badge/Ktor-000000?logo=ktor&logoColor=white)](https://ktor.io/) [![Angular](https://img.shields.io/badge/Angular-DD0031?logo=angular&logoColor=white)](https://angular.io/) [![Postgres](https://img.shields.io/badge/PostgreSQL-336791?logo=postgresql&logoColor=white)](https://www.postgresql.org/) [![GitHub Actions](https://img.shields.io/badge/GitHub%20Actions-2088FF?logo=github-actions&logoColor=white)](https://github.com/features/actions) 
 
 ---
 
@@ -125,6 +125,7 @@ Fases de Construcción
 - BD: RDS PostgreSQL (managed).
 - Frontend: S3 bucket + CloudFront (CDN).
 - Almacenamiento de multimedia: local en servidor (uploads/images, uploads/audio) — servido estáticamente por Ktor.
+- CI/CD: GitHub Actions — automatización de build, tests y deploy en cada push a main (ver `.github/workflows/deploy.yml`).
 
 ---
 
