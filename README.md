@@ -179,10 +179,13 @@ Aprendizajes blandos
 - Colaboración en debugging sin egos.
 
 Equipo
-- Brian Luis Ruiz Pérez — Backend, BD, arquitecto de software, DevOps, y tester — @MrX-zeta  
-- Diego Alberto Zárate — Frontend, maquetado, UX/UI, prototipado y tests — @Diego-Zarate18  
-- Karolina Trujillo — Frontend, maquetado y UX — @KarolinaTrujillo  
-- Eduardo Montoya — Documentación, liderazgo de proyecto y QA/bugs — @edmonbl
+
+| Nombre | Contribución | GitHub |
+|--------|--------------|--------|
+| Brian Luis Ruiz Pérez | Backend, BD, arquitecto de software, DevOps, y tester | [@MrX-zeta](https://github.com/MrX-zeta) |
+| Diego Alberto Zárate | Frontend, maquetado, UX/UI, prototipado y tests | [@Diego-Zarate18](https://github.com/Diego-Zarate18) |
+| Karolina Trujillo | Frontend, maquetado y UX | [@KarolinaTrujillo](https://github.com/KarolinaTrujillo) |
+| Eduardo Montoya | Documentación, liderazgo de proyecto y QA/bugs | [@edmonbl](https://github.com/edmonbl) |
 
 El proyecto se desarrolló de manera óptima: comunicación clara, ambiente colaborativo y decisiones planificadas con anticipación.
 
